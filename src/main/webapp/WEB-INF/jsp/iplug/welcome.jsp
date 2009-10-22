@@ -1,47 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-	<title>iPlug Xml</title>
-	<link rel="stylesheet" type="text/css" href="../css/yui/reset-fonts-grids/reset-fonts-grids.css"> 
-</head>
-
-<body>
-<!-- the id on the containing div determines the page width. -->
-<!-- #doc = 750px; #doc2 = 950px; #doc3 = 100%; #doc4 = 974px -->
-<div id="doc">					
-	<div id="hd">
-		<p>Header</p>
-	</div>
-	<div id="bd">
-
-		<!-- Use Standard Nesting Grids and Special Nesting Grids to subdivid regions of your layout. -->
-		<!-- Special Nesting Grid B tells three children to split space evenly -->
-		<div class="yui-gb">
-	
-			<!-- the first child of a Grid needs the "first" class -->
-			<div class="yui-u first">
-				<p>
-				</p>
-			</div>	
-	
-			<div class="yui-u">
-				<p>
-				
-				<a href="upload.html">Mapping Erstellen</a> 
-							
-				</p>
-			</div>
-	
-			<div class="yui-u">
-				<p>C</p>
-			</div>
-	
-		</div>
-	
-	</div>
-	<div id="ft">
-		<p>Footer</p>
-	</div>
-</div>
-</body>
-</html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+ <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
+<%
+response.sendRedirect("listMappings.html");
+%>
