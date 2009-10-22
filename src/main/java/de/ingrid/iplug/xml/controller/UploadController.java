@@ -74,7 +74,7 @@ public class UploadController {
 		document.setFileName(multipartFile.getOriginalFilename());
 		model.addAttribute("document", document);
 
-		return "redirect:/iplug/previewXmlFile.html";
+		return "redirect:/iplug/settings.html";
 
 	}
 

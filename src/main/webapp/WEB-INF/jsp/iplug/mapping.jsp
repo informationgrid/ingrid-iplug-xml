@@ -1,3 +1,4 @@
+ <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 <%@ include file="/WEB-INF/jsp/base/include.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -25,20 +26,33 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Sheet auswählen</h1>
+		<h1 id="head">Mapping der Daten auf den Index</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='settings.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
+			<a href="#" onclick="document.getElementById('submit').submit();">Mapping Beenden und Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='settings.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
+			<a href="#" onclick="document.getElementById('submit').submit();">Mapping Beenden und Speichern</a>
 		</div>
+		<form action="finish.html" method="post" style="display:none" id="submit">
+			
+		</form>
+		
 		<div id="content">
-			<h2>file:///${plugDescription.workingDirectory}/${document.fileName}</h2>
-	      </div>	
+			<c:set var="sheet" value="${sheets.sheets[0]}"/>
+			<h2>Definieren Sie, was indexiert werden soll</h2>
+			
+			<div style="overflow:auto">
+				<c:import url="file:///${plugDescription.workingDirectory}/mapping/${document.fileName}" var="xml"/>
+				<c:import url="/WEB-INF/jsp/iplug/xsl/extractXPath.xsl" var="xsl"/>
+	      		<x:transform doc="${xml}" xslt="${xsl}"></x:transform>
+	      	</div>      	   
+	      	
+	      	
+        </div>	
 	</div>
 	<div id="footer" style="height:100px; width:90%"></div>
 </body>

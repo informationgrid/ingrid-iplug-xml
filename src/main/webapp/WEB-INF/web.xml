@@ -35,7 +35,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
         <servlet-name>forwarding</servlet-name>
         <url-pattern>*.js</url-pattern>
     </servlet-mapping>
-  	<listener>
+    <listener>
  		<listener-class>de.ingrid.admin.ContextListener</listener-class>
  	</listener>
  

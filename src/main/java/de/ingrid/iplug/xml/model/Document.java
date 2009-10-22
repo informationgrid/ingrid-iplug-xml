@@ -6,6 +6,25 @@ import java.util.List;
 public class Document {
 
 	private String _fileName;
+	private String _rootExpression = "@*|node()";
+	private String _description;
+	
+	public String getRootExpression() {
+		return _rootExpression;
+	}
+
+	public void setRootExpression(String rootExpression) {
+		_rootExpression = rootExpression;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
 	private List<Field> _fields = new ArrayList<Field>();
 
 	public String getFileName() {

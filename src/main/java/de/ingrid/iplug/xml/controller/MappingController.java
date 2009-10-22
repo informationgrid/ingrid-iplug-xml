@@ -12,14 +12,14 @@ import de.ingrid.iplug.xml.model.Document;
 
 @Controller
 @SessionAttributes( { "document", "plugDescription" })
-public class PreviewXmlFileController {
-
-	@RequestMapping(value = "/iplug/previewXmlFile.html", method = RequestMethod.GET)
+public class MappingController {
+	
+	@RequestMapping(value = "/iplug/mapping.html", method = RequestMethod.GET)
 	public String settings(
 			@ModelAttribute("document") Document document,
 			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
 			ModelMap model) {
-		return "/iplug/previewXmlFile";
+		return "/iplug/mapping";
 	}
 
 }
