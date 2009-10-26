@@ -6,16 +6,28 @@ import java.util.List;
 public class Document {
 
 	private String _fileName;
-	private String _rootExpression = "@*|node()";
-	private String _description;
 	
-	public String getRootExpression() {
-		return _rootExpression;
+	//private String _rootFilterExpression = "@*|node()";
+	
+	private String _rootXpath = "/root/myDocument";
+	
+	private String _description;
+
+	public String getRootXpath() {
+		return _rootXpath;
 	}
 
-	public void setRootExpression(String rootExpression) {
-		_rootExpression = rootExpression;
+	public void setRootXpath(String rootXpath) {
+		_rootXpath = rootXpath;
 	}
+
+//	public String getRootFilterExpression() {
+//		return _rootFilterExpression;
+//	}
+//
+//	public void setFilterRootExpression(String rootFilterExpression) {
+//		_rootFilterExpression = rootFilterExpression;
+//	}
 
 	public String getDescription() {
 		return _description;

@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import de.ingrid.admin.mapping.FieldType;
-import de.ingrid.admin.mapping.Filter;
 
 public class Field implements Externalizable {
 

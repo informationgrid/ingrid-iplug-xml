@@ -25,7 +25,7 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Bereich wählen / Beschreibung</h1>
+		<h1 id="head">Dokument definieren / Beschreibung</h1>
 		<div class="controls">
 			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
@@ -37,13 +37,13 @@
 			<a href="#" onclick="document.getElementById('document').submit();">Weiter</a>
 		</div>
 		<div id="content">
-			<h2>Sie können mit einer XQuery einen Teilauschnitt des XMLs filtern. @*|node() wählt das gesamte XML aus.</h2>
+			<h2>Was wird ein Dokument im Index? Geben Sie den XPath an.</h2>
 			<form:form method="post" action="" modelAttribute="document">
 				<table id="konfigForm">
 					<tr>
-						<td class="leftCol">Teil Bereich (XQuery):</td>
+						<td class="leftCol">XPath zum Dokument:</td>
 						<td>
-							<form:input path="rootExpression" />
+							<form:input path="rootXpath" />
 						</td>
 					</tr>
 					<tr>

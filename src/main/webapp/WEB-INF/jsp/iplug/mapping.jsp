@@ -2,7 +2,9 @@
 <%@ include file="/WEB-INF/jsp/base/include.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+
+<%@page import="org.xml.sax.XMLReader"%>
+<%@page import="org.xml.sax.helpers.XMLReaderFactory"%><html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>Portal U Administration</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -42,16 +44,41 @@
 		</form>
 		
 		<div id="content">
-			<c:set var="sheet" value="${sheets.sheets[0]}"/>
-			<h2>Definieren Sie, was indexiert werden soll</h2>
+			<h2>Definieren Sie, was indexiert werden soll.</h2>
 			
 			<div style="overflow:auto">
-				<c:import url="file:///${plugDescription.workingDirectory}/mapping/${document.fileName}" var="xml"/>
+				<x:parse var="xml">
+					${frag}
+				</x:parse>
 				<c:import url="/WEB-INF/jsp/iplug/xsl/extractXPath.xsl" var="xsl"/>
-	      		<x:transform doc="${xml}" xslt="${xsl}"></x:transform>
+		      	
+	      		<x:transform doc="${xml}" xslt="${xsl}"/>
 	      	</div>      	   
 	      	
-	      	
+	      	<c:if test="${!empty document.fields}">
+		      	<h2><br/>Index Vorschau:</h2>
+				<div style="overflow:auto">
+				<table class="data">
+		      		<tr>
+				      	<th width="25">&nbsp;</th>
+				      	<c:forEach var="field" items="${document.fields}">
+				      		<th>${field.fieldName} [Del]</th>
+				      	</c:forEach>
+			      	</tr>
+			      	<c:forEach var="doc" items="${indexDocs}" begin="0" end="19">
+			      		<tr>
+			      			<td>${doc.key +1}</td>
+			      			<c:forEach var="field" items="${document.fields}">
+			      			<td>${doc.value[field.fieldName]}</td>
+			      			</c:forEach>
+			      		</tr>
+			      	</c:forEach>
+			    </table> 
+		      	</div>
+	
+			    <div style="clear:both"></div>
+			    <br/><br/>
+		    </c:if> 	
         </div>	
 	</div>
 	<div id="footer" style="height:100px; width:90%"></div>
