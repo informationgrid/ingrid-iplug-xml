@@ -34,7 +34,7 @@ public class AddToIndexController {
 			@RequestParam(required = true) final float score) {
 
 		String label = !"".equals(ownFieldName) ? ownFieldName : fieldName;
-		Field field = new Field(label, xpath, score, null, FieldType.valueOf(fieldType));
+		Field field = new Field(label, xpath, score, FieldType.valueOf(fieldType));
 		document.addField(field);
 
 		return "redirect:/iplug/mapping.html";

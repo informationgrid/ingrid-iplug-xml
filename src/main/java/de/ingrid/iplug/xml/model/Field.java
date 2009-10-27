@@ -4,22 +4,21 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Field implements Externalizable {
 
 	private String _fieldName;
 	private String _xpath;
 	private float _score;
-	private Filter _filter;
+	private List<Filter> _filters = new ArrayList<Filter>();
 	private FieldType _fieldType;
 
-	public Field(String fieldName, String xpath, float score, Filter filter,
-			FieldType fieldType) {
+	public Field(String fieldName, String xpath, float score, FieldType fieldType) {
 		_fieldName = fieldName;
 		_xpath = xpath;
 		_score = score;
-		_filter = filter;
 		_fieldType = fieldType;
 	}
 
@@ -47,12 +46,16 @@ public class Field implements Externalizable {
 		_score = score;
 	}
 
-	public Filter getFilter() {
-		return _filter;
+	public List<Filter> getFilters() {
+		return _filters;
+	}
+	
+	public void addFilter(Filter filter){
+		_filters.add(filter);
 	}
 
-	public void setFilter(Filter filter) {
-		_filter = filter;
+	public void setFilters(List<Filter> filters) {
+		_filters = filters;
 	}
 
 	public FieldType getFieldType() {
@@ -69,8 +72,14 @@ public class Field implements Externalizable {
 		_fieldName = in.readUTF();
 		_xpath = in.readUTF();
 		_score = in.readFloat();
-		_filter.readExternal(in);
 		_fieldType = FieldType.valueOf(in.readUTF());
+		_filters.clear();
+		int size = in.readInt();
+		for (int i = 0; i < size; i++) {
+			Filter filter = new Filter();
+			filter.readExternal(in);
+			_filters.add(filter);
+		}
 	}
 
 	@Override
@@ -78,7 +87,10 @@ public class Field implements Externalizable {
 		out.writeUTF(_fieldName);
 		out.writeUTF(_xpath);
 		out.writeFloat(_score);
-		_filter.writeExternal(out);
+		out.writeInt(_filters.size());
+		for (Filter filter : _filters) {
+			filter.writeExternal(out);
+		}
 		out.writeUTF(_fieldType.name());
 	}
 
