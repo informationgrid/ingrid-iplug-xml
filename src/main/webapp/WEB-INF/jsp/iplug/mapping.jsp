@@ -63,14 +63,13 @@
 				      	<th width="25">&nbsp;</th>
 				      	<c:forEach var="field" items="${document.fields}" varStatus="fieldStatus">
 				      		<th>
-				      			<b>${field.fieldName}</b> <a href=""><img src="/images/iplug/delete.png" align="absmiddle"/></a>
+				      			<b>${field.fieldName}</b> <a href="removeFromIndex.html?index=${fieldStatus.index}"><img src="/images/iplug/delete.png" align="absmiddle"/></a>
+				      			<c:forEach var="filter" items="${field.filters}" varStatus="filterStatus">
+				      				<br/>
+				      				${filter.filterType} ${filter.expression} <a href="removeFilter.html?fieldIndex=${fieldStatus.index}&filterIndex=${filterStatus.index}"><img src="/images/iplug/delete.png" align="absmiddle"/></a>
+				      			</c:forEach>
 				      			<br/>
 				      			<a href="addFilter.html?fieldIndex=${fieldStatus.index}"><img src="/images/iplug/add.png" align="absmiddle"/> Filter</a>
-				      			<br/>
-				      			<c:forEach var="filter" items="${field.filters}" varStatus="filterStatus">
-				      				${filter.filterType} ${filter.expression} <a href="removeFilter.html?fieldIndex=${fieldStatus.index}&filterIndex=${filterStatus.index}"><img src="/images/iplug/delete.png" align="absmiddle"/></a>
-				      				<br/>
-				      			</c:forEach>
 				      		</th>
 				      	</c:forEach>
 			      	</tr>
