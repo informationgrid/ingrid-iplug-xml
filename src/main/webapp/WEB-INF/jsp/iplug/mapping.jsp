@@ -46,14 +46,7 @@
 		<div id="content">
 			<h2>Definieren Sie, was indexiert werden soll.</h2>
 			
-			<div style="overflow:auto">
-				<x:parse var="xml">
-					${frag}
-				</x:parse>
-				<c:import url="/WEB-INF/jsp/iplug/xsl/extractXPath.xsl" var="xsl"/>
-		      	
-	      		<x:transform doc="${xml}" xslt="${xsl}"/>
-	      	</div>      	   
+			<c:import url="/iplug/transform.html"></c:import>      	   
 	      	
 	      	<c:if test="${!empty document.fields}">
 		      	<h2><br/>Index Vorschau:</h2>

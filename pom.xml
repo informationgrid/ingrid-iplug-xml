@@ -114,9 +114,13 @@
 					<groupId>jetty</groupId>
 					<artifactId>org.mortbay.jetty</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>commons-betwixt</groupId>
+					<artifactId>commons-betwixt</artifactId>
+				</exclusion>
+				
 			</exclusions>
 		</dependency>
-
 	</dependencies>
 	<build>
 		<plugins>
