@@ -15,10 +15,6 @@ public class ListMappingsController {
 
 	@RequestMapping(value = "/iplug/listMappings.html", method = RequestMethod.GET)
 	public String listMappings(@ModelAttribute("plugDescription") final PlugdescriptionCommandObject commandObject, ModelMap model) {
-		// TODO show list mapping jsp
 		return "/iplug/listMappings";
 	}
-
-	
-
 }
