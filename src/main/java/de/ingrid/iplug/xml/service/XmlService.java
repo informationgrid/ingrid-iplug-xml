@@ -99,11 +99,17 @@ public class XmlService {
 		final XPathFactory factory = XPathFactory.newInstance();
 		XPath xpath = factory.newXPath();
 		org.w3c.dom.Document parse = parseDocument(xml);
-System.out.println("XmlService.getDocuments() " +xPathString);
+
 		XPathExpression expr = xpath.compile(xPathString);
 		NodeList nodes = (NodeList) expr
 				.evaluate(parse, XPathConstants.NODESET);
 		return nodes;
+	}
+	
+	public NodeList getSubNodes(Node node, String xPathString) throws XPathExpressionException{
+		XPathExpression expr = compileXpath(xPathString);
+		NodeList subNodes = (NodeList) expr.evaluate(node, XPathConstants.NODESET);
+		return subNodes;
 	}
 
 

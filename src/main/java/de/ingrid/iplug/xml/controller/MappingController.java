@@ -4,11 +4,6 @@ import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -58,26 +53,24 @@ public class MappingController {
 			filterString = _xmlService.getFilterExpression(document);
 		}
 		
-		NodeList nodes = _xmlService.getDocuments(document, xml, docRootPath +filterString);
-		int length = nodes.getLength();
+		NodeList docs = _xmlService.getDocuments(document, xml, docRootPath +filterString);
+		int length = docs.getLength();
 		for (int i = 0; i < length; i++) {
-			Node item = nodes.item(i); // one index doc
-				LinkedHashMap<String, String> fieldAndValues = new LinkedHashMap<String, String>();
+			Node doc = docs.item(i); // one index doc
+			LinkedHashMap<String, String> fieldAndValues = new LinkedHashMap<String, String>();
 				
-				for (Field field : fields) {
-					final XPathFactory factory = XPathFactory.newInstance();
-					XPath xpath = factory.newXPath();
-					XPathExpression expr = xpath.compile(field.getXpath());
-					NodeList subNodes = (NodeList) expr
-							.evaluate(item, XPathConstants.NODESET);
-					List<Comparable> values = _xmlService.getValues(subNodes);
-					String valueString = "";
-					for (Comparable comparable : values) {
-						valueString += comparable + " ";
-					}
-					fieldAndValues.put(field.getFieldName(), valueString);
-					indexDocs.put(i, fieldAndValues);
+			for (Field field : fields) {
+				NodeList subNodes = _xmlService.getSubNodes(doc, field.getXpath());
+				List<Comparable> values = _xmlService.getValues(subNodes);
+				
+				// build the combined value string for jsp 
+				String valueString = "";
+				for (Comparable comparable : values) {
+					valueString += comparable + " ";
 				}
+				fieldAndValues.put(field.getFieldName(), valueString);
+				indexDocs.put(i, fieldAndValues);
+			}
 		}
 		model.addAttribute("indexDocs", indexDocs);
 
