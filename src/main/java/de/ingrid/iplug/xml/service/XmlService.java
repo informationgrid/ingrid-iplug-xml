@@ -32,6 +32,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import de.ingrid.iplug.xml.model.Document;
+import de.ingrid.iplug.xml.model.Field;
+import de.ingrid.iplug.xml.model.Filter;
+import de.ingrid.iplug.xml.model.Filter.FilterType;
 
 @Service
 public class XmlService {
@@ -96,12 +99,13 @@ public class XmlService {
 		final XPathFactory factory = XPathFactory.newInstance();
 		XPath xpath = factory.newXPath();
 		org.w3c.dom.Document parse = parseDocument(xml);
-
+System.out.println("XmlService.getDocuments() " +xPathString);
 		XPathExpression expr = xpath.compile(xPathString);
 		NodeList nodes = (NodeList) expr
 				.evaluate(parse, XPathConstants.NODESET);
 		return nodes;
 	}
+
 
 	private org.w3c.dom.Document parseDocument(File xml)
 			throws ParserConfigurationException, SAXException, IOException {
@@ -120,5 +124,63 @@ public class XmlService {
 		}
 		return values;
 	}
-
+	
+	public boolean documentHasFilters(Document document){
+		List<Field> fields = document.getFields();
+		for (Field field : fields) {
+			List<Filter> filters = field.getFilters();
+			if(filters.size() > 0){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public String getFilterExpression(Document document) {
+		List<String> expressions = new ArrayList<String>();
+		List<Field> fields = document.getFields();
+		for (Field field : fields) {
+			List<Filter> filters = field.getFilters();
+			for (Filter filter : filters) {
+				FilterType filterType = filter.getFilterType();
+				switch (filterType) {
+				case EQUAL:
+					expressions.add(field.getXpath() + " = '" +filter.getExpression() +"'");
+					break;
+				case NOT_EQUAL:
+					expressions.add("not(" +field.getXpath() + " = '" +filter.getExpression() +"')");
+					break;
+				case CONTAINS:
+					expressions.add("contains(" +field.getXpath() +",'" +filter.getExpression() +"')");
+					break;
+				case NOT_CONTAINS:
+					expressions.add("not(contains(" +field.getXpath() +",'" +filter.getExpression() +"'))");
+					break;
+				case GREATER_THAN:
+					expressions.add(field.getXpath() +" > " +filter.getExpression());
+					break;
+				case LOWER_THAN:
+					expressions.add(field.getXpath() +" < " +filter.getExpression());
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		
+		// build the valid xpath expression string
+		String filterExprString = "";
+		if(expressions.size() > 0){
+			filterExprString += "[";
+			for(int i=0; i<expressions.size(); i++){
+				if(i > 0){
+					filterExprString += " and ";
+				}
+				filterExprString += expressions.get(i);
+			}
+			filterExprString += "]";
+		}
+		return filterExprString;
+	}
+	
 }

@@ -4,6 +4,11 @@ import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,46 +42,42 @@ public class MappingController {
 			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
 			ModelMap model) throws Exception {
 
-		// create xml fragment with get first doc
+		
 		File xml = new File(plugdescriptionCommandObject.getWorkinDirectory()
 				+ File.separator + "mapping" + File.separator
 				+ document.getFileName());
-		// ByteArrayOutputStream byteArrayOutputStream =
-		// _xmlService.getFirstDocFromXml(
-		// document, xml);
-		// String oneDoc = new String(byteArrayOutputStream.toByteArray());
-		// System.out.println("MappingController.settings() " + oneDoc);
-		// model.addAttribute("frag", oneDoc);
 
 		// index preview
 		List<Field> fields = document.getFields();
 		String docRootPath = document.getRootXpath();
-		LinkedHashMap<Integer, LinkedHashMap<String, String>> indexDocs = new LinkedHashMap<Integer, LinkedHashMap<String, String>>(); // doc
-		// index
-		// |
-		// fieldname
-		// +
-		// values
+		// doc index  |  field name +  values
+		LinkedHashMap<Integer, LinkedHashMap<String, String>> indexDocs = new LinkedHashMap<Integer, LinkedHashMap<String, String>>(); 
 
-		NodeList nodes = _xmlService.getDocuments(document, xml, docRootPath);
+		String filterString = "";
+		if(_xmlService.documentHasFilters(document)){
+			filterString = _xmlService.getFilterExpression(document);
+		}
+		
+		NodeList nodes = _xmlService.getDocuments(document, xml, docRootPath +filterString);
 		int length = nodes.getLength();
 		for (int i = 0; i < length; i++) {
 			Node item = nodes.item(i); // one index doc
-			LinkedHashMap<String, String> fieldAndValues = new LinkedHashMap<String, String>();
-			for (Field field : fields) {
-				NodeList nodesToIndex = _xmlService.getDocuments(document, xml,
-						docRootPath + "[" + (i + 1) + "]" + "/"
-								+ field.getXpath()); // a field can have
-				// multiple nodes to
-				// index
-				List<Comparable> values = _xmlService.getValues(nodesToIndex);
-				String valueString = "";
-				for (Comparable comparable : values) {
-					valueString += comparable + " ";
+				LinkedHashMap<String, String> fieldAndValues = new LinkedHashMap<String, String>();
+				
+				for (Field field : fields) {
+					final XPathFactory factory = XPathFactory.newInstance();
+					XPath xpath = factory.newXPath();
+					XPathExpression expr = xpath.compile(field.getXpath());
+					NodeList subNodes = (NodeList) expr
+							.evaluate(item, XPathConstants.NODESET);
+					List<Comparable> values = _xmlService.getValues(subNodes);
+					String valueString = "";
+					for (Comparable comparable : values) {
+						valueString += comparable + " ";
+					}
+					fieldAndValues.put(field.getFieldName(), valueString);
+					indexDocs.put(i, fieldAndValues);
 				}
-				fieldAndValues.put(field.getFieldName(), valueString);
-				indexDocs.put(i, fieldAndValues);
-			}
 		}
 		model.addAttribute("indexDocs", indexDocs);
 
