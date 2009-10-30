@@ -15,7 +15,12 @@ public class Field implements Externalizable {
 	private List<Filter> _filters = new ArrayList<Filter>();
 	private FieldType _fieldType;
 
-	public Field(String fieldName, String xpath, float score, FieldType fieldType) {
+	public Field() {
+		// externalizable
+	}
+
+	public Field(String fieldName, String xpath, float score,
+			FieldType fieldType) {
 		_fieldName = fieldName;
 		_xpath = xpath;
 		_score = score;
@@ -49,8 +54,8 @@ public class Field implements Externalizable {
 	public List<Filter> getFilters() {
 		return _filters;
 	}
-	
-	public void addFilter(Filter filter){
+
+	public void addFilter(Filter filter) {
 		_filters.add(filter);
 	}
 
@@ -87,11 +92,11 @@ public class Field implements Externalizable {
 		out.writeUTF(_fieldName);
 		out.writeUTF(_xpath);
 		out.writeFloat(_score);
+		out.writeUTF(_fieldType.name());
 		out.writeInt(_filters.size());
 		for (Filter filter : _filters) {
 			filter.writeExternal(out);
 		}
-		out.writeUTF(_fieldType.name());
 	}
 
 }

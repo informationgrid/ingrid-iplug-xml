@@ -1,16 +1,21 @@
 package de.ingrid.iplug.xml.model;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Document {
+public class Document implements Externalizable {
 
+	private List<Field> _fields = new ArrayList<Field>();
 	private String _fileName;
-	
-	//private String _rootFilterExpression = "@*|node()";
-	
+
+	// private String _rootFilterExpression = "@*|node()";
+
 	private String _rootXpath = "/root/myDocument";
-	
+
 	private String _description;
 
 	public String getRootXpath() {
@@ -21,13 +26,13 @@ public class Document {
 		_rootXpath = rootXpath;
 	}
 
-//	public String getRootFilterExpression() {
-//		return _rootFilterExpression;
-//	}
-//
-//	public void setFilterRootExpression(String rootFilterExpression) {
-//		_rootFilterExpression = rootFilterExpression;
-//	}
+	// public String getRootFilterExpression() {
+	// return _rootFilterExpression;
+	// }
+	//
+	// public void setFilterRootExpression(String rootFilterExpression) {
+	// _rootFilterExpression = rootFilterExpression;
+	// }
 
 	public String getDescription() {
 		return _description;
@@ -36,8 +41,6 @@ public class Document {
 	public void setDescription(String description) {
 		_description = description;
 	}
-
-	private List<Field> _fields = new ArrayList<Field>();
 
 	public String getFileName() {
 		return _fileName;
@@ -59,4 +62,30 @@ public class Document {
 		_fields.add(field);
 	}
 
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		_fileName = in.readUTF();
+		_description = in.readUTF();
+		_rootXpath = in.readUTF();
+		int count = in.readInt();
+		_fields.clear();
+		for (int i = 0; i < count; i++) {
+			Field field = new Field();
+			field.readExternal(in);
+			_fields.add(field);
+		}
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeUTF(_fileName);
+		out.writeUTF(_description);
+		out.writeUTF(_rootXpath);
+		out.writeInt(_fields.size());
+		for (Field field : _fields) {
+			field.writeExternal(out);
+		}
+
+	}
 }
