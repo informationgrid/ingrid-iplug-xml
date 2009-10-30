@@ -1,7 +1,5 @@
 package de.ingrid.iplug.xml.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.admin.IUris;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.xml.model.Document;
 import de.ingrid.iplug.xml.model.Field;
 
 @Controller
@@ -34,7 +33,17 @@ public class XmlFinsishController {
 		List<String> fields = (List<String>) plugdescriptionCommandObject
 				.get("fields");
 
-		plugdescriptionCommandObject.put("document", document);
+		if (!plugdescriptionCommandObject.containsKey("mapping")) {
+			plugdescriptionCommandObject.put("mapping",
+					new ArrayList<Document>());
+		}
+		List<Document> documents = (List<Document>) plugdescriptionCommandObject
+				.get("mapping");
+		// edit mode
+		if (documents.contains(document)) {
+			documents.remove(document);
+		}
+		documents.add(document);
 
 		List<Field> fieldsFromDocument = document.getFields();
 		for (Field field : fieldsFromDocument) {

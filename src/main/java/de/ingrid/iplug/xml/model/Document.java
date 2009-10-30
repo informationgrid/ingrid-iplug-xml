@@ -12,8 +12,6 @@ public class Document implements Externalizable {
 	private List<Field> _fields = new ArrayList<Field>();
 	private String _fileName;
 
-	// private String _rootFilterExpression = "@*|node()";
-
 	private String _rootXpath = "/root/myDocument";
 
 	private String _description;
@@ -25,14 +23,6 @@ public class Document implements Externalizable {
 	public void setRootXpath(String rootXpath) {
 		_rootXpath = rootXpath;
 	}
-
-	// public String getRootFilterExpression() {
-	// return _rootFilterExpression;
-	// }
-	//
-	// public void setFilterRootExpression(String rootFilterExpression) {
-	// _rootFilterExpression = rootFilterExpression;
-	// }
 
 	public String getDescription() {
 		return _description;
@@ -86,6 +76,16 @@ public class Document implements Externalizable {
 		for (Field field : _fields) {
 			field.writeExternal(out);
 		}
+	}
 
+	@Override
+	public int hashCode() {
+		return _fileName.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Document other = (Document) obj;
+		return other._fileName.equals(_fileName);
 	}
 }

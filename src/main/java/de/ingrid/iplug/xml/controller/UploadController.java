@@ -64,14 +64,19 @@ public class UploadController {
 				.getWorkinDirectory();
 		File mappingDir = new File(workinDirectory, "mapping");
 		mappingDir.mkdirs();
-		FileOutputStream fileOutputStream = new FileOutputStream(new File(
-				mappingDir, multipartFile.getOriginalFilename()));
+
+		int length = mappingDir.listFiles().length;
+		File newXmlFile = new File(mappingDir, multipartFile
+				.getOriginalFilename()
+				+ "_" + length);
+
+		FileOutputStream fileOutputStream = new FileOutputStream(newXmlFile);
 		fileOutputStream.write(uploadBytes);
 		fileOutputStream.flush();
 		fileOutputStream.close();
 
 		Document document = new Document();
-		document.setFileName(multipartFile.getOriginalFilename());
+		document.setFileName(newXmlFile.getName());
 		model.addAttribute("document", document);
 
 		return "redirect:/iplug/settings.html";
