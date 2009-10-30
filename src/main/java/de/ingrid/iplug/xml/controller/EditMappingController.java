@@ -16,7 +16,7 @@ import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.xml.model.Document;
 
 @Controller
-@SessionAttributes( { "plugDescription", "sheets" })
+@SessionAttributes( { "plugDescription", "document" })
 public class EditMappingController {
 
 	@SuppressWarnings("unchecked")
@@ -36,7 +36,7 @@ public class EditMappingController {
 				document = currentDocument;
 				break;
 			}
-			model.addAttribute("mapping", document);
+			model.addAttribute("document", document);
 		}
 		return "redirect:/iplug/mapping.html";
 	}

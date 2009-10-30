@@ -23,32 +23,39 @@
 	<c:set var="active" value="mapping" scope="request"/>
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
+	
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Daten Mappings</h1>
 		<div id="content">
 			<h2>Folgende XML Dateien sind bereits gemappt</h2>
-			
 			<table class="data">
 				<tr>
 					<th>Datei</th>
 					<th>Beschreibung</th>
 					<th>&nbsp;</th>
 				</tr>
+				<c:set var="i" value="0" />
+				<c:forEach var="document" items="${plugDescription['mapping']}">
 				<tr>
-					<td>filename</td>
-					<td>desc</td>
+					<td>${document.fileName}</td>
+					<td>${document.description}</td>
 					<td>
 						<form action="/iplug/deleteMapping.html" method="POST" style="float:left">
+							<input type="hidden" name="documentIndex" value="${i}"/>
 							<input type="submit" value="Löschen"/>
 						</form>
 						<form action="/iplug/editMapping.html" method="GET" style="float:left">
+							<input type="hidden" name="documentIndex" value="${i}"/>
 							<input type="submit" value="Bearbeiten"/>
 						</form>
-						<form style="float:left">
-							<button>Datei aktualisieren</button>
+						<form action="/iplug/switchXml.html" method="GET" style="float:left">
+							<input type="hidden" name="documentIndex" value="${i}"/>
+							<input type="submit" value="Datei aktualisieren" />
 						</form>
 					</td>
 				</tr>
+				<c:set var="i" value="${i + 1}" />
+				</c:forEach>
 			</table>
 			
 			<br/>
