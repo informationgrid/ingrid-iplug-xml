@@ -12,6 +12,6 @@ public class XmlWelcomeController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String welcome() {
-		return "redirect:/iplug/upload.html";
+		return "redirect:/iplug/listMappings.html";
 	}
 }
