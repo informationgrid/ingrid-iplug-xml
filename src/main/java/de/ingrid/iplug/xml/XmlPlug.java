@@ -3,6 +3,7 @@ package de.ingrid.iplug.xml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.ingrid.admin.search.IngridIndexSearcher;
 import de.ingrid.iplug.HeartBeatPlug;
 import de.ingrid.iplug.IPlugdescriptionFieldFilter;
 import de.ingrid.iplug.PlugDescriptionFieldFilters;
@@ -16,34 +17,41 @@ import de.ingrid.utils.query.IngridQuery;
 
 @Service
 public class XmlPlug extends HeartBeatPlug {
+	
+	private final IngridIndexSearcher _indexSearcher;
 
 	@Autowired
-	public XmlPlug(IPlugdescriptionFieldFilter[] filters,
+	public XmlPlug(final IngridIndexSearcher indexSearcher,
+			IPlugdescriptionFieldFilter[] fieldFilters,
 			IMetadataInjector[] metadataInjectors,
 			IPreProcessor[] preProcessors, IPostProcessor[] postProcessors) {
-		super(10000, new PlugDescriptionFieldFilters(filters),
+		super(10000, new PlugDescriptionFieldFilters(fieldFilters),
 				metadataInjectors, preProcessors, postProcessors);
+		_indexSearcher = indexSearcher;
 	}
 
 	@Override
-	public IngridHits search(IngridQuery query, int start, int length)
-			throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public void close() throws Exception {
+		_indexSearcher.close();
 	}
 
-	@Override
-	public IngridHitDetail getDetail(IngridHit hit, IngridQuery query,
-			String[] requestedFields) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public IngridHits search(final IngridQuery query, final int start,
+			final int length) throws Exception {
+		return _indexSearcher.search(query, start, length);
 	}
 
-	@Override
-	public IngridHitDetail[] getDetails(IngridHit[] hits, IngridQuery query,
-			String[] requestedFields) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public IngridHitDetail getDetail(final IngridHit hit,
+			final IngridQuery query, final String[] fields) throws Exception {
+		final IngridHitDetail detail = _indexSearcher.getDetail(hit, query,
+				fields);
+		return detail;
+	}
+
+	public IngridHitDetail[] getDetails(final IngridHit[] hitArray,
+			final IngridQuery query, final String[] fields) throws Exception {
+		final IngridHitDetail[] details = _indexSearcher.getDetails(hitArray,
+				query, fields);
+		return details;
 	}
 
 }
