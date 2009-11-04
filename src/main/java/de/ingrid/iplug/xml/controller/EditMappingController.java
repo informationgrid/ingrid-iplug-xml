@@ -36,8 +36,8 @@ public class EditMappingController {
 				document = currentDocument;
 				break;
 			}
-			model.addAttribute("document", document);
 		}
+		model.addAttribute("document", document);
 		return "redirect:/iplug/mapping.html";
 	}
 }
