@@ -118,47 +118,47 @@
 					<groupId>commons-betwixt</groupId>
 					<artifactId>commons-betwixt</artifactId>
 				</exclusion>
-				
+
 			</exclusions>
 		</dependency>
-		
-<dependency>
-    <groupId>org.jdom</groupId>
-    <artifactId>jdom</artifactId>
-    <version>1.1</version>
-</dependency>		
+
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.1</version>
+		</dependency>
 
 
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-      <version>2.6.1</version>
-    </dependency>
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xmlParserAPIs</artifactId>
-      <version>2.6.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jdom</groupId>
-      <artifactId>jaxen-core</artifactId>
-      <version>1.0-FCS</version>  <!-- patched 1.0-FCS -->
-    </dependency>
-    <dependency>
-      <groupId>org.jdom</groupId>
-      <artifactId>jaxen-jdom</artifactId>
-      <version>1.0-FCS</version>  <!-- patched 1.0-FCS -->
-    </dependency>
-    <dependency>
-      <groupId>org.jdom</groupId>
-      <artifactId>saxpath</artifactId>
-      <version>1.0-FCS</version>  <!-- patched 1.0-FCS -->
-    </dependency>
-    <dependency>
-      <groupId>xalan</groupId>
-      <artifactId>xalan</artifactId>
-      <version>2.5.D1</version>
-    </dependency>
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xmlParserAPIs</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jaxen-core</artifactId>
+			<version>1.0-FCS</version>  <!-- patched 1.0-FCS -->
+		</dependency>
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jaxen-jdom</artifactId>
+			<version>1.0-FCS</version>  <!-- patched 1.0-FCS -->
+		</dependency>
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>saxpath</artifactId>
+			<version>1.0-FCS</version>  <!-- patched 1.0-FCS -->
+		</dependency>
+		<dependency>
+			<groupId>xalan</groupId>
+			<artifactId>xalan</artifactId>
+			<version>2.5.D1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -204,78 +204,74 @@
 					<scanIntervalSeconds>0</scanIntervalSeconds>
 				</configuration>
 			</plugin>
-      <!-- UNPACK admin webapps in target and copy when assembling. Avoid direct dependency to webapps because of circular dependency -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-                    <!-- unzip jetty -->
-                    <execution>
-                        <id>unzip-jetty</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>jetty</groupId>
-                                    <artifactId>jetty</artifactId>
-                                    <version>6.1.14</version>
-                                    <type>zip</type>
-                                    <outputDirectory>
-                                        ${project.build.directory}/
+			<!--
+				UNPACK admin webapps in target and copy when assembling. Avoid
+				direct dependency to webapps because of circular dependency
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<!-- unzip jetty -->
+					<execution>
+						<id>unzip-jetty</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>jetty</groupId>
+									<artifactId>jetty</artifactId>
+									<version>6.1.14</version>
+									<type>zip</type>
+									<outputDirectory>
+										${project.build.directory}/
                                     </outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <configuration>
-                            <tasks>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
 								<delete includeemptydirs="true">
-                                    <fileset
-                                        dir="${project.build.directory}/jetty-6.1.14/webapps/"
-                                        includes="**/*" excludes="ROOT/**/*"
-                                    />
-                                </delete>
-                                <delete dir="${project.build.directory}/jetty-6.1.14/contrib" />
-                                <delete
-                                    dir="${project.build.directory}/jetty-6.1.14/examples"
-                                />
-                                <delete
-                                    dir="${project.build.directory}/jetty-6.1.14/project-website"
-                                />
-                                <delete dir="${project.build.directory}/jetty-6.1.14/patches" />
-                                <delete dir="${project.build.directory}/jetty-6.1.14/modules" />
-                                <delete dir="${project.build.directory}/jetty-6.1.14/javadoc" />
-                                <delete dir="${project.build.directory}/jetty-6.1.14/extras" />
-                                <delete dir="${project.build.directory}/jetty-6.1.14/jxr" />
-                                <delete dir="${project.build.directory}/jetty-6.1.14/distribution" />
-                                <delete file="${project.build.directory}/jetty-6.1.14/pom.xml" />
-                                <delete includeemptydirs="true">
-                                    <fileset
-                                        dir="${project.build.directory}/jetty-6.1.14/contexts"
-                                        includes="**/*"
-                                    />
-                                </delete>
+									<fileset dir="${project.build.directory}/jetty-6.1.14/webapps/"
+										includes="**/*" excludes="ROOT/**/*" />
+								</delete>
+								<delete dir="${project.build.directory}/jetty-6.1.14/contrib" />
+								<delete dir="${project.build.directory}/jetty-6.1.14/examples" />
+								<delete
+									dir="${project.build.directory}/jetty-6.1.14/project-website" />
+								<delete dir="${project.build.directory}/jetty-6.1.14/patches" />
+								<delete dir="${project.build.directory}/jetty-6.1.14/modules" />
+								<delete dir="${project.build.directory}/jetty-6.1.14/javadoc" />
+								<delete dir="${project.build.directory}/jetty-6.1.14/extras" />
+								<delete dir="${project.build.directory}/jetty-6.1.14/jxr" />
+								<delete dir="${project.build.directory}/jetty-6.1.14/distribution" />
+								<delete file="${project.build.directory}/jetty-6.1.14/pom.xml" />
+								<delete includeemptydirs="true">
+									<fileset dir="${project.build.directory}/jetty-6.1.14/contexts"
+										includes="**/*" />
+								</delete>
 								<unzip dest="${project.build.directory}/jetty-6.1.14/webapps/ROOT"
 									src="${project.build.directory}/${project.build.finalName}.war">
 								</unzip>
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                	</execution>        
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
 				</executions>
-      </plugin>
-	  </plugins>
+			</plugin>
+		</plugins>
 	</build>
 </project>
