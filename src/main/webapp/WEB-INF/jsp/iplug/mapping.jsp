@@ -30,12 +30,12 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Mapping der Daten auf den Index</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='settings.html';">Zurück</a>
+			<a href="#" onclick="document.location='upload.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('submit').submit();">Mapping Beenden und Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='settings.html';">Zurück</a>
+			<a href="#" onclick="document.location='upload.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('submit').submit();">Mapping Beenden und Speichern</a>
 		</div>

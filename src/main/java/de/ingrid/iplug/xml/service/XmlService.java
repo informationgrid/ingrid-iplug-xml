@@ -1,34 +1,29 @@
 package de.ingrid.iplug.xml.service;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+import org.jdom.transform.JDOMSource;
+import org.jdom.xpath.XPath;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import de.ingrid.iplug.xml.model.Document;
@@ -39,109 +34,48 @@ import de.ingrid.iplug.xml.model.Filter.FilterType;
 @Service
 public class XmlService {
 
+	private static final Log LOG = LogFactory.getLog(XmlService.class);
+
+	private SAXBuilder _saxBuilder;
+
 	public XmlService() {
-
+		_saxBuilder = new SAXBuilder();
+		_saxBuilder.setValidation(false);
 	}
 
-	public void transformNode(String xpath, File xml, OutputStream outputStream)
-			throws IOException, ParserConfigurationException, SAXException,
-			XPathExpressionException, TransformerException {
-
-		org.w3c.dom.Document w3cDocument = parseDocument(xml);
-		XPathExpression xPathExpression = compileXpath(xpath);
-		NodeList nodes = (NodeList) xPathExpression.evaluate(w3cDocument,
-				XPathConstants.NODESET);
-		Node node = nodes.getLength() > 0 ? nodes.item(0) : null;
-		Source xmlSource = new DOMSource(node);
-		Source xsltSource = new StreamSource(XmlService.class
-				.getResourceAsStream("/extractXPath.xsl"));
-		Result result = new StreamResult(outputStream);
-		TransformerFactory transformerFactory = TransformerFactory
-				.newInstance();
-		Transformer transformer = transformerFactory.newTransformer(xsltSource);
-		transformer.transform(xmlSource, result);
+	public org.jdom.Document createDocument(File xml) throws JDOMException,
+			IOException {
+		return _saxBuilder.build(xml);
 	}
 
-	private XPathExpression compileXpath(String xpath)
-			throws XPathExpressionException {
-		final XPathFactory factory = XPathFactory.newInstance();
-		XPath newXpath = factory.newXPath();
-		return newXpath.compile(xpath);
+	@SuppressWarnings("unchecked")
+	public List<Element> getSubNodes(Element node, String xPathString)
+			throws XPathExpressionException, JDOMException {
+		return XPath.selectNodes(node, xPathString);
 	}
 
-	public ByteArrayOutputStream getFirstDocFromXml(Document document, File xml)
-			throws ParserConfigurationException, SAXException, IOException,
-			XPathExpressionException, TransformerFactoryConfigurationError,
-			TransformerConfigurationException, TransformerException {
-		// parse file
-		final XPathFactory factory = XPathFactory.newInstance();
-		XPath xpath = factory.newXPath();
-		org.w3c.dom.Document parse = parseDocument(xml);
-
-		XPathExpression expr = xpath.compile(document.getRootXpath() + "[1]");
-		Node node = (Node) expr.evaluate(parse, XPathConstants.NODE);
-
-		// create new xml doc
-		Source xmlSource = new DOMSource(node);
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		Result result = new StreamResult(byteArrayOutputStream);
-		TransformerFactory transformerFactory = TransformerFactory
-				.newInstance();
-		Transformer transformer = transformerFactory.newTransformer();
-		transformer.setOutputProperty("indent", "yes");
-		transformer.transform(xmlSource, result);
-		return byteArrayOutputStream;
-	}
-
-	public NodeList getDocuments(Document document, File xml, String xPathString)
-			throws ParserConfigurationException, SAXException, IOException,
-			XPathExpressionException {
-		final XPathFactory factory = XPathFactory.newInstance();
-		XPath xpath = factory.newXPath();
-		org.w3c.dom.Document parse = parseDocument(xml);
-
-		XPathExpression expr = xpath.compile(xPathString);
-		NodeList nodes = (NodeList) expr
-				.evaluate(parse, XPathConstants.NODESET);
-		return nodes;
-	}
-	
-	public NodeList getSubNodes(Node node, String xPathString) throws XPathExpressionException{
-		XPathExpression expr = compileXpath(xPathString);
-		NodeList subNodes = (NodeList) expr.evaluate(node, XPathConstants.NODESET);
-		return subNodes;
-	}
-
-
-	private org.w3c.dom.Document parseDocument(File xml)
-			throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance()
-				.newDocumentBuilder();
-		return docBuilder.parse(xml);
-	}
-
-	public List<Comparable> getValues(NodeList nodes)
+	public List<String> getValues(List<Element> nodes)
 			throws XPathExpressionException, ParserConfigurationException,
 			SAXException, IOException {
-		int length = nodes.getLength();
-		List<Comparable> values = new ArrayList<Comparable>();
+		int length = nodes.size();
+		List<String> values = new ArrayList<String>();
 		for (int i = 0; i < length; i++) {
-			values.add(nodes.item(i).getTextContent());
+			values.add(nodes.get(i).getText());
 		}
 		return values;
 	}
-	
-	public boolean documentHasFilters(Document document){
+
+	public boolean documentHasFilters(Document document) {
 		List<Field> fields = document.getFields();
 		for (Field field : fields) {
 			List<Filter> filters = field.getFilters();
-			if(filters.size() > 0){
+			if (filters.size() > 0) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public String getFilterExpression(Document document) {
 		List<String> expressions = new ArrayList<String>();
 		List<Field> fields = document.getFields();
@@ -151,35 +85,41 @@ public class XmlService {
 				FilterType filterType = filter.getFilterType();
 				switch (filterType) {
 				case EQUAL:
-					expressions.add(field.getXpath() + " = '" +filter.getExpression() +"'");
+					expressions.add(field.getXpath() + " = '"
+							+ filter.getExpression() + "'");
 					break;
 				case NOT_EQUAL:
-					expressions.add("not(" +field.getXpath() + " = '" +filter.getExpression() +"')");
+					expressions.add("not(" + field.getXpath() + " = '"
+							+ filter.getExpression() + "')");
 					break;
 				case CONTAINS:
-					expressions.add("contains(" +field.getXpath() +",'" +filter.getExpression() +"')");
+					expressions.add("contains(" + field.getXpath() + ",'"
+							+ filter.getExpression() + "')");
 					break;
 				case NOT_CONTAINS:
-					expressions.add("not(contains(" +field.getXpath() +",'" +filter.getExpression() +"'))");
+					expressions.add("not(contains(" + field.getXpath() + ",'"
+							+ filter.getExpression() + "'))");
 					break;
 				case GREATER_THAN:
-					expressions.add(field.getXpath() +" > " +filter.getExpression());
+					expressions.add(field.getXpath() + " > "
+							+ filter.getExpression());
 					break;
 				case LOWER_THAN:
-					expressions.add(field.getXpath() +" < " +filter.getExpression());
+					expressions.add(field.getXpath() + " < "
+							+ filter.getExpression());
 					break;
 				default:
 					break;
 				}
 			}
 		}
-		
+
 		// build the valid xpath expression string
 		String filterExprString = "";
-		if(expressions.size() > 0){
+		if (expressions.size() > 0) {
 			filterExprString += "[";
-			for(int i=0; i<expressions.size(); i++){
-				if(i > 0){
+			for (int i = 0; i < expressions.size(); i++) {
+				if (i > 0) {
 					filterExprString += " and ";
 				}
 				filterExprString += expressions.get(i);
@@ -188,5 +128,24 @@ public class XmlService {
 		}
 		return filterExprString;
 	}
-	
+
+	public Element selectRootElement(org.jdom.Document jdomDocument,
+			String xpath) throws JDOMException {
+		Element singleNode = (Element) org.jdom.xpath.XPath.selectSingleNode(
+				jdomDocument, xpath);
+		return singleNode;
+	}
+
+	public void writeElement(Element rootElement, OutputStream outputStream)
+			throws TransformerException {
+		Source xmlSource = new JDOMSource(rootElement);
+		Source xsltSource = new StreamSource(XmlService.class
+				.getResourceAsStream("/extractXPath.xsl"));
+		Result result = new StreamResult(outputStream);
+		TransformerFactory transformerFactory = TransformerFactory
+				.newInstance();
+		Transformer transformer = transformerFactory.newTransformer(xsltSource);
+		transformer.transform(xmlSource, result);
+	}
+
 }

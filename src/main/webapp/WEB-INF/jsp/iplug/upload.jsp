@@ -43,6 +43,18 @@
 						<td class="leftCol">Xml Datei:</td>
 						<td><input type="file" name="file"/> <form:errors path="file" cssClass="error" element="div" /></td>
 					</tr>
+					<tr>
+						<td class="leftCol">XPath zum Dokument:</td>
+						<td>
+							<form:input path="rootXpath" />
+						</td>
+					</tr>
+					<tr>
+						<td class="leftCol">Beschreibung:</td>
+						<td>
+							<form:input path="description" />
+						</td>
+					</tr>
 				</table>
 			</form:form>
 		</div>

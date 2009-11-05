@@ -1,7 +1,6 @@
 package de.ingrid.iplug.xml.controller;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -21,22 +20,13 @@ public class EditMappingController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/iplug/editMapping.html", method = RequestMethod.GET)
-	public String editSheet(
+	public String editXml(
 			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
 			@RequestParam(value = "documentIndex", required = true) int documentIndex,
 			Model model) throws IOException {
-		List<Document> documents= (List<Document>) plugdescriptionCommandObject
+		List<Document> documents = (List<Document>) plugdescriptionCommandObject
 				.get("mapping");
-		Iterator<Document> iterator = documents.iterator();
-		int i = 0;
-		Document document = null;
-		while (iterator.hasNext()) {
-			Document currentDocument= iterator.next();
-			if (i == documentIndex) {
-				document = currentDocument;
-				break;
-			}
-		}
+		Document document = documents.get(documentIndex);
 		model.addAttribute("document", document);
 		return "redirect:/iplug/mapping.html";
 	}
