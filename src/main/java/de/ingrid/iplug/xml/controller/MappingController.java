@@ -47,9 +47,8 @@ public class MappingController {
 			filterString = _xmlService.getFilterExpression(document);
 		}
 
-		List<Element> docs = _xmlService.getSubNodes(rootElement
-				.getParentElement(), rootElement.getName() + filterString
-				+ "[position() < 21]");
+		List<Element> docs = _xmlService.selectSubNodesFromParentLevel(
+				rootElement, filterString + "[position() < 21]");
 		int length = docs.size();
 		for (int i = 0; i < length; i++) {
 			Element doc = docs.get(i); // one index doc

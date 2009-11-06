@@ -34,8 +34,7 @@ import de.ingrid.iplug.xml.model.Filter.FilterType;
 @Service
 public class XmlService {
 
-	private static final Log LOG = LogFactory.getLog(XmlService.class);
-
+	private static Log LOG = LogFactory.getLog(XmlService.class);
 	private SAXBuilder _saxBuilder;
 
 	public XmlService() {
@@ -51,18 +50,59 @@ public class XmlService {
 	@SuppressWarnings("unchecked")
 	public List<Element> getSubNodes(Element node, String xPathString)
 			throws XPathExpressionException, JDOMException {
-		return XPath.selectNodes(node, xPathString);
+		XPath newInstance = XPath.newInstance(xPathString);
+		LOG.info("try to select node list with xpath ["
+				+ newInstance.getXPath() + "] from element [" + node + "]");
+		return newInstance.selectNodes(node);
 	}
 
-	public List<String> getValues(List<Element> nodes)
-			throws XPathExpressionException, ParserConfigurationException,
-			SAXException, IOException {
-		int length = nodes.size();
-		List<String> values = new ArrayList<String>();
-		for (int i = 0; i < length; i++) {
-			values.add(nodes.get(i).getText());
+	public List<Element> selectSubNodesFromParentLevel(Element element,
+			String xpath) throws XPathExpressionException, JDOMException {
+		Element fromElement = element.getDocument().getRootElement() != null ? element
+				.getDocument().getRootElement()
+				: element;
+		String rootXpath = buildRootXpath(element) + xpath;
+
+		LOG.info(xpath + " -> " + rootXpath);
+		return getSubNodes(fromElement, rootXpath);
+	}
+
+	private String buildRootXpath(Element element) {
+		String s = "";
+		Element parentElement = element.getParentElement();
+		if (parentElement != null) {
+			s = buildRootXpath(parentElement);
 		}
-		return values;
+		String nameSpacePrefix = !"".equals(element.getNamespacePrefix()) ? element
+				.getNamespacePrefix()
+				+ ":"
+				: "";
+		s = s + "/" + nameSpacePrefix + element.getName();
+		System.out.println("return: " + s);
+		return s;
+	}
+
+	public Element selectRootElement(org.jdom.Document jdomDocument,
+			String xpath) throws JDOMException {
+		XPath newInstance = XPath.newInstance(xpath);
+		LOG.info("try to select single node with xpath ["
+				+ newInstance.getXPath() + "] from element [" + jdomDocument
+				+ "]");
+		Element singleNode = (Element) newInstance
+				.selectSingleNode(jdomDocument);
+		return singleNode;
+	}
+
+	public void writeElement(Element rootElement, OutputStream outputStream)
+			throws TransformerException {
+		Source xmlSource = new JDOMSource(rootElement);
+		Source xsltSource = new StreamSource(XmlService.class
+				.getResourceAsStream("/extractXPath.xsl"));
+		Result result = new StreamResult(outputStream);
+		TransformerFactory transformerFactory = TransformerFactory
+				.newInstance();
+		Transformer transformer = transformerFactory.newTransformer(xsltSource);
+		transformer.transform(xmlSource, result);
 	}
 
 	public boolean documentHasFilters(Document document) {
@@ -129,23 +169,15 @@ public class XmlService {
 		return filterExprString;
 	}
 
-	public Element selectRootElement(org.jdom.Document jdomDocument,
-			String xpath) throws JDOMException {
-		Element singleNode = (Element) org.jdom.xpath.XPath.selectSingleNode(
-				jdomDocument, xpath);
-		return singleNode;
-	}
-
-	public void writeElement(Element rootElement, OutputStream outputStream)
-			throws TransformerException {
-		Source xmlSource = new JDOMSource(rootElement);
-		Source xsltSource = new StreamSource(XmlService.class
-				.getResourceAsStream("/extractXPath.xsl"));
-		Result result = new StreamResult(outputStream);
-		TransformerFactory transformerFactory = TransformerFactory
-				.newInstance();
-		Transformer transformer = transformerFactory.newTransformer(xsltSource);
-		transformer.transform(xmlSource, result);
+	public List<String> getValues(List<Element> nodes)
+			throws XPathExpressionException, ParserConfigurationException,
+			SAXException, IOException {
+		int length = nodes.size();
+		List<String> values = new ArrayList<String>();
+		for (int i = 0; i < length; i++) {
+			values.add(nodes.get(i).getText());
+		}
+		return values;
 	}
 
 }
