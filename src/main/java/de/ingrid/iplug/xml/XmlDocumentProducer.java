@@ -179,7 +179,7 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 
 				List<Element> docs = _xmlService.getSubNodes(rootElement
 						.getParentElement(), rootElement.getName()
-						+ filterString + "[position() < 21]");
+						+ filterString);
 
 				_xmlIterator = new XmlDocumentIterator(_xmlIterator, docs,
 						xmlDocument.getFields(), _xmlService, _stemmer);
