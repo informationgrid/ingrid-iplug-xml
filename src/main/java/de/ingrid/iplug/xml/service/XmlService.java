@@ -18,6 +18,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
@@ -169,13 +170,19 @@ public class XmlService {
 		return filterExprString;
 	}
 
-	public List<String> getValues(List<Element> nodes)
+	public List<String> getValues(List nodes)
 			throws XPathExpressionException, ParserConfigurationException,
 			SAXException, IOException {
 		int length = nodes.size();
 		List<String> values = new ArrayList<String>();
 		for (int i = 0; i < length; i++) {
-			values.add(nodes.get(i).getText());
+			try {
+				Element element = (Element) nodes.get(i);
+				values.add(element.getText());
+			} catch (Exception e) {
+				Attribute attribute = (Attribute) nodes.get(i);
+				values.add(attribute.getValue());
+			} 			
 		}
 		return values;
 	}

@@ -56,9 +56,8 @@ public class MappingController {
 
 			for (Field field : fields) {
 				String xpath = field.getXpath();
-				List<Element> subNodes = _xmlService.getSubNodes(doc, xpath);
+				List subNodes = _xmlService.getSubNodes(doc, xpath);
 				List<String> values = _xmlService.getValues(subNodes);
-
 				// build the combined value string for jsp
 				String valueString = "";
 				for (String s : values) {
