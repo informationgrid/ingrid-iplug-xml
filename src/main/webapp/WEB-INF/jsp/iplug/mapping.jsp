@@ -70,7 +70,7 @@
 			      		<tr>
 			      			<td>${doc.key +1}</td>
 			      			<c:forEach var="field" items="${document.fields}">
-			      			<td>${doc.value[field.fieldName]}</td>
+			      			<td>${doc.value[field.xpath]}</td>
 			      			</c:forEach>
 			      		</tr>
 			      	</c:forEach>

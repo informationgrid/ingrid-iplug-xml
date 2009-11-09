@@ -63,7 +63,7 @@ public class MappingController {
 				for (String s : values) {
 					valueString += s + " ";
 				}
-				fieldAndValues.put(field.getFieldName(), valueString);
+				fieldAndValues.put(field.getXpath(), valueString);
 				indexDocs.put(i, fieldAndValues);
 			}
 		}
