@@ -27,7 +27,7 @@ public class XmlPlug extends HeartBeatPlug implements IRecordLoader {
 			IPlugdescriptionFieldFilter[] fieldFilters,
 			IMetadataInjector[] metadataInjectors,
 			IPreProcessor[] preProcessors, IPostProcessor[] postProcessors) {
-		super(10000, new PlugDescriptionFieldFilters(fieldFilters),
+		super(60000, new PlugDescriptionFieldFilters(fieldFilters),
 				metadataInjectors, preProcessors, postProcessors);
 		_indexSearcher = indexSearcher;
 	}
