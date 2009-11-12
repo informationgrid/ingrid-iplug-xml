@@ -57,9 +57,8 @@ public class XmlPlug extends HeartBeatPlug implements IRecordLoader {
 	}
 
 	@Override
-	public Record getRecord(IngridHit hit) throws Exception {
-		int documentId = hit.getDocumentId();
-		return null;
+	public Record getRecord(final IngridHit hit) throws Exception {
+        return _indexSearcher.getRecord(hit);
 	}
 
 }
