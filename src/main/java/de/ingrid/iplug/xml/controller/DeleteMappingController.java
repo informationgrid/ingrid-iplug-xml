@@ -19,11 +19,11 @@ public class DeleteMappingController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/iplug/deleteMapping.html", method = RequestMethod.POST)
 	public String deleteMapping(
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@RequestParam(value = "documentIndex", required = true) int documentIndex) {
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
+			@RequestParam(value = "documentIndex", required = true) final int documentIndex) {
 		System.out.println("DeleteMappingController.deleteMapping() : documentIndex = " + documentIndex);
-		List<Document> documents = (List<Document>) plugdescriptionCommandObject.get("mapping");
-		Iterator<Document> iterator = documents.iterator();
+		final List<Document> documents = (List<Document>) plugdescriptionCommandObject.get("mapping");
+		final Iterator<Document> iterator = documents.iterator();
 		int i = 0;
 		while (iterator.hasNext()) {
 			iterator.next();
@@ -33,6 +33,6 @@ public class DeleteMappingController {
 			}
 			i++;
 		}
-		return "redirect:/base/save.html";
+        return "redirect:/iplug/listMappings.html";
 	}
 }

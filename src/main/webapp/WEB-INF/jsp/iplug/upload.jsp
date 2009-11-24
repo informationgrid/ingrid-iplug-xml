@@ -47,6 +47,14 @@
 						<td class="leftCol">XPath zum Dokument:</td>
 						<td>
 							<form:input path="rootXpath" />
+							<c:if test="${!empty error}">
+							    <div class="error">
+                                    <c:choose>
+                                        <c:when test="${error == 'empty'}">Bitte geben Sie den Pfad zum Wurzelelement an.</c:when>
+                                        <c:when test="${error == 'invalid'}">Dieser Pfad existiert nicht. Bitte überprüfen Sie Ihre Eingabe.</c:when>
+                                    </c:choose>
+							    </div>
+							</c:if>
 						</td>
 					</tr>
 					<tr>

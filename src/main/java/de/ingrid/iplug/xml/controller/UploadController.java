@@ -49,11 +49,11 @@ public class UploadController {
 			return _multipartFile;
 		}
 
-		public void setFile(MultipartFile multipartFile) {
+		public void setFile(final MultipartFile multipartFile) {
 			_multipartFile = multipartFile;
 		}
 
-		public void setDescription(String description) {
+		public void setDescription(final String description) {
 			_description = description;
 		}
 
@@ -61,7 +61,7 @@ public class UploadController {
 			return _description;
 		}
 
-		public void setRootXpath(String rootXpath) {
+		public void setRootXpath(final String rootXpath) {
 			_rootXpath = rootXpath;
 		}
 
@@ -72,9 +72,9 @@ public class UploadController {
 	}
 
 	public static class XsltOutput {
-		private byte[] _content;
+		private final byte[] _content;
 
-		public XsltOutput(byte[] content) {
+		public XsltOutput(final byte[] content) {
 			_content = content;
 		}
 
@@ -84,12 +84,12 @@ public class UploadController {
 	}
 
 	@Autowired
-	public UploadController(XmlService xmlService) {
+	public UploadController(final XmlService xmlService) {
 		_xmlService = xmlService;
 	}
 
 	@InitBinder
-	public void initBinder(WebDataBinder binder) {
+	public void initBinder(final WebDataBinder binder) {
 		binder.registerCustomEditor(byte[].class,
 				new ByteArrayMultipartFileEditor());
 	}
@@ -106,48 +106,58 @@ public class UploadController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String upload(
-			@ModelAttribute("uploadBean") UploadBean uploadBean,
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			Model model) throws IOException, JDOMException,
+			@ModelAttribute("uploadBean") final UploadBean uploadBean,
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
+			final Model model) throws IOException, JDOMException,
 			TransformerException {
-		MultipartFile multipartFile = uploadBean.getFile();
-		byte[] uploadBytes = multipartFile.getBytes();
-		File workinDirectory = plugdescriptionCommandObject
+		final MultipartFile multipartFile = uploadBean.getFile();
+		final byte[] uploadBytes = multipartFile.getBytes();
+		final File workinDirectory = plugdescriptionCommandObject
 				.getWorkinDirectory();
-		File mappingDir = new File(workinDirectory, "mapping");
+		final File mappingDir = new File(workinDirectory, "mapping");
 		mappingDir.mkdirs();
 
-		int length = mappingDir.listFiles().length;
-		File newXmlFile = new File(mappingDir, multipartFile
+		final int length = mappingDir.listFiles().length;
+		final File newXmlFile = new File(mappingDir, multipartFile
 				.getOriginalFilename()
 				+ "_" + length);
 
-		FileOutputStream fileOutputStream = new FileOutputStream(newXmlFile);
+		final FileOutputStream fileOutputStream = new FileOutputStream(newXmlFile);
 		fileOutputStream.write(uploadBytes);
 		fileOutputStream.flush();
 		fileOutputStream.close();
 
-		Document document = new Document();
+		final Document document = new Document();
 		document.setFileName(newXmlFile.getName());
 		document.setRootXpath(uploadBean.getRootXpath());
 		document.setDescription(uploadBean.getDescription());
 		model.addAttribute("document", document);
 
 		LOG.info("parse xml file: " + newXmlFile.getAbsolutePath());
-		org.jdom.Document jdomDocument = _xmlService.createDocument(newXmlFile);
+		final org.jdom.Document jdomDocument = _xmlService.createDocument(newXmlFile);
 		LOG.info("parsing finish");
 		LOG.info("select root document...");
-		Element rootElement = _xmlService.selectRootElement(jdomDocument,
-				uploadBean.getRootXpath());
+        final String rootPath = uploadBean.getRootXpath();
+        if (rootPath == null || "".equals(rootPath)) {
+            LOG.warn("invalid root element '" + rootPath + "'");
+            model.addAttribute("error", "empty");
+            return firstRow();
+        }
+        final Element rootElement = _xmlService.selectRootElement(jdomDocument, rootPath);
+        if (rootElement == null) {
+            LOG.warn("invalid root element '" + rootPath + "'");
+            model.addAttribute("error", "invalid");
+            return firstRow();
+        }
 		model.addAttribute("rootElement", rootElement);
 		LOG.info("select root document finished");
 
 		LOG.info("run xslt over rootDocument...");
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		_xmlService.writeElement(rootElement, outputStream);
 		outputStream.flush();
-		byte[] byteArray = outputStream.toByteArray();
-		XsltOutput xsltOutput = new XsltOutput(byteArray);
+		final byte[] byteArray = outputStream.toByteArray();
+		final XsltOutput xsltOutput = new XsltOutput(byteArray);
 		outputStream.close();
 		LOG.info("run xslt over rootDocument finished");
 		model.addAttribute("xsltOutput", xsltOutput);
