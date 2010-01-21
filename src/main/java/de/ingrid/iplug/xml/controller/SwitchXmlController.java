@@ -27,7 +27,7 @@ import de.ingrid.iplug.xml.model.Document;
 public class SwitchXmlController {
 
 	@InitBinder
-	public void initBinder(WebDataBinder binder) {
+	public void initBinder(final WebDataBinder binder) {
 		binder.registerCustomEditor(byte[].class,
 				new ByteArrayMultipartFileEditor());
 	}
@@ -37,33 +37,33 @@ public class SwitchXmlController {
 		return new UploadBean();
 	}
 
-	@RequestMapping(value = "/iplug/switchXml.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/iplug-pages/switchXml.html", method = RequestMethod.GET)
 	public String switchXls(
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@RequestParam(value = "documentIndex", required = true) int documentIndex,
-			Model model) throws IOException {
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
+			@RequestParam(value = "documentIndex", required = true) final int documentIndex,
+			final Model model) throws IOException {
 		model.addAttribute("documentIndex", documentIndex);
-		return "/iplug/switchXml";
+        return "/iplug-pages/switchXml";
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/iplug/switchXml.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/iplug-pages/switchXml.html", method = RequestMethod.POST)
 	public String upload(
-			@RequestParam(value = "documentIndex", required = true) int documentIndex,
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@ModelAttribute("uploadBean") UploadBean uploadBean, Model model)
+			@RequestParam(value = "documentIndex", required = true) final int documentIndex,
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
+			@ModelAttribute("uploadBean") final UploadBean uploadBean, final Model model)
 			throws IOException {
-		MultipartFile multipartFile = uploadBean.getFile();
-		byte[] uploadBytes = multipartFile.getBytes();
-		List<Document> documents = (List<Document>) plugdescriptionCommandObject.get("mapping");
-		String fileName = documents.get(documentIndex).getFileName();
-		File mappingDir = new File(plugdescriptionCommandObject
+		final MultipartFile multipartFile = uploadBean.getFile();
+		final byte[] uploadBytes = multipartFile.getBytes();
+		final List<Document> documents = (List<Document>) plugdescriptionCommandObject.get("mapping");
+		final String fileName = documents.get(documentIndex).getFileName();
+		final File mappingDir = new File(plugdescriptionCommandObject
 				.getWorkinDirectory(), "mapping");
-		File newXmlFile = new File(mappingDir, fileName);
-		FileOutputStream outputStream = new FileOutputStream(newXmlFile);
+		final File newXmlFile = new File(mappingDir, fileName);
+		final FileOutputStream outputStream = new FileOutputStream(newXmlFile);
 		outputStream.write(uploadBytes);
 		outputStream.close();
-		return "redirect:/iplug/listMappings.html";
+        return "redirect:/iplug-pages/listMappings.html";
 
 	}
 }

@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@RequestMapping(value = "/iplug/welcome.html")
+@RequestMapping(value = "/iplug-pages/welcome.html")
 @SessionAttributes("plugDescription")
 public class XmlWelcomeController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String welcome() {
-		return "redirect:/iplug/listMappings.html";
+        return "redirect:/iplug-pages/listMappings.html";
 	}
 }

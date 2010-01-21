@@ -21,44 +21,44 @@ import de.ingrid.iplug.xml.model.Filter;
 @SessionAttributes("document")
 public class AddToIndexController {
 
-	@RequestMapping(value = "/iplug/addToIndex.html", method = RequestMethod.GET)
-	public String addToIndex(@ModelAttribute("document") Document document,
-			@RequestParam(required = true) final String xpath, ModelMap model) {
+    @RequestMapping(value = "/iplug-pages/addToIndex.html", method = RequestMethod.GET)
+	public String addToIndex(@ModelAttribute("document") final Document document,
+			@RequestParam(required = true) final String xpath, final ModelMap model) {
 		model.addAttribute("xpath", xpath);
 		model.addAttribute("fieldTypes", FieldType.values());
-		return "/iplug/addToIndex";
+        return "/iplug-pages/addToIndex";
 	}
 
-	@RequestMapping(value = "/iplug/addToIndex.html", method = RequestMethod.POST)
-	public String addToIndexPost(@ModelAttribute("document") Document document,
+    @RequestMapping(value = "/iplug-pages/addToIndex.html", method = RequestMethod.POST)
+	public String addToIndexPost(@ModelAttribute("document") final Document document,
 			@RequestParam(required = true) final String xpath,
 			@RequestParam(required = false) final String fieldName,
 			@RequestParam(required = false) final String ownFieldName,
 			@RequestParam(required = true) final String fieldType,
 			@RequestParam(required = true) final float score) {
 
-		String label = !"".equals(ownFieldName) ? ownFieldName : fieldName;
-		Field field = new Field(label, xpath, score, FieldType.valueOf(fieldType));
+		final String label = !"".equals(ownFieldName) ? ownFieldName : fieldName;
+		final Field field = new Field(label, xpath, score, FieldType.valueOf(fieldType));
 		document.addField(field);
 
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 	}
 
-	@RequestMapping(value = "/iplug/removeFromIndex.html", method = RequestMethod.GET)
-	public String removeFromIndex(@ModelAttribute("document") Document document,
+    @RequestMapping(value = "/iplug-pages/removeFromIndex.html", method = RequestMethod.GET)
+	public String removeFromIndex(@ModelAttribute("document") final Document document,
 			@RequestParam(required = true) final int index) {
-		
-		List<Field> fields = document.getFields();
-		Field field = fields.get(index);
+
+		final List<Field> fields = document.getFields();
+		final Field field = fields.get(index);
 		// delete filters first
-		List<Filter> filters = field.getFilters();
-		Iterator<Filter> iterator = filters.iterator();
+		final List<Filter> filters = field.getFilters();
+		final Iterator<Filter> iterator = filters.iterator();
 		while (iterator.hasNext()) {
 			iterator.next();
 			iterator.remove();
 		}
 		document.getFields().remove(index);
-		
-		return "redirect:/iplug/mapping.html";
+
+        return "redirect:/iplug-pages/mapping.html";
 	}
 }

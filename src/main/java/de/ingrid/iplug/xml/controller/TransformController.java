@@ -23,14 +23,14 @@ import de.ingrid.iplug.xml.controller.UploadController.XsltOutput;
 @SessionAttributes( { "xsltOutput" })
 public class TransformController {
 
-	@RequestMapping(value = "/iplug/transform.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/iplug-pages/transform.html", method = RequestMethod.GET)
 	public String transform(
-			@ModelAttribute("xsltOutput") XsltOutput xsltOutput,
-			ServletRequest request, ServletResponse response)
+			@ModelAttribute("xsltOutput") final XsltOutput xsltOutput,
+			final ServletRequest request, final ServletResponse response)
 			throws IOException, XPathExpressionException,
 			ParserConfigurationException, SAXException, TransformerException,
 			JDOMException {
-		OutputStream outputStream = response.getOutputStream();
+		final OutputStream outputStream = response.getOutputStream();
 		outputStream.write(xsltOutput.getContent());
 		outputStream.flush();
 		return null;

@@ -16,28 +16,28 @@ import de.ingrid.iplug.xml.model.Document;
 import de.ingrid.iplug.xml.model.Field;
 
 @Controller
-@RequestMapping("/iplug/finish.html")
+@RequestMapping("/iplug-pages/finish.html")
 @SessionAttributes(value = { "plugDescription", "document" })
 public class XmlFinsishController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.POST)
 	public String postFinish(
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@ModelAttribute("document") de.ingrid.iplug.xml.model.Document document)
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
+			@ModelAttribute("document") final de.ingrid.iplug.xml.model.Document document)
 			throws IOException {
 
 		if (!plugdescriptionCommandObject.containsKey("fields")) {
 			plugdescriptionCommandObject.put("fields", new ArrayList<String>());
 		}
 
-		List<String> fields = (List<String>) plugdescriptionCommandObject
+		final List<String> fields = (List<String>) plugdescriptionCommandObject
 				.get("fields");
 
 		if (!plugdescriptionCommandObject.containsKey("mapping")) {
 			plugdescriptionCommandObject.put("mapping",
 					new ArrayList<Document>());
 		}
-		List<Document> documents = (List<Document>) plugdescriptionCommandObject
+		final List<Document> documents = (List<Document>) plugdescriptionCommandObject
 				.get("mapping");
 		// edit mode
 		if (documents.contains(document)) {
@@ -45,9 +45,9 @@ public class XmlFinsishController {
 		}
 		documents.add(document);
 
-		List<Field> fieldsFromDocument = document.getFields();
-		for (Field field : fieldsFromDocument) {
-			String fieldName = field.getFieldName();
+		final List<Field> fieldsFromDocument = document.getFields();
+		for (final Field field : fieldsFromDocument) {
+			final String fieldName = field.getFieldName();
 			fields.add(fieldName);
 		}
 

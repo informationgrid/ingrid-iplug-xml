@@ -25,40 +25,40 @@ public class AddFilterController {
 	public AddFilterController() {
 	}
 
-	@RequestMapping(value = "/iplug/addFilter.html", method = RequestMethod.GET)
-	public String addFilter(@ModelAttribute("document") Document document,
-			@RequestParam(required = true) final int fieldIndex, ModelMap model) {
+    @RequestMapping(value = "/iplug-pages/addFilter.html", method = RequestMethod.GET)
+	public String addFilter(@ModelAttribute("document") final Document document,
+			@RequestParam(required = true) final int fieldIndex, final ModelMap model) {
 		model.addAttribute("fieldIndex", fieldIndex);
-		
+
 		model.addAttribute("filterTypes", FilterType.values());
-		return "/iplug/addFilter";
+        return "/iplug-pages/addFilter";
 	}
 
-	@RequestMapping(value = "/iplug/addFilter.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/iplug-pages/addFilter.html", method = RequestMethod.POST)
 	public String addFilterPost(
-			@ModelAttribute("document") Document document,
+			@ModelAttribute("document") final Document document,
 			@RequestParam(required = true) final int fieldIndex,
 			@RequestParam(value = "filterType", required = true) final String filterTypeString,
 			@RequestParam(required = true) final String expression) {
-		
-		List<Field> fields = document.getFields();
-		Field field = fields.get(fieldIndex);
-		Filter filter = new Filter(expression, FilterType.valueOf(filterTypeString));
-		
+
+		final List<Field> fields = document.getFields();
+		final Field field = fields.get(fieldIndex);
+		final Filter filter = new Filter(expression, FilterType.valueOf(filterTypeString));
+
 		field.addFilter(filter);
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 	}
 
-	@RequestMapping(value = "/iplug/removeFilter.html", method = RequestMethod.GET)
-	public String removeFilter(@ModelAttribute("document") Document document,
+    @RequestMapping(value = "/iplug-pages/removeFilter.html", method = RequestMethod.GET)
+	public String removeFilter(@ModelAttribute("document") final Document document,
 			@RequestParam(required = true) final int fieldIndex,
 			@RequestParam(required = true) final int filterIndex) {
 
-		List<Field> fields = document.getFields();
-		Field field = fields.get(fieldIndex);
-		List<Filter> filters = field.getFilters();
+		final List<Field> fields = document.getFields();
+		final Field field = fields.get(fieldIndex);
+		final List<Filter> filters = field.getFilters();
 		filters.remove(filterIndex);
 
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 	}
 }

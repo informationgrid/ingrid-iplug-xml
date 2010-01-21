@@ -25,42 +25,42 @@ public class MappingController {
 	private final XmlService _xmlService;
 
 	@Autowired
-	public MappingController(XmlService xmlService) {
+	public MappingController(final XmlService xmlService) {
 		_xmlService = xmlService;
 
 	}
 
-	@RequestMapping(value = "/iplug/mapping.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/iplug-pages/mapping.html", method = RequestMethod.GET)
 	public String settings(
-			@ModelAttribute("document") Document document,
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@ModelAttribute("rootElement") Element rootElement, ModelMap model)
+			@ModelAttribute("document") final Document document,
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
+			@ModelAttribute("rootElement") final Element rootElement, final ModelMap model)
 			throws Exception {
 
 		// index preview
-		List<Field> fields = document.getFields();
+		final List<Field> fields = document.getFields();
 		// doc index | field name + values
-		Map<Integer, LinkedHashMap<String, String>> indexDocs = new LinkedHashMap<Integer, LinkedHashMap<String, String>>();
+		final Map<Integer, LinkedHashMap<String, String>> indexDocs = new LinkedHashMap<Integer, LinkedHashMap<String, String>>();
 
 		String filterString = "";
 		if (_xmlService.documentHasFilters(document)) {
 			filterString = _xmlService.getFilterExpression(document);
 		}
 
-		List<Element> docs = _xmlService.selectSubNodesFromParentLevel(
+		final List<Element> docs = _xmlService.selectSubNodesFromParentLevel(
 				rootElement, filterString + "[position() < 21]");
-		int length = docs.size();
+		final int length = docs.size();
 		for (int i = 0; i < length; i++) {
-			Element doc = docs.get(i); // one index doc
-			LinkedHashMap<String, String> fieldAndValues = new LinkedHashMap<String, String>();
+			final Element doc = docs.get(i); // one index doc
+			final LinkedHashMap<String, String> fieldAndValues = new LinkedHashMap<String, String>();
 
-			for (Field field : fields) {
-				String xpath = field.getXpath();
-				List subNodes = _xmlService.getSubNodes(doc, xpath);
-				List<String> values = _xmlService.getValues(subNodes);
+			for (final Field field : fields) {
+				final String xpath = field.getXpath();
+				final List subNodes = _xmlService.getSubNodes(doc, xpath);
+				final List<String> values = _xmlService.getValues(subNodes);
 				// build the combined value string for jsp
 				String valueString = "";
-				for (String s : values) {
+				for (final String s : values) {
 					valueString += s + " ";
 				}
 				fieldAndValues.put(field.getXpath(), valueString);
@@ -69,7 +69,7 @@ public class MappingController {
 		}
 		model.addAttribute("indexDocs", indexDocs);
 
-		return "/iplug/mapping";
+        return "/iplug-pages/mapping";
 	}
 
 }

@@ -13,7 +13,7 @@
 <meta name="author" content="wemove digital solutions" />
 <meta name="copyright" content="wemove digital solutions GmbH" />
 <link rel="StyleSheet" href="../css/base/portal_u.css" type="text/css" media="all" />
-<link rel="StyleSheet" href="../css/iplug/iplug_xml.css" type="text/css" media="all" />
+<link rel="StyleSheet" href="../css/iplug-pages/iplug_xml.css" type="text/css" media="all" />
 </head>
 <body>
 	<div id="header">
@@ -46,7 +46,7 @@
 		<div id="content">
 			<h2>Definieren Sie, was indexiert werden soll.</h2>
 			
-			<c:import url="/iplug/transform.html"></c:import>      	   
+			<c:import url="/iplug-pages/transform.html"></c:import>      	   
 	      	
 	      	<c:if test="${!empty document.fields}">
 		      	<h2><br/>Index Vorschau:</h2>
@@ -56,13 +56,13 @@
 				      	<th width="25">&nbsp;</th>
 				      	<c:forEach var="field" items="${document.fields}" varStatus="fieldStatus">
 				      		<th>
-				      			<b>${field.fieldName}</b> <a href="removeFromIndex.html?index=${fieldStatus.index}"><img src="/images/iplug/delete.png" align="absmiddle"/></a>
+				      			<b>${field.fieldName}</b> <a href="removeFromIndex.html?index=${fieldStatus.index}"><img src="/images/iplug-pages/delete.png" align="absmiddle"/></a>
 				      			<c:forEach var="filter" items="${field.filters}" varStatus="filterStatus">
 				      				<br/>
-				      				${filter.filterType} ${filter.expression} <a href="removeFilter.html?fieldIndex=${fieldStatus.index}&filterIndex=${filterStatus.index}"><img src="/images/iplug/delete.png" align="absmiddle"/></a>
+				      				${filter.filterType} ${filter.expression} <a href="removeFilter.html?fieldIndex=${fieldStatus.index}&filterIndex=${filterStatus.index}"><img src="/images/iplug-pages/delete.png" align="absmiddle"/></a>
 				      			</c:forEach>
 				      			<br/>
-				      			<a href="addFilter.html?fieldIndex=${fieldStatus.index}"><img src="/images/iplug/add.png" align="absmiddle"/> Filter</a>
+				      			<a href="addFilter.html?fieldIndex=${fieldStatus.index}"><img src="/images/iplug-pages/add.png" align="absmiddle"/> Filter</a>
 				      		</th>
 				      	</c:forEach>
 			      	</tr>

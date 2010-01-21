@@ -28,7 +28,7 @@ import de.ingrid.iplug.xml.model.Document;
 import de.ingrid.iplug.xml.service.XmlService;
 
 @Controller
-@RequestMapping(value = "/iplug/upload.html")
+@RequestMapping(value = "/iplug-pages/upload.html")
 @SessionAttributes(value = { "uploadBean", "plugDescription", "document",
 		"rootElement", "xsltOutput" })
 public class UploadController {
@@ -96,7 +96,7 @@ public class UploadController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String firstRow() {
-		return "/iplug/upload";
+        return "/iplug-pages/upload";
 	}
 
 	@ModelAttribute("uploadBean")
@@ -162,7 +162,7 @@ public class UploadController {
 		LOG.info("run xslt over rootDocument finished");
 		model.addAttribute("xsltOutput", xsltOutput);
 
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 
 	}
 

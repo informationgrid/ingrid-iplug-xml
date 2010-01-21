@@ -17,7 +17,7 @@ import de.ingrid.iplug.xml.model.Document;
 public class DeleteMappingController {
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/iplug/deleteMapping.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/iplug-pages/deleteMapping.html", method = RequestMethod.POST)
 	public String deleteMapping(
 			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
 			@RequestParam(value = "documentIndex", required = true) final int documentIndex) {
@@ -33,6 +33,6 @@ public class DeleteMappingController {
 			}
 			i++;
 		}
-        return "redirect:/iplug/listMappings.html";
+        return "redirect:/iplug-pages/listMappings.html";
 	}
 }

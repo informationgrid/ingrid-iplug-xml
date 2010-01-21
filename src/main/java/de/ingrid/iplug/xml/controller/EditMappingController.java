@@ -35,45 +35,45 @@ public class EditMappingController {
 	private final XmlService _xmlService;
 
 	@Autowired
-	public EditMappingController(XmlService xmlService) {
+	public EditMappingController(final XmlService xmlService) {
 		_xmlService = xmlService;
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/iplug/editMapping.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/iplug-pages/editMapping.html", method = RequestMethod.GET)
 	public String editXml(
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@RequestParam(value = "documentIndex", required = true) int documentIndex,
-			Model model) throws IOException, JDOMException,
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
+			@RequestParam(value = "documentIndex", required = true) final int documentIndex,
+			final Model model) throws IOException, JDOMException,
 			TransformerException {
-		List<Document> documents = (List<Document>) plugdescriptionCommandObject
+		final List<Document> documents = (List<Document>) plugdescriptionCommandObject
 				.get("mapping");
-		Document document = documents.get(documentIndex);
+		final Document document = documents.get(documentIndex);
 		model.addAttribute("document", document);
 
-		File mappingDir = new File(plugdescriptionCommandObject
+		final File mappingDir = new File(plugdescriptionCommandObject
 				.getWorkinDirectory(), "mapping");
-		File newXmlFile = new File(mappingDir, document.getFileName());
+		final File newXmlFile = new File(mappingDir, document.getFileName());
 
 		LOG.info("parse xml file: " + newXmlFile.getAbsolutePath());
-		org.jdom.Document jdomDocument = _xmlService.createDocument(newXmlFile);
+		final org.jdom.Document jdomDocument = _xmlService.createDocument(newXmlFile);
 		LOG.info("parsing finish");
 		LOG.info("select root document...");
-		Element rootElement = _xmlService.selectRootElement(jdomDocument,
+		final Element rootElement = _xmlService.selectRootElement(jdomDocument,
 				document.getRootXpath());
 		model.addAttribute("rootElement", rootElement);
 		LOG.info("select root document finished");
 
 		LOG.info("run xslt over rootDocument...");
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		_xmlService.writeElement(rootElement, outputStream);
 		outputStream.flush();
-		byte[] byteArray = outputStream.toByteArray();
-		XsltOutput xsltOutput = new XsltOutput(byteArray);
+		final byte[] byteArray = outputStream.toByteArray();
+		final XsltOutput xsltOutput = new XsltOutput(byteArray);
 		outputStream.close();
 		LOG.info("run xslt over rootDocument finished");
 		model.addAttribute("xsltOutput", xsltOutput);
 
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 	}
 }
