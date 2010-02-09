@@ -236,6 +236,17 @@
 				</executions>
 			</plugin>
 			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <iPlug-Type>IPLUG_XML</iPlug-Type>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
