@@ -30,13 +30,13 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Mapping der Daten auf den Index</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='upload.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/upload.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('submit').submit();">Mapping Beenden und Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='upload.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/upload.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('submit').submit();">Mapping Beenden und Speichern</a>
 		</div>
 		<form action="../iplug-pages/finish.html" method="post" style="display:none" id="submit">
@@ -56,13 +56,13 @@
 				      	<th width="25">&nbsp;</th>
 				      	<c:forEach var="field" items="${document.fields}" varStatus="fieldStatus">
 				      		<th>
-				      			<b>${field.fieldName}</b> <a href="removeFromIndex.html?index=${fieldStatus.index}"><img src="../images/iplug-pages/delete.png" align="absmiddle"/></a>
+				      			<b>${field.fieldName}</b> <a href="../iplug-pages/removeFromIndex.html?index=${fieldStatus.index}"><img src="../images/iplug-pages/delete.png" align="absmiddle"/></a>
 				      			<c:forEach var="filter" items="${field.filters}" varStatus="filterStatus">
 				      				<br/>
-				      				${filter.filterType} ${filter.expression} <a href="removeFilter.html?fieldIndex=${fieldStatus.index}&filterIndex=${filterStatus.index}"><img src="../images/iplug-pages/delete.png" align="absmiddle"/></a>
+				      				${filter.filterType} ${filter.expression} <a href="../iplug-pages/removeFilter.html?fieldIndex=${fieldStatus.index}&filterIndex=${filterStatus.index}"><img src="../images/iplug-pages/delete.png" align="absmiddle"/></a>
 				      			</c:forEach>
 				      			<br/>
-				      			<a href="addFilter.html?fieldIndex=${fieldStatus.index}"><img src="../images/iplug-pages/add.png" align="absmiddle"/> Filter</a>
+				      			<a href="../iplug-pages/addFilter.html?fieldIndex=${fieldStatus.index}"><img src="../images/iplug-pages/add.png" align="absmiddle"/> Filter</a>
 				      		</th>
 				      	</c:forEach>
 			      	</tr>
