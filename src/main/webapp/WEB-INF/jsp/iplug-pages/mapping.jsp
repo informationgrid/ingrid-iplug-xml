@@ -46,7 +46,7 @@
 		<div id="content">
 			<h2>Definieren Sie, was indexiert werden soll.</h2>
 			
-			<c:import url="../iplug-pages/transform.html"></c:import>      	   
+			<c:import url="/iplug-pages/transform.html"></c:import>      	   
 	      	
 	      	<c:if test="${!empty document.fields}">
 		      	<h2><br/>Index Vorschau:</h2>
