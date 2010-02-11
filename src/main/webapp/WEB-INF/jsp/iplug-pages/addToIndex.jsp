@@ -37,7 +37,7 @@
 		</div>
 		<div id="content">
 			<h2>Geben Sie die Eigenschaften des zu indizierenden Feldes an</h2>
-			<form method="post" action="addToIndex.html" id="addToIndex">
+			<form method="post" action="../iplug-pages/addToIndex.html" id="addToIndex">
 				<input type="hidden" name="xpath" value="${xpath}"/>
 				
 				<table id="konfigForm">

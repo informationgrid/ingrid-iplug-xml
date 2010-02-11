@@ -39,14 +39,14 @@
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('submit').submit();">Mapping Beenden und Speichern</a>
 		</div>
-		<form action="finish.html" method="post" style="display:none" id="submit">
+		<form action="../iplug-pages/finish.html" method="post" style="display:none" id="submit">
 			
 		</form>
 		
 		<div id="content">
 			<h2>Definieren Sie, was indexiert werden soll.</h2>
 			
-			<c:import url="/iplug-pages/transform.html"></c:import>      	   
+			<c:import url="../iplug-pages/transform.html"></c:import>      	   
 	      	
 	      	<c:if test="${!empty document.fields}">
 		      	<h2><br/>Index Vorschau:</h2>
@@ -56,13 +56,13 @@
 				      	<th width="25">&nbsp;</th>
 				      	<c:forEach var="field" items="${document.fields}" varStatus="fieldStatus">
 				      		<th>
-				      			<b>${field.fieldName}</b> <a href="removeFromIndex.html?index=${fieldStatus.index}"><img src="/images/iplug-pages/delete.png" align="absmiddle"/></a>
+				      			<b>${field.fieldName}</b> <a href="removeFromIndex.html?index=${fieldStatus.index}"><img src="../images/iplug-pages/delete.png" align="absmiddle"/></a>
 				      			<c:forEach var="filter" items="${field.filters}" varStatus="filterStatus">
 				      				<br/>
-				      				${filter.filterType} ${filter.expression} <a href="removeFilter.html?fieldIndex=${fieldStatus.index}&filterIndex=${filterStatus.index}"><img src="/images/iplug-pages/delete.png" align="absmiddle"/></a>
+				      				${filter.filterType} ${filter.expression} <a href="removeFilter.html?fieldIndex=${fieldStatus.index}&filterIndex=${filterStatus.index}"><img src="../images/iplug-pages/delete.png" align="absmiddle"/></a>
 				      			</c:forEach>
 				      			<br/>
-				      			<a href="addFilter.html?fieldIndex=${fieldStatus.index}"><img src="/images/iplug-pages/add.png" align="absmiddle"/> Filter</a>
+				      			<a href="addFilter.html?fieldIndex=${fieldStatus.index}"><img src="../images/iplug-pages/add.png" align="absmiddle"/> Filter</a>
 				      		</th>
 				      	</c:forEach>
 			      	</tr>

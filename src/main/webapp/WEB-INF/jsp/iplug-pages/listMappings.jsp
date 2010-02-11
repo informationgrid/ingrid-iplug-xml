@@ -40,15 +40,15 @@
 					<td>${document.fileName}</td>
 					<td>${document.description}</td>
 					<td>
-						<form action="/iplug-pages/deleteMapping.html" method="POST" style="float:left">
+						<form action="../iplug-pages/deleteMapping.html" method="POST" style="float:left">
 							<input type="hidden" name="documentIndex" value="${i}"/>
 							<input type="submit" value="Löschen"/>
 						</form>
-						<form action="/iplug-pages/editMapping.html" method="GET" style="float:left">
+						<form action="../iplug-pages/editMapping.html" method="GET" style="float:left">
 							<input type="hidden" name="documentIndex" value="${i}"/>
 							<input type="submit" value="Bearbeiten"/>
 						</form>
-						<form action="/iplug-pages/switchXml.html" method="GET" style="float:left">
+						<form action="../iplug-pages/switchXml.html" method="GET" style="float:left">
 							<input type="hidden" name="documentIndex" value="${i}"/>
 							<input type="submit" value="Datei aktualisieren" />
 						</form>
