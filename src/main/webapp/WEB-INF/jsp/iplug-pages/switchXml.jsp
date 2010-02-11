@@ -37,7 +37,7 @@
 		</div>
 		<div id="content">
 			<h2>Wählen Sie eine XML Datei aus, die Sie indizieren möchten</h2>
-			<form:form  enctype="multipart/form-data" modelAttribute="uploadBean"> 
+			<form:form  action="../iplug-pages/switchXml.html" enctype="multipart/form-data" modelAttribute="uploadBean"> 
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">XML Datei:</td>
