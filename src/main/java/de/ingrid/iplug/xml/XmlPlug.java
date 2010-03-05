@@ -39,6 +39,7 @@ public class XmlPlug extends HeartBeatPlug implements IRecordLoader {
 
 	public IngridHits search(final IngridQuery query, final int start,
 			final int length) throws Exception {
+        preProcess(query);
 		return _indexSearcher.search(query, start, length);
 	}
 
