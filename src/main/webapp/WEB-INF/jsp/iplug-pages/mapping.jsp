@@ -64,7 +64,8 @@
 				      	<th width="25">&nbsp;</th>
 				      	<c:forEach var="field" items="${document.fields}" varStatus="fieldStatus">
 				      		<th>
-				      			<b>${field.fieldName}</b> <a href="../iplug-pages/removeFromIndex.html?index=${fieldStatus.index}"><img src="../images/iplug-pages/delete.png" align="absmiddle"/></a>
+				      			<b>${field.fieldName}</b> <a href="../iplug-pages/removeFromIndex.html?index=${fieldStatus.index}"><img src="../images/iplug-pages/delete.png" align="absmiddle"/></a><br/>
+								[${document.rootXpath}/${field.xpath}]<br/>
 				      			<c:forEach var="filter" items="${field.filters}" varStatus="filterStatus">
 				      				<br/>
 				      				${filter.filterType} ${filter.expression} <a href="../iplug-pages/removeFilter.html?fieldIndex=${fieldStatus.index}&filterIndex=${filterStatus.index}"><img src="../images/iplug-pages/delete.png" align="absmiddle"/></a>
