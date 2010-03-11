@@ -51,7 +51,7 @@
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Feld Xpath:</td>
-						<td>${xpath}</td>
+						<td><input type="text" name="xpath" value="${xpath}"/></td>
 					</tr>
 					<tr>
 						<td class="leftCol">Index Feldname:</td>
