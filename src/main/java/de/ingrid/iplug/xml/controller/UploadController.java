@@ -143,7 +143,11 @@ public class UploadController {
             model.addAttribute("error", "empty");
             return firstRow();
         }
-        final Element rootElement = _xmlService.selectRootElement(jdomDocument, rootPath);
+        Element rootElement = null;
+        try {
+            rootElement = _xmlService.selectRootElement(jdomDocument, rootPath);
+        } catch (final Exception e) {
+        }
         if (rootElement == null) {
             LOG.warn("invalid root element '" + rootPath + "'");
             model.addAttribute("error", "invalid");
