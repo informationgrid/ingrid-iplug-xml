@@ -52,6 +52,12 @@
 						<td class="leftCol">Feld Xpath:</td>
 						<td><input type="text" name="xpath" value="./${xpath}"/></td>
 					</tr>
+					<c:if test="${!empty error}">
+					<tr>
+						<td></td>
+						<td><font color="red">Überprüfen Sie bitte Ihren eingegebenen xPath Ausdruck.</font></td>
+					</tr>
+					</c:if>
 					<tr>
 						<td class="leftCol">Index Feldname:</td>
 						<td>

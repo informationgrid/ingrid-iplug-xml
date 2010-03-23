@@ -49,12 +49,18 @@ public class XmlService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Element> getSubNodes(Element node, String xPathString)
-			throws XPathExpressionException, JDOMException {
-		XPath newInstance = XPath.newInstance(xPathString);
-		LOG.info("try to select node list with xpath ["
-				+ newInstance.getXPath() + "] from element [" + node + "]");
-		return newInstance.selectNodes(node);
+	public List<Element> getSubNodes(Element node, String xPathString) {
+		XPath newInstance;
+		try {
+			newInstance = XPath.newInstance(xPathString);
+			LOG.info("try to select node list with xpath ["
+					+ newInstance.getXPath() + "] from element [" + node + "]");
+			return newInstance.selectNodes(node);
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			LOG.info("xPath expression is invalid. Function getSubNodes return null.");
+			return null;
+		}
 	}
 
 	public List<Element> selectSubNodesFromParentLevel(Element element,
@@ -63,7 +69,7 @@ public class XmlService {
 				.getDocument().getRootElement()
 				: element;
 		String rootXpath = buildRootXpath(element) + xpath;
-
+		
 		LOG.info(xpath + " -> " + rootXpath);
 		return getSubNodes(fromElement, rootXpath);
 	}
