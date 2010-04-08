@@ -14,6 +14,7 @@ public class XPathTest101tec extends TestCase {
 		String xpath2 = "./PERSONAE/PERSONA";
 		String xpath3 = "count(.//city)";
 		String xpath4 = ".[count(.//city)>10]/name";
+		String xpath5 = "./city/@id";
 		
 		assertNull(testNewInstance(xpath1));
 		assertNotNull(testNewInstance(xpath2));
@@ -21,6 +22,7 @@ public class XPathTest101tec extends TestCase {
 		assertEquals("count(.//city)", testNewInstance(xpath3));
 		assertNotNull(testNewInstance(xpath4));
 		assertEquals(".[count(.//city)>10]/name", testNewInstance(xpath4));
+		assertNotNull(testNewInstance(xpath5));
 	}
 	
 	

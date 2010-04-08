@@ -18,6 +18,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jaxen.util.SingletonList;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -181,16 +182,32 @@ public class XmlService {
 			SAXException, IOException {
 		int length = nodes.size();
 		List<String> values = new ArrayList<String>();
+		
 		for (int i = 0; i < length; i++) {
-			try {
-				Element element = (Element) nodes.get(i);
-				values.add(element.getText());
-			} catch (Exception e) {
-				Attribute attribute = (Attribute) nodes.get(i);
-				values.add(attribute.getValue());
-			} 			
+			
+			if(nodes instanceof SingletonList){
+				values.add(nodes.get(i).toString());
+			}else{
+				try {
+					Element element = (Element) nodes.get(i);
+					values.add(element.getText());
+				} catch (Exception e) {
+					Attribute attribute = (Attribute) nodes.get(i);
+					values.add(attribute.getValue());
+				} 	
+			}
+					
 		}
 		return values;
 	}
 
+	
+	public boolean checkXpath(String xpath){
+		try {
+			XPath.newInstance(xpath);
+			return true;
+		} catch (JDOMException e) {
+			return false;
+		}
+	}
 }

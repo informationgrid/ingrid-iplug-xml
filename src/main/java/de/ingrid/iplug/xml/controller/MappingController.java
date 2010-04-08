@@ -59,8 +59,8 @@ public class MappingController {
 			for (final Field field : fields) {
 				final String xpath = field.getXpath();
 				final List subNodes = _xmlService.getSubNodes(doc, xpath);
-			        
-				if(subNodes != null && subNodes.size() > 0){
+
+				if((subNodes != null && subNodes.size() > 0) || _xmlService.checkXpath(xpath)){
 					final List<String> values = _xmlService.getValues(subNodes);
 					// build the combined value string for jsp
 					String valueString = "";
