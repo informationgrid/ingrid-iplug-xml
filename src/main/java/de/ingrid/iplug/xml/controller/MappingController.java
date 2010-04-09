@@ -59,8 +59,8 @@ public class MappingController {
 			for (final Field field : fields) {
 				final String xpath = field.getXpath();
 				final List subNodes = _xmlService.getSubNodes(doc, xpath);
-
-				if((subNodes != null && subNodes.size() > 0) || _xmlService.checkXpath(xpath)){
+				boolean xPathCheck = _xmlService.checkXpath(xpath); 
+				if((subNodes != null && subNodes.size() > 0) || xPathCheck){
 					final List<String> values = _xmlService.getValues(subNodes);
 					// build the combined value string for jsp
 					String valueString = "";
@@ -73,7 +73,7 @@ public class MappingController {
 					model.addAttribute("xpath", xpath.replace("./", ""));
 					model.addAttribute("error", "empty");
 					model.addAttribute("fieldTypes", FieldType.values());
-					fields.clear();
+					fields.remove(field);
 					return "/iplug-pages/addToIndex";
 				}
 			}
