@@ -134,10 +134,29 @@ public class UploadController {
 		model.addAttribute("document", document);
 
 		LOG.info("parse xml file: " + newXmlFile.getAbsolutePath());
-		final org.jdom.Document jdomDocument = _xmlService.createDocument(newXmlFile);
+		
+		final String rootPath = uploadBean.getRootXpath();
+        org.jdom.Document jdomDocument = null;
+		try {
+			jdomDocument = _xmlService.createDocument(newXmlFile);
+		} catch (Exception e) {
+			if(uploadBytes.length == 0){
+				LOG.warn("empty file");
+				model.addAttribute("error_file","empty");
+			}else{
+				LOG.warn("invalid file '" + multipartFile.getOriginalFilename() + "'");
+				model.addAttribute("error_file", "invalid");
+			}
+			
+			if (rootPath == null || "".equals(rootPath)) {
+	            LOG.warn("invalid root element '" + rootPath + "'");
+	            model.addAttribute("error", "empty");
+	        }
+			return firstRow();
+		}
+		
 		LOG.info("parsing finish");
 		LOG.info("select root document...");
-        final String rootPath = uploadBean.getRootXpath();
         if (rootPath == null || "".equals(rootPath)) {
             LOG.warn("invalid root element '" + rootPath + "'");
             model.addAttribute("error", "empty");

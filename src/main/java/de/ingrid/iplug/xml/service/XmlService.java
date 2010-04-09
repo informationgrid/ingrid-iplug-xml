@@ -40,7 +40,10 @@ public class XmlService {
 	private SAXBuilder _saxBuilder;
 
 	public XmlService() {
-		_saxBuilder = new SAXBuilder();
+		_saxBuilder = new SAXBuilder();	
+		_saxBuilder.setFeature("http://xml.org/sax/features/validation", false);
+		_saxBuilder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+		_saxBuilder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 		_saxBuilder.setValidation(false);
 	}
 

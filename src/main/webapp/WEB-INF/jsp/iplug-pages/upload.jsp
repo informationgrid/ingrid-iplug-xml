@@ -49,7 +49,17 @@
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Xml Datei:</td>
-						<td><input type="file" name="file"/> <form:errors path="file" cssClass="error" element="div" /></td>
+						<td>
+							<input type="file" name="file"/> <form:errors path="file" cssClass="error" element="div" />
+							<c:if test="${!empty error_file}">
+							    <div class="error">
+                                    <c:choose>
+                                        <c:when test="${error_file == 'invalid'}">Ihr ausgewähltes XML Dokument ist ungültig.</c:when>
+                                        <c:when test="${error_file == 'empty'}">Bitte wählen Sie ein XML Dokument aus.</c:when>
+                                    </c:choose>
+							    </div>
+							</c:if>
+						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">XPath zum Dokument:</td>
