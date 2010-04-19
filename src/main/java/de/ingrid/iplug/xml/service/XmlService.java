@@ -33,6 +33,10 @@ import de.ingrid.iplug.xml.model.Field;
 import de.ingrid.iplug.xml.model.Filter;
 import de.ingrid.iplug.xml.model.Filter.FilterType;
 
+/**
+ * XML service for filters and xPath expression. 
+ *
+ */
 @Service
 public class XmlService {
 
@@ -47,11 +51,29 @@ public class XmlService {
 		_saxBuilder.setValidation(false);
 	}
 
+	/**
+	 * Create document by file.
+	 * 
+	 * @param xml
+	 * @return
+	 * 		Created document.
+	 * 
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public org.jdom.Document createDocument(File xml) throws JDOMException,
 			IOException {
 		return _saxBuilder.build(xml);
 	}
 
+	/**
+	 * Get sub nodes by node and xPath.
+	 * 
+	 * @param node
+	 * @param xPathString
+	 * @return
+	 * 		New instance of xPath. 
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Element> getSubNodes(Element node, String xPathString) {
 		XPath newInstance;
@@ -67,6 +89,16 @@ public class XmlService {
 		}
 	}
 
+	/**
+	 * Select sub nodes from parent level by element and xPath expression.
+	 * 
+	 * @param element
+	 * @param xpath
+	 * @return
+	 * 		Sub nodes by element and xPath.
+	 * @throws XPathExpressionException
+	 * @throws JDOMException
+	 */
 	public List<Element> selectSubNodesFromParentLevel(Element element,
 			String xpath) throws XPathExpressionException, JDOMException {
 		Element fromElement = element.getDocument().getRootElement() != null ? element
@@ -78,6 +110,13 @@ public class XmlService {
 		return getSubNodes(fromElement, rootXpath);
 	}
 
+	/**
+	 * Build root xPath by element.
+	 * 
+	 * @param element
+	 * @return
+	 * 		Root xPath.
+	 */
 	private String buildRootXpath(Element element) {
 		String s = "";
 		Element parentElement = element.getParentElement();
@@ -93,6 +132,15 @@ public class XmlService {
 		return s;
 	}
 
+	/**
+	 * Select root element.
+	 * 
+	 * @param jdomDocument
+	 * @param xpath
+	 * @return
+	 * 		Root element.
+	 * @throws JDOMException
+	 */
 	public Element selectRootElement(org.jdom.Document jdomDocument,
 			String xpath) throws JDOMException {
 		XPath newInstance = XPath.newInstance(xpath);
@@ -104,6 +152,13 @@ public class XmlService {
 		return singleNode;
 	}
 
+	/**
+	 * Write element.
+	 * 
+	 * @param rootElement
+	 * @param outputStream
+	 * @throws TransformerException
+	 */
 	public void writeElement(Element rootElement, OutputStream outputStream)
 			throws TransformerException {
 		Source xmlSource = new JDOMSource(rootElement);
@@ -116,6 +171,13 @@ public class XmlService {
 		transformer.transform(xmlSource, result);
 	}
 
+	/**
+	 * Check if document has filters.
+	 * 
+	 * @param document
+	 * @return
+	 * 		true - if exist.
+	 */
 	public boolean documentHasFilters(Document document) {
 		List<Field> fields = document.getFields();
 		for (Field field : fields) {
@@ -180,6 +242,17 @@ public class XmlService {
 		return filterExprString;
 	}
 
+	/**
+	 * Get values by list of nodes.
+	 * 
+	 * @param nodes
+	 * @return
+	 * 		List of values.
+	 * @throws XPathExpressionException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
 	public List<String> getValues(List nodes)
 			throws XPathExpressionException, ParserConfigurationException,
 			SAXException, IOException {
@@ -205,6 +278,13 @@ public class XmlService {
 	}
 
 	
+	/** 
+	 * Check xPath expression.
+	 * 
+	 * @param xpath
+	 * @return
+	 * 		true - if xPath instance can create by xPath expression.  
+	 */
 	public boolean checkXpath(String xpath){
 		try {
 			XPath.newInstance(xpath);

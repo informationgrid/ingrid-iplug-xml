@@ -7,6 +7,10 @@ import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Definition of field.
+ *
+ */
 public class Field implements Externalizable {
 
 	private String _fieldName;
@@ -27,50 +31,114 @@ public class Field implements Externalizable {
 		_fieldType = fieldType;
 	}
 
+	/**
+	 * Get field name. 
+	 * 
+	 * @return
+	 * 		Field name. 
+	 */
 	public String getFieldName() {
 		return _fieldName;
 	}
 
+	/**
+	 * Set field name.
+	 * 
+	 * @param fieldName
+	 */
 	public void setFieldName(String fieldName) {
 		_fieldName = fieldName;
 	}
 
+	/**
+	 * Get xPath.
+	 * 
+	 * @return
+	 * 		xPath.
+	 */
 	public String getXpath() {
 		return _xpath;
 	}
 
+	/**
+	 * Set xPath.
+	 * 
+	 * @param xpath
+	 */
 	public void setXpath(String xpath) {
 		_xpath = xpath;
 	}
 
+	/**
+	 * Get score.
+	 * 
+	 * @return
+	 * 		Score.
+	 */
 	public float getScore() {
 		return _score;
 	}
 
+	/**
+	 * Set score.
+	 * 
+	 * @param score
+	 */
 	public void setScore(float score) {
 		_score = score;
 	}
 
+	/**
+	 * Get filters.
+	 * 
+	 * @return
+	 * 		List of filters.
+	 * 
+	 */
 	public List<Filter> getFilters() {
 		return _filters;
 	}
 
+	/**
+	 * Add filter.
+	 * 
+	 * @param filter
+	 */
 	public void addFilter(Filter filter) {
 		_filters.add(filter);
 	}
 
+	/**
+	 * Set filters.
+	 * 
+	 * @param filters
+	 */
 	public void setFilters(List<Filter> filters) {
 		_filters = filters;
 	}
 
+	/**
+	 * Get field type.
+	 * 
+	 * @return
+	 * 		Field type.
+	 */
 	public FieldType getFieldType() {
 		return _fieldType;
 	}
 
+	/**
+	 * Set field type.
+	 * 
+	 * @param fieldType
+	 */
 	public void setFieldType(FieldType fieldType) {
 		_fieldType = fieldType;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
+	 */
 	@Override
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
@@ -87,6 +155,9 @@ public class Field implements Externalizable {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.io.Externalizable#writeExternal(java.io.ObjectOutput)
+	 */
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeUTF(_fieldName);

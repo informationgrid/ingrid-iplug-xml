@@ -39,6 +39,18 @@ public class EditMappingController {
 		_xmlService = xmlService;
 	}
 
+	/**
+	 * Edit xml.
+	 * 
+	 * @param plugdescriptionCommandObject
+	 * @param documentIndex
+	 * @param model
+	 * @return
+	 * 		Web request "redirect:/iplug-pages/mapping.html"
+	 * @throws IOException
+	 * @throws JDOMException
+	 * @throws TransformerException
+	 */
 	@SuppressWarnings("unchecked")
     @RequestMapping(value = "/iplug-pages/editMapping.html", method = RequestMethod.GET)
 	public String editXml(

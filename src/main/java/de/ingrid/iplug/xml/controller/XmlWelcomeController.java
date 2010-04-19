@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("plugDescription")
 public class XmlWelcomeController {
 
+	/**
+	 * Redirect to listMapping.html.	
+	 * 
+	 * @return
+	 * 		Web request "redirect:/iplug-pages/listMappings.html"
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String welcome() {
         return "redirect:/iplug-pages/listMappings.html";

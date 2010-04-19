@@ -16,6 +16,14 @@ import de.ingrid.iplug.xml.model.Document;
 @SessionAttributes( { "plugDescription" })
 public class DeleteMappingController {
 
+	/**
+	 * Delete mapping.
+	 * 
+	 * @param plugdescriptionCommandObject
+	 * @param documentIndex
+	 * @return
+	 * 		Web request "redirect:/iplug-pages/listMappings.html"
+	 */
 	@SuppressWarnings("unchecked")
     @RequestMapping(value = "/iplug-pages/deleteMapping.html", method = RequestMethod.POST)
 	public String deleteMapping(

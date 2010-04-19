@@ -23,6 +23,21 @@ import de.ingrid.iplug.xml.controller.UploadController.XsltOutput;
 @SessionAttributes( { "xsltOutput" })
 public class TransformController {
 
+    /**
+     * Transform of XsltOutput.
+     * 
+     * @param xsltOutput
+     * @param request
+     * @param response
+     * @return
+     * 		null
+     * @throws IOException
+     * @throws XPathExpressionException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws TransformerException
+     * @throws JDOMException
+     */
     @RequestMapping(value = "/iplug-pages/transform.html", method = RequestMethod.GET)
 	public String transform(
 			@ModelAttribute("xsltOutput") final XsltOutput xsltOutput,

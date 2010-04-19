@@ -31,6 +31,17 @@ public class MappingController {
 
 	}
 
+    /**
+     * Define settings for mapping.
+     * 
+     * @param document
+     * @param plugdescriptionCommandObject
+     * @param rootElement
+     * @param model
+     * @return
+     * 		Web request "/iplug-pages/mapping" 
+     * @throws Exception
+     */
     @RequestMapping(value = "/iplug-pages/mapping.html", method = RequestMethod.GET)
 	public String settings(
 			@ModelAttribute("document") final Document document,

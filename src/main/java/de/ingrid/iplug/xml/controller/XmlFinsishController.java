@@ -19,6 +19,15 @@ import de.ingrid.iplug.xml.model.Field;
 @RequestMapping("/iplug-pages/finish.html")
 @SessionAttributes(value = { "plugDescription", "document" })
 public class XmlFinsishController {
+	/**
+	 * Put all fields to PlugDescription.
+	 * 
+	 * @param plugdescriptionCommandObject
+	 * @param document
+	 * @return
+	 * 		Web request "redirect:/base/save.html"
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.POST)
 	public String postFinish(

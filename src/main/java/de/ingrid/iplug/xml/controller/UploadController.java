@@ -104,6 +104,18 @@ public class UploadController {
 		return new UploadBean();
 	}
 
+	/**
+	 * Upload XML file.
+	 * 
+	 * @param uploadBean
+	 * @param plugdescriptionCommandObject
+	 * @param model
+	 * @return
+	 * 		Web request "redirect:/iplug-pages/mapping.html";
+	 * @throws IOException
+	 * @throws JDOMException
+	 * @throws TransformerException
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public String upload(
 			@ModelAttribute("uploadBean") final UploadBean uploadBean,

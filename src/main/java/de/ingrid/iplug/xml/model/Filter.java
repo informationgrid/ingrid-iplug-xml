@@ -26,20 +26,38 @@ public class Filter implements Externalizable {
 		_filterType = filterType;
 	}
 
+	/**
+	 * Get expression.
+	 * 
+	 * @return
+	 * 		Expression.
+	 */
 	public Comparable<? extends Serializable> getExpression() {
 		return _expression;
 	}
 
+	/**
+	 * Get filter type.
+	 * 
+	 * @return
+	 * 		Filter type.
+	 */
 	public FilterType getFilterType() {
 		return _filterType;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
+	 */
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
 		_filterType = FilterType.valueOf(in.readUTF());
 		_expression = (Comparable<? extends Serializable>) in.readObject();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.io.Externalizable#writeExternal(java.io.ObjectOutput)
+	 */
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeUTF(_filterType.name());
 		out.writeObject(_expression);

@@ -21,6 +21,15 @@ import de.ingrid.iplug.xml.model.Filter;
 @SessionAttributes("document")
 public class AddToIndexController {
 
+    /**
+     * Add xPath and field types to model.
+     * 
+     * @param document
+     * @param xpath
+     * @param model
+     * @return
+     * 		Web request "/iplug-pages/addToIndex"
+     */
     @RequestMapping(value = "/iplug-pages/addToIndex.html", method = RequestMethod.GET)
 	public String addToIndex(@ModelAttribute("document") final Document document,
 			@RequestParam(required = true) final String xpath, final ModelMap model) {
@@ -29,6 +38,18 @@ public class AddToIndexController {
         return "/iplug-pages/addToIndex";
 	}
 
+    /**
+     * Add field to document.
+     * 
+     * @param document
+     * @param xpath
+     * @param fieldName
+     * @param ownFieldName
+     * @param fieldType
+     * @param score
+     * @return
+     * 		Web request "redirect:/iplug-pages/mapping.html"
+     */
     @RequestMapping(value = "/iplug-pages/addToIndex.html", method = RequestMethod.POST)
 	public String addToIndexPost(@ModelAttribute("document") final Document document,
 			@RequestParam(required = true) final String xpath,
@@ -44,6 +65,14 @@ public class AddToIndexController {
         return "redirect:/iplug-pages/mapping.html";
 	}
 
+    /**
+     * Remove field from document by index. 
+     * 
+     * @param document
+     * @param index
+     * @return
+     * 		Web request "redirect:/iplug-pages/mapping.html"
+     */
     @RequestMapping(value = "/iplug-pages/removeFromIndex.html", method = RequestMethod.GET)
 	public String removeFromIndex(@ModelAttribute("document") final Document document,
 			@RequestParam(required = true) final int index) {

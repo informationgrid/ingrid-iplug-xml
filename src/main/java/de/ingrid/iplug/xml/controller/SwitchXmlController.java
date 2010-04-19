@@ -37,6 +37,16 @@ public class SwitchXmlController {
 		return new UploadBean();
 	}
 
+    /**
+     * Add document to model.
+     * 
+     * @param plugdescriptionCommandObject
+     * @param documentIndex
+     * @param model
+     * @return
+     * 		Web request "/iplug-pages/switchXml.html"
+     * @throws IOException
+     */
     @RequestMapping(value = "/iplug-pages/switchXml.html", method = RequestMethod.GET)
 	public String switchXls(
 			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
@@ -46,6 +56,17 @@ public class SwitchXmlController {
         return "/iplug-pages/switchXml";
 	}
 
+	/**
+	 * Upload upload bean.
+	 * 
+	 * @param documentIndex
+	 * @param plugdescriptionCommandObject
+	 * @param uploadBean
+	 * @param model
+	 * @return
+	 * 		Web request "redirect:/iplug-pages/listMappings.html"
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
     @RequestMapping(value = "/iplug-pages/switchXml.html", method = RequestMethod.POST)
 	public String upload(

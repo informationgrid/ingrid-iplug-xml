@@ -21,6 +21,10 @@ import de.ingrid.iplug.xml.service.XmlService;
 import de.ingrid.utils.IConfigurable;
 import de.ingrid.utils.PlugDescription;
 
+/**
+ * Produce xml document.
+ *
+ */
 @Service
 public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 
@@ -55,6 +59,9 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 			_stemmer = stemmer;
 		}
 
+		/* (non-Javadoc)
+		 * @see java.util.Iterator#hasNext()
+		 */
 		public boolean hasNext() {
 			boolean hasNext = false;
 			if (_prev != null) {
@@ -66,6 +73,9 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 			return hasNext;
 		}
 
+		/* (non-Javadoc)
+		 * @see java.util.Iterator#next()
+		 */
 		public Document next() {
 			if (_prev != null && _prev.hasNext()) {
 				return _prev.next();
@@ -74,6 +84,13 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 			return createDocument(element);
 		}
 
+		/**
+		 * Create document with element node.
+		 * 
+		 * @param node
+		 * @return
+		 * 		Document.
+		 */
 		@SuppressWarnings("unchecked")
 		private Document createDocument(Element node) {
 			Document doc = new Document();
@@ -136,6 +153,9 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 			return doc;
 		}
 
+		/* (non-Javadoc)
+		 * @see java.util.Iterator#remove()
+		 */
 		@Override
 		public void remove() {
 			throw new UnsupportedOperationException("not implemented");
@@ -143,14 +163,23 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see de.ingrid.admin.object.IDocumentProducer#hasNext()
+	 */
 	public boolean hasNext() {
 		return _xmlIterator.hasNext();
 	}
 
+	/* (non-Javadoc)
+	 * @see de.ingrid.admin.object.IDocumentProducer#next()
+	 */
 	public Document next() {
 		return _xmlIterator.next();
 	}
 
+	/* (non-Javadoc)
+	 * @see de.ingrid.utils.IConfigurable#configure(de.ingrid.utils.PlugDescription)
+	 */
 	@SuppressWarnings("unchecked")
 	public void configure(PlugDescription plugDescription) {
 		try {

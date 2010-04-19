@@ -25,6 +25,15 @@ public class AddFilterController {
 	public AddFilterController() {
 	}
 
+    /**
+     * Add filter to index field.
+     * 
+     * @param document
+     * @param fieldIndex
+     * @param model
+     * @return
+     * 		Web request "/iplug-pages/addFilter"
+     */
     @RequestMapping(value = "/iplug-pages/addFilter.html", method = RequestMethod.GET)
 	public String addFilter(@ModelAttribute("document") final Document document,
 			@RequestParam(required = true) final int fieldIndex, final ModelMap model) {
@@ -34,6 +43,16 @@ public class AddFilterController {
         return "/iplug-pages/addFilter";
 	}
 
+    /**
+     * Add filter to index field.
+     * 
+     * @param document
+     * @param fieldIndex
+     * @param filterTypeString
+     * @param expression
+     * @return
+     * 		Web request "redirect:/iplug-pages/mapping.html"
+     */
     @RequestMapping(value = "/iplug-pages/addFilter.html", method = RequestMethod.POST)
 	public String addFilterPost(
 			@ModelAttribute("document") final Document document,
@@ -49,6 +68,15 @@ public class AddFilterController {
         return "redirect:/iplug-pages/mapping.html";
 	}
 
+    /**
+     * Remove filter from index field.
+     * 
+     * @param document
+     * @param fieldIndex
+     * @param filterIndex
+     * @return
+     * 		Web request "redirect:/iplug-pages/mapping.html"	
+     */
     @RequestMapping(value = "/iplug-pages/removeFilter.html", method = RequestMethod.GET)
 	public String removeFilter(@ModelAttribute("document") final Document document,
 			@RequestParam(required = true) final int fieldIndex,
