@@ -53,7 +53,9 @@
 		
 		<div id="content">
 			<h2>Definieren Sie, was indexiert werden soll.</h2>
-			
+			<input type="submit"  value="Index-Feld erstellen" onclick="document.location='./addToIndex.html?xpath='"/>
+			<br/><br/>
+			<p>Die folgende Darstellung dient als Vorschau der gemappten XML Quelle und bezieht sich auf das erste Kind-Element:</p>						
 			<c:import url="/iplug-pages/transform.html"></c:import>      	   
 	      	
 	      	<c:if test="${!empty document.fields}">

@@ -104,7 +104,6 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 					List<String> values = _xmlService.getValues(subNodes);
 
 					switch (fieldType) {
-					case BOOLEAN:
 					case KEYWORD:
 						for (String value : values) {
 							doc.add(new org.apache.lucene.document.Field(label,

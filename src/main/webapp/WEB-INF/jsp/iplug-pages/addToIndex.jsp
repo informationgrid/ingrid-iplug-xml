@@ -75,13 +75,24 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="leftCol">Feld Typ:</td>
+						<td class="leftCol">Abbildung im Index als:</td>
 						<td>
 							<select name="fieldType">
 								<c:forEach var="fieldType" items="${fieldTypes}">
 									<option value="${fieldType}">${fieldType}</option>
 								</c:forEach>
 							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="leftCol"></td>
+						<td class="comment">
+							Bitte wählen Sie den entsprechenden Typ aus:
+							<ul>
+								<li>1) TEXT - Wert wird im Index wie in der Quelle hinterlegt</li>
+								<li>2) KEYWORD - Wert wird im Index in Tokens gesplittet</li>
+								<li>3) NUMBER - Numerischer Wert wird im Index mit Nullen (12 Vorkommastellen) befüllt</li>
+							</ul>
 						</td>
 					</tr>
 					<tr>
