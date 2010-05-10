@@ -54,8 +54,9 @@
 							<c:if test="${!empty error_file}">
 							    <div class="error">
                                     <c:choose>
-                                        <c:when test="${error_file == 'invalid'}">Ihr ausgewähltes XML Dokument ist ungültig.</c:when>
+                                        <c:when test="${error_file == 'invalid'}">Die ausgewählte Datei entspricht keinem XML Schema.</c:when>
                                         <c:when test="${error_file == 'empty'}">Bitte wählen Sie ein XML Dokument aus.</c:when>
+                                        <c:when test="${error_file == 'invalid_zip'}">Die ausgewählte ZIP-Datei ist fehlerhaft oder der Zugriff wird verweigert.</c:when>
                                     </c:choose>
 							    </div>
 							</c:if>

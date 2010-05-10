@@ -65,7 +65,10 @@ public class EditMappingController {
 
 		final File mappingDir = new File(plugdescriptionCommandObject
 				.getWorkinDirectory(), "mapping");
-		final File newXmlFile = new File(mappingDir, document.getFileName());
+		
+		final File pathToMappingDir = new File (mappingDir, document.getFileName());
+		final File[] listAllFiles = pathToMappingDir.listFiles();
+		final File newXmlFile = new File(pathToMappingDir, listAllFiles[0].getName());
 
 		LOG.info("parse xml file: " + newXmlFile.getAbsolutePath());
 		final org.jdom.Document jdomDocument = _xmlService.createDocument(newXmlFile);

@@ -89,8 +89,8 @@
 						<td class="comment">
 							Bitte wählen Sie den entsprechenden Typ aus:
 							<ul>
-								<li>1) TEXT - Wert wird im Index wie in der Quelle hinterlegt</li>
-								<li>2) KEYWORD - Wert wird im Index in Tokens gesplittet</li>
+								<li>1) TEXT - Wert wird im Index in Tokens gesplittet</li>
+								<li>2) KEYWORD - Wert wird im Index wie in der Quelle hinterlegt</li>
 								<li>3) NUMBER - Numerischer Wert wird im Index mit Nullen (12 Vorkommastellen) befüllt</li>
 							</ul>
 						</td>

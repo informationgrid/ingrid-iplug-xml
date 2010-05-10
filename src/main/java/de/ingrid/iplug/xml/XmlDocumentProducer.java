@@ -189,29 +189,31 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 			for (de.ingrid.iplug.xml.model.Document xmlDocument : xmlDocuments) {
 				LOG.debug("document: " + xmlDocument.getFileName() + ", "
 						+ xmlDocument.getRootXpath());
-				File xmlFile = new File(workinDirectory + File.separator
-						+ "mapping" + File.separator
-						+ xmlDocument.getFileName());
-				LOG.info("parse xml file: " + xmlFile.getAbsolutePath());
-				org.jdom.Document jdomDocument = _xmlService
-						.createDocument(xmlFile);
-				LOG.info("parsing finish");
-				LOG.info("select root document...");
-				Element rootElement = _xmlService.selectRootElement(
-						jdomDocument, xmlDocument.getRootXpath());
+				File xmlPath = new File (workinDirectory + File.separator
+						+ "mapping" + File.separator, xmlDocument.getFileName());
+				File[] xmlFiles = xmlPath.listFiles();
+				for (int i = 0; i < xmlFiles.length; i++) {
+					File xmlFile = xmlFiles[i];
+					LOG.info("parse xml file: " + xmlFile.getAbsolutePath());
+					org.jdom.Document jdomDocument = _xmlService
+							.createDocument(xmlFile);
+					LOG.info("parsing finish");
+					LOG.info("select root document...");
+					Element rootElement = _xmlService.selectRootElement(
+							jdomDocument, xmlDocument.getRootXpath());
 
-				String filterString = "";
-				if (_xmlService.documentHasFilters(xmlDocument)) {
-					filterString = _xmlService.getFilterExpression(xmlDocument);
+					String filterString = "";
+					if (_xmlService.documentHasFilters(xmlDocument)) {
+						filterString = _xmlService.getFilterExpression(xmlDocument);
+					}
+
+					List<Element> docs = _xmlService.getSubNodes(rootElement
+							.getParentElement(), rootElement.getName()
+							+ filterString);
+
+					_xmlIterator = new XmlDocumentIterator(_xmlIterator, docs,
+							xmlDocument.getFields(), _xmlService, _stemmer);
 				}
-
-				List<Element> docs = _xmlService.getSubNodes(rootElement
-						.getParentElement(), rootElement.getName()
-						+ filterString);
-
-				_xmlIterator = new XmlDocumentIterator(_xmlIterator, docs,
-						xmlDocument.getFields(), _xmlService, _stemmer);
-
 			}
 
 		} catch (Exception e) {

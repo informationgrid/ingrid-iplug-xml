@@ -1,9 +1,15 @@
 package de.ingrid.iplug.xml.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
 
 import javax.xml.transform.TransformerException;
 
@@ -124,23 +130,61 @@ public class UploadController {
 			TransformerException {
 		final MultipartFile multipartFile = uploadBean.getFile();
 		final byte[] uploadBytes = multipartFile.getBytes();
-		final File workinDirectory = plugdescriptionCommandObject
-				.getWorkinDirectory();
-		final File mappingDir = new File(workinDirectory, "mapping");
-		mappingDir.mkdirs();
-
-		final int length = mappingDir.listFiles().length;
-		final File newXmlFile = new File(mappingDir, multipartFile
-				.getOriginalFilename()
-				+ "_" + length);
-
+		final File mappingDir = createDirectoryForMapping(plugdescriptionCommandObject
+				.getWorkinDirectory(), "mapping");
+		int length = mappingDir.listFiles().length;
+		final String mappingFilename = multipartFile.getOriginalFilename()+ "_" + length;
+		File newXmlFile = new File (createDirectoryForMapping(mappingDir, mappingFilename), mappingFilename);
+		
 		final FileOutputStream fileOutputStream = new FileOutputStream(newXmlFile);
 		fileOutputStream.write(uploadBytes);
 		fileOutputStream.flush();
 		fileOutputStream.close();
-
+		
 		final Document document = new Document();
-		document.setFileName(newXmlFile.getName());
+		
+		if(multipartFile.getContentType().equals("application/zip")){
+			ZipFile zipFile;
+			try {
+				zipFile = new ZipFile(newXmlFile);	
+			} catch (ZipException e) {
+				LOG.warn("invalid zip file");
+				model.addAttribute("error_file","invalid_zip");
+				return firstRow(); 
+			}
+			
+			Enumeration entries = zipFile.entries();
+			File firstZipFile = null;
+			byte[] buffer = new byte[16384];
+			int len;
+			while (entries.hasMoreElements()) {
+				ZipEntry entry = (ZipEntry) entries.nextElement();
+				String entryFileName = newXmlFile.getName() + "_" + entry.getName();
+				File extractedFileFromZip = new File(newXmlFile.getParentFile(),entryFileName);
+			
+				if(firstZipFile == null){
+					firstZipFile = extractedFileFromZip;
+				}
+				BufferedOutputStream bos = new BufferedOutputStream(
+						new FileOutputStream(extractedFileFromZip));
+				BufferedInputStream bis = new BufferedInputStream(zipFile
+						.getInputStream(entry));
+				while ((len = bis.read(buffer)) > 0) {
+					bos.write(buffer, 0, len);
+				}
+				bos.flush();
+				bos.close();
+				bis.close();
+			}
+			zipFile.close();
+			
+			if(newXmlFile.isFile()){
+				newXmlFile.delete();
+			}
+			newXmlFile = firstZipFile;
+		}
+		
+		document.setFileName(mappingFilename);
 		document.setRootXpath(uploadBean.getRootXpath());
 		document.setDescription(uploadBean.getDescription());
 		model.addAttribute("document", document);
@@ -200,5 +244,10 @@ public class UploadController {
         return "redirect:/iplug-pages/mapping.html";
 
 	}
-
+	
+	public File createDirectoryForMapping(File mappingWorkDirectory, String mappingFileDirectory){
+		final File mappingFileDir = new File(mappingWorkDirectory, mappingFileDirectory);
+		mappingFileDir.mkdirs();
+		return mappingFileDir;
+	}	
 }
