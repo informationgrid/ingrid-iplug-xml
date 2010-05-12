@@ -6,6 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
@@ -132,8 +134,8 @@ public class UploadController {
 		final byte[] uploadBytes = multipartFile.getBytes();
 		final File mappingDir = createDirectoryForMapping(plugdescriptionCommandObject
 				.getWorkinDirectory(), "mapping");
-		int length = mappingDir.listFiles().length;
-		final String mappingFilename = multipartFile.getOriginalFilename()+ "_" + length;
+		String timestamp = new SimpleDateFormat( "yyyyMMddHHmmss" ).format(new Date()).toString();
+		final String mappingFilename = multipartFile.getOriginalFilename()+ "_" + timestamp;
 		File newXmlFile = new File (createDirectoryForMapping(mappingDir, mappingFilename), mappingFilename);
 		
 		final FileOutputStream fileOutputStream = new FileOutputStream(newXmlFile);

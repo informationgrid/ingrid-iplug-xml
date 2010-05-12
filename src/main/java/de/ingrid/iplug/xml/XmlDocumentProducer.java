@@ -166,7 +166,11 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 	 * @see de.ingrid.admin.object.IDocumentProducer#hasNext()
 	 */
 	public boolean hasNext() {
-		return _xmlIterator.hasNext();
+		try {
+			return _xmlIterator.hasNext();	
+		} catch (NullPointerException e) {
+			return false;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -192,27 +196,29 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 				File xmlPath = new File (workinDirectory + File.separator
 						+ "mapping" + File.separator, xmlDocument.getFileName());
 				File[] xmlFiles = xmlPath.listFiles();
-				for (int i = 0; i < xmlFiles.length; i++) {
-					File xmlFile = xmlFiles[i];
-					LOG.info("parse xml file: " + xmlFile.getAbsolutePath());
-					org.jdom.Document jdomDocument = _xmlService
-							.createDocument(xmlFile);
-					LOG.info("parsing finish");
-					LOG.info("select root document...");
-					Element rootElement = _xmlService.selectRootElement(
-							jdomDocument, xmlDocument.getRootXpath());
+				if(xmlFiles != null){
+					for (int i = 0; i < xmlFiles.length; i++) {
+						File xmlFile = xmlFiles[i];
+						LOG.info("parse xml file: " + xmlFile.getAbsolutePath());
+						org.jdom.Document jdomDocument = _xmlService
+								.createDocument(xmlFile);
+						LOG.info("parsing finish");
+						LOG.info("select root document...");
+						Element rootElement = _xmlService.selectRootElement(
+								jdomDocument, xmlDocument.getRootXpath());
 
-					String filterString = "";
-					if (_xmlService.documentHasFilters(xmlDocument)) {
-						filterString = _xmlService.getFilterExpression(xmlDocument);
-					}
+						String filterString = "";
+						if (_xmlService.documentHasFilters(xmlDocument)) {
+							filterString = _xmlService.getFilterExpression(xmlDocument);
+						}
 
-					List<Element> docs = _xmlService.getSubNodes(rootElement
-							.getParentElement(), rootElement.getName()
-							+ filterString);
+						List<Element> docs = _xmlService.getSubNodes(rootElement
+								.getParentElement(), rootElement.getName()
+								+ filterString);
 
-					_xmlIterator = new XmlDocumentIterator(_xmlIterator, docs,
-							xmlDocument.getFields(), _xmlService, _stemmer);
+						_xmlIterator = new XmlDocumentIterator(_xmlIterator, docs,
+								xmlDocument.getFields(), _xmlService, _stemmer);
+					}	
 				}
 			}
 

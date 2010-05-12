@@ -15,20 +15,10 @@ public class Document implements Externalizable {
 
 	private List<Field> _fields = new ArrayList<Field>();
 	private String _fileName;
-	private String _zipName;
 	private String _rootXpath = "/root/myDocument";
 
 	private String _description;
 
-	
-	public String get_zipName() {
-		return _zipName;
-	}
-
-	public void set_zipName(String name) {
-		_zipName = name;
-	}
-	
 	/**
 	 * Get root xPath.
 	 * 
