@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.admin.command.Command;
-import de.ingrid.admin.command.FileDeleteCommand;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.xml.command.SyncPlugDescriptionDirectoryCommand;
 import de.ingrid.iplug.xml.model.Document;
 @Controller
 @SessionAttributes( { "plugDescription", "postCommandObject"})
@@ -43,8 +43,8 @@ public class DeleteMappingController {
 		while (iterator.hasNext()) {
 			iterator.next();
 			if (i == documentIndex) {
-				postCommandObject.add(new FileDeleteCommand(plugdescriptionCommandObject.getWorkinDirectory() + "\\mapping\\" + documents.get(i).getFileName()));
-				iterator.remove();
+				postCommandObject.add(new SyncPlugDescriptionDirectoryCommand(plugdescriptionCommandObject));
+		    	iterator.remove();
 				break;
 			}
 			i++;
