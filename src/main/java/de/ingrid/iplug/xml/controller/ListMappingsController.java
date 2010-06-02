@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import de.ingrid.admin.command.Command;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.xml.command.SyncPlugDescriptionDirectoryCommand;
+import de.ingrid.utils.query.IngridQuery;
 
 @Controller
 @SessionAttributes("plugDescription")
@@ -25,6 +26,16 @@ public class ListMappingsController {
      */
     @RequestMapping(value = "/iplug-pages/listMappings.html", method = RequestMethod.GET)
 	public String listMappings(@ModelAttribute("plugDescription") final PlugdescriptionCommandObject commandObject, final ModelMap model) {
+     
+        // add ranking if not already done
+        boolean isOff  = commandObject.containsRankingType("off");
+        boolean isDate = commandObject.containsRankingType("date");
+        
+        // clear list before adding
+        if (commandObject.getArrayList(IngridQuery.RANKED) != null )
+            commandObject.getArrayList(IngridQuery.RANKED).clear();
+        commandObject.setRankinTypes(true,  isDate, isOff);
+        
     	SyncPlugDescriptionDirectoryCommand command = new SyncPlugDescriptionDirectoryCommand(commandObject);
     	command.execute();
     	return "/iplug-pages/listMappings";
