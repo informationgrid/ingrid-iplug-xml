@@ -76,6 +76,9 @@ public class SyncPlugDescriptionDirectoryCommand extends Command{
         		}
         	}
     	}else{
+    	    if (mappingList == null)
+    	        return;
+    	    
     		Iterator<Document> iterator = mappingList.iterator();
 			while (iterator.hasNext()) {
 				iterator.next();
