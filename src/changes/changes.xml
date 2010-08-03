@@ -6,7 +6,7 @@
   </properties>
   <body>
     <release version="1.0.0" date="2010-08-03" description="Initial Release">
-      <action type="add" dev="wemove" issue="INGRID21-104">
+      <action type="add" dev="wemove" issue="INGRID21-108">
         Implementierung eines XML iPlugs
       </action>
     </release>
