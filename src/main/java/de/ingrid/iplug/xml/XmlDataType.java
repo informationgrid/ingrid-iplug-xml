@@ -9,5 +9,6 @@ public class XmlDataType extends AbstractDataType {
 
 	public XmlDataType() {
         super(XML, new DscOtherDataType());
+        setForceActive(true);
 	}
 }
