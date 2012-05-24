@@ -52,6 +52,7 @@
 						<td><input type="file" name="file"/> <form:errors path="file" cssClass="error" element="div" /></td>
 					</tr>
 				</table>
+				<input type="hidden" name="documentIndex" value="${documentIndex}"/>
 			</form:form>
 		</div>
 	</div>

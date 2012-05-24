@@ -79,7 +79,7 @@ public class SwitchXmlController {
 		final List<Document> documents = (List<Document>) plugdescriptionCommandObject.get("mapping");
 		final String fileName = documents.get(documentIndex).getFileName();
 		final File mappingDir = new File(plugdescriptionCommandObject
-				.getWorkinDirectory(), "mapping");
+				.getWorkinDirectory(), "mapping/"+fileName);
 		final File newXmlFile = new File(mappingDir, fileName);
 		final FileOutputStream outputStream = new FileOutputStream(newXmlFile);
 		outputStream.write(uploadBytes);
