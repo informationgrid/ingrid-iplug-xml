@@ -40,50 +40,52 @@ public class SyncPlugDescriptionDirectoryCommand extends Command{
     	String[] mappingDirFiles = mappingDir.list();
     	List<Document> mappingList = new ArrayList<Document>();
     	mappingList = (List<Document>) plugDescription.get("mapping");
-    	boolean fileDelete = true;
-    	if(mappingDirFiles != null && mappingDirFiles.length > 0){
-    		for(int i=0; i<mappingDirFiles.length;i++){
-    			String filenameDir = mappingDirFiles[i];
-    			for(int j=0; j<mappingList.size();j++){
-        			String filenameMapping  = mappingList.get(j).getFileName();
-        			if(filenameMapping.equals(filenameDir)){
-        				fileDelete=false;
-        				break;
-        			}else{
-        				fileDelete=true;
-        			}
-        		}
-    			
-    			File tmpFile = new File(mappingDir, filenameDir);
-    			boolean fileIsFile = tmpFile.isFile();
-        		boolean fileIsDirectory = tmpFile.isDirectory();
-        		
-        		if(fileDelete){
-        			deleteMappingFilesFromDirectory(tmpFile);
-        		}
-        		
-        		if(!fileIsFile && !fileIsDirectory){
-        			Iterator<Document> iterator = mappingList.iterator();
-        			int index = 0;
-        			while (iterator.hasNext()) {
-        				iterator.next();
-        				if (index == i) {
-        					iterator.remove();
-        					break;
-        				}
-        				index++;
-        			}
-        		}
-        	}
-    	}else{
-    	    if (mappingList == null)
-    	        return;
-    	    
-    		Iterator<Document> iterator = mappingList.iterator();
-			while (iterator.hasNext()) {
-				iterator.next();
-				iterator.remove();
-			}
+    	if(mappingList != null){
+	    	boolean fileDelete = true;
+	    	if(mappingDirFiles != null && mappingDirFiles.length > 0){
+	    		for(int i=0; i<mappingDirFiles.length;i++){
+	    			String filenameDir = mappingDirFiles[i];
+	    			for(int j=0; j<mappingList.size();j++){
+	        			String filenameMapping  = mappingList.get(j).getFileName();
+	        			if(filenameMapping.equals(filenameDir)){
+	        				fileDelete=false;
+	        				break;
+	        			}else{
+	        				fileDelete=true;
+	        			}
+	        		}
+	    			
+	    			File tmpFile = new File(mappingDir, filenameDir);
+	    			boolean fileIsFile = tmpFile.isFile();
+	        		boolean fileIsDirectory = tmpFile.isDirectory();
+	        		
+	        		if(fileDelete){
+	        			deleteMappingFilesFromDirectory(tmpFile);
+	        		}
+	        		
+	        		if(!fileIsFile && !fileIsDirectory){
+	        			Iterator<Document> iterator = mappingList.iterator();
+	        			int index = 0;
+	        			while (iterator.hasNext()) {
+	        				iterator.next();
+	        				if (index == i) {
+	        					iterator.remove();
+	        					break;
+	        				}
+	        				index++;
+	        			}
+	        		}
+	        	}
+	    	}else{
+	    	    if (mappingList == null)
+	    	        return;
+	    	    
+	    		Iterator<Document> iterator = mappingList.iterator();
+				while (iterator.hasNext()) {
+					iterator.next();
+					iterator.remove();
+				}
+	    	}
     	}
     }
 	

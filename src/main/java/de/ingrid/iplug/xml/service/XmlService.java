@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,6 +23,7 @@ import org.jaxen.util.SingletonList;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.jdom.transform.JDOMSource;
 import org.jdom.xpath.XPath;
@@ -144,7 +146,16 @@ public class XmlService {
 	public Element selectRootElement(org.jdom.Document jdomDocument,
 			String xpath) throws JDOMException {
 		XPath newInstance = XPath.newInstance(xpath);
-		LOG.info("try to select single node with xpath ["
+		
+		// Set namespaces to Namespace.NO_NAMESPACE
+		for (Iterator<?> it = jdomDocument.getDescendants(); it.hasNext();) {
+            Object o = it.next();
+            if (o instanceof Element) {
+                Element el = (Element) o;
+                el.setNamespace(Namespace.NO_NAMESPACE);
+            }
+        }
+        LOG.info("try to select single node with xpath ["
 				+ newInstance.getXPath() + "] from element [" + jdomDocument
 				+ "]");
 		Element singleNode = (Element) newInstance
@@ -253,7 +264,7 @@ public class XmlService {
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	public List<String> getValues(List nodes)
+	public List<String> getValues(List<?> nodes)
 			throws XPathExpressionException, ParserConfigurationException,
 			SAXException, IOException {
 		int length = nodes.size();
