@@ -4,7 +4,7 @@
 			ui			          ="swing,text,swing-auto,text-auto"
       		loadDefaults          ="prompt"
 			verbose		          ="true"
-			debug		          ="true"
+			debug		          ="false"
 			lookAndFeel	          ="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
 			name		          ="iPlug-XML Installation"
 			windowIcon	          ="/resources/icons/logoIcon.gif"
