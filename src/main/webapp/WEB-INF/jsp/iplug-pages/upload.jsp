@@ -50,7 +50,7 @@
 					<tr>
 						<td class="leftCol">Xml Datei:</td>
 						<td>
-							<input type="file" name="file"/> <form:errors path="file" cssClass="error" element="div" />
+							<div class="input full"><input type="file" name="file"/> <form:errors path="file" cssClass="error" element="div" /></div>
 							<c:if test="${!empty error_file}">
 							    <div class="error">
                                     <c:choose>
@@ -65,21 +65,23 @@
 					<tr>
 						<td class="leftCol">XPath zum Dokument:</td>
 						<td>
-							<form:input path="rootXpath" />
-							<c:if test="${!empty error}">
-							    <div class="error">
-                                    <c:choose>
-                                        <c:when test="${error == 'empty'}">Bitte geben Sie den Pfad zum Wurzelelement an.</c:when>
-                                        <c:when test="${error == 'invalid'}">Dieser Pfad existiert nicht oder ist ungültig. Bitte überprüfen Sie Ihre Eingabe.</c:when>
-                                    </c:choose>
-							    </div>
-							</c:if>
+							<div class="input full">
+								<form:input path="rootXpath" />
+								<c:if test="${!empty error}">
+								    <div class="error">
+	                                    <c:choose>
+	                                        <c:when test="${error == 'empty'}">Bitte geben Sie den Pfad zum Wurzelelement an.</c:when>
+	                                        <c:when test="${error == 'invalid'}">Dieser Pfad existiert nicht oder ist ungültig. Bitte überprüfen Sie Ihre Eingabe.</c:when>
+	                                    </c:choose>
+								    </div>
+								</c:if>
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Beschreibung:</td>
 						<td>
-							<form:input path="description" />
+							<div class="input full"><form:input path="description" /></div>
 						</td>
 					</tr>
 				</table>

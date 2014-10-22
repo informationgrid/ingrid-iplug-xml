@@ -46,7 +46,9 @@
 		<div id="content">
 			<h2>Es werden nur Daten indexiert, auf die die angegebenen Ausdrücke zutreffen. Mehrere Filter sind AND verknüpft.</h2>
 			<form method="post" action="../iplug-pages/addFilter.html" id="addFilter">
-				<input type="hidden" name="fieldIndex" value="${fieldIndex}"/>
+				<div class="input full">
+					<input type="hidden" name="fieldIndex" value="${fieldIndex}"/>
+				</div>
 				
 				<table id="konfigForm">
 					<tr>
@@ -56,17 +58,21 @@
 					<tr>
 						<td class="leftCol">Filter:</td>
 						<td>
-							<select name="filterType">
-								<c:forEach var="filterType" items="${filterTypes}">
-									<option value="${filterType}">${filterType}</option>
-								</c:forEach>
-							</select>
+							<div class="input full">
+								<select name="filterType">
+									<c:forEach var="filterType" items="${filterTypes}">
+										<option value="${filterType}">${filterType}</option>
+									</c:forEach>
+								</select>
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Wert:</td>
 						<td>
-							<input type="text" name="expression" value=""/>
+							<div class="input full">
+								<input type="text" name="expression" value=""/>
+							</div>
 						</td>
 					</tr>
 				</table>

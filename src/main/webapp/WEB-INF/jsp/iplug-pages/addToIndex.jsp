@@ -50,7 +50,7 @@
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Feld Xpath:</td>
-						<td><input type="text" name="xpath" value="./${xpath}"/></td>
+						<td><div class="input full"><input type="text" name="xpath" value="./${xpath}"/></div></td>
 					</tr>
 					<c:if test="${!empty error}">
 					<tr>
@@ -61,27 +61,33 @@
 					<tr>
 						<td class="leftCol">Index Feldname:</td>
 						<td>
-							<select name="fieldName">
-								<option value="">-- bitte wählen --</option>
-								<option value="title">title</option>
-								<option value="summary">summary</option>
-							</select>
+							<div class="input full">
+								<select name="fieldName">
+									<option value="">-- bitte wählen --</option>
+									<option value="title">title</option>
+									<option value="summary">summary</option>
+								</select>
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Oder eigener Index Feldname:</td>
 						<td>
-							<input type="text" name="ownFieldName" value=""/>
+							<div class="input full">
+								<input type="text" name="ownFieldName" value=""/>
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Abbildung im Index als:</td>
 						<td>
-							<select name="fieldType">
-								<c:forEach var="fieldType" items="${fieldTypes}">
-									<option value="${fieldType}">${fieldType}</option>
-								</c:forEach>
-							</select>
+							<div class="input full">
+								<select name="fieldType">
+									<c:forEach var="fieldType" items="${fieldTypes}">
+										<option value="${fieldType}">${fieldType}</option>
+									</c:forEach>
+								</select>
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -98,12 +104,14 @@
 					<tr>
 						<td class="leftCol">Relative Wertigkeit:</td>
 						<td>
-							<select name="score">
-								<c:set var="preset" value="5"/>
-								<c:forEach var="i" begin="1" end="10">
-									<option value="${i}" <c:if test="${i == preset}">selected="selected"</c:if>>${i}</option>
-								</c:forEach>
-							</select>
+							<div class="input full">
+								<select name="score">
+									<c:set var="preset" value="5"/>
+									<c:forEach var="i" begin="1" end="10">
+										<option value="${i}" <c:if test="${i == preset}">selected="selected"</c:if>>${i}</option>
+									</c:forEach>
+								</select>
+							</div>
 						</td>
 					</tr>
 				</table>
