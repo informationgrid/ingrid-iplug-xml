@@ -51,7 +51,6 @@ public class Configuration implements IConfig {
 
     @Override
     public void setPropertiesFromPlugdescription( Properties props, PlugdescriptionCommandObject pd ) {
-    	log.info("Add values");
     	String mappingString = "";
     	List<Document> documents = (List<Document>) pd.get("mapping");
     	for (int i = 0; i < documents.size(); i++) {
