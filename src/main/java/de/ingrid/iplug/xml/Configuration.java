@@ -35,7 +35,7 @@ public class Configuration implements IConfig {
         pdObject.addField("metainfo");
         pdObject.put( "iPlugClass", "de.ingrid.iplug.xml.XmlPlug");
         if(pdObject.get("mapping") == null){
-        	if(mapping != null){
+        	if(!mapping.equals("")){
         		xstream = new XStream();
             	pdObject.put("mapping", xstream.fromXML(mapping));
         	}
