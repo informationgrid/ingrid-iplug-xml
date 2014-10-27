@@ -2,16 +2,17 @@
     <description>
         iPlug-XML Installation Script
     </description>
-	<!-- set global properties for this build -->
-	<property name="iPlugName" 			value="${project.artifactId}-${project.version}"/>
-	<property name="xml-communication" 	value="${installDir}/conf/communication.xml"/>
+    <!-- set global properties for this build -->
+    <property name="iPlugName"          value="${project.artifactId}-${project.version}"/>
+    <property name="xml-communication"  value="${installDir}/conf/communication.xml"/>
     <property name="start-script"       value="${installDir}/start.sh"/>
+	<property name="config"             value="${installDir}/conf/config.override.properties"/>
 
-    <!-- THIS PORPERTIES ARE NECESSARY FOR UPDATES -->
+    <!-- THESE PORPERTIES ARE NECESSARY FOR UPDATES -->
     <property name="libraryDir"         value="lib" />
     <property name="libraryIdent"       value="ingrid-iplug-xml-" />
     <!-- <property name="libraryIdent"       value="MANIFEST.MF" /> -->
-    <property name="versionsWithConfigurations"  value="3.3.0" />
+    <property name="versionsWithConfigurations"  value="" />
     <property name="minSupportedVersion" value="3.3.0" />
 
     <import file="build-installer-utils.xml"  as="utils" />
@@ -25,36 +26,32 @@
     <target name="setInstallProperty" depends="extract">
         <property name="installProcedure" value="true" />
     </target>
-	
-	<target name="extract" description="Extract all files to the installation directory.">
-		<unzip src="${antinstaller.jar}" dest="${installDir}">
-			<patternset>
-				<include name="${iPlugName}/**/*.*"/>
-			</patternset>
-		</unzip>
-		
-		<move toDir="${installDir}">
-			<fileset dir="${installDir}/${iPlugName}"/>
-		</move>
-		
-		<mkdir dir="${installDir}/logs"/>
+    
+    <target name="extract" description="Extract all files to the installation directory.">
+        <unzip src="${antinstaller.jar}" dest="${installDir}">
+            <patternset>
+                <include name="${iPlugName}/**/*.*"/>
+            </patternset>
+        </unzip>
+        
+        <move toDir="${installDir}">
+            <fileset dir="${installDir}/${iPlugName}"/>
+        </move>
+        
+        <mkdir dir="${installDir}/logs"/>
         <mkdir dir="${installDir}/webapp/WEB-INF/work"/>
         
-        <replace file="${start-script}" token="@SERVER_PORT@" value="${localServerPort}"/>
-    
-	    <condition property="copy.plugDescription">
-	      <not>
-	        <equals arg1="${plugDescription}" arg2="noPlugDescription"/>
-	      </not>
-	    </condition>
-	</target>
+        <condition property="copy.plugDescription">
+          <not>
+            <equals arg1="${plugDescription}" arg2="noPlugDescription"/>
+          </not>
+        </condition>
+    </target>
 
-	<target name="extractUpdate">
+    <target name="extractUpdate">
         <unzip src="${antinstaller.jar}" dest=".">
             <patternset>
                 <include name="**/*.*"/>
-                <exclude name="${iPlugName}/conf/communication.xml" />
-                <exclude name="${iPlugName}/start.sh" />
             </patternset>
         </unzip>
         
@@ -67,15 +64,24 @@
         </move>
     </target>
 	
+	<target name="adminPort" description="Configure the admin port.">
+        <echo>Schreiben der Konfiguration
+        </echo>
+        <touch file="${config}"/>
+        <propertyfile file="${config}">
+            <entry key="jetty.port" value="${localServerPort}" />
+        </propertyfile>
+    </target>
+    
  
-	<target name="startIPlug">
-		<echo>
+    <target name="startIPlug">
+        <echo>
 =================
 Weiteres Vorgehen
 =================
 
-		</echo>
-		<echo>
+        </echo>
+        <echo>
 Gehen Sie ins Verzeichnis:
 ${installDir}
 und rufen sie von der Kommandozeile folgendes auf
@@ -92,7 +98,7 @@ Administration (im Portal) eingeschaltet werden.
 Weitere Informationen entnehmen Sie bitte dem
 Online-Handbuch unter 
 http://www.kst.portalu.de/wiki/index.php/InGrid_Installation.
-		</echo>
-	</target>
-	
+        </echo>
+    </target>
+    
 </project>

@@ -51,7 +51,8 @@
     		ifTarget    ="setInstallProperty"
             type        ="input"
             name        ="componentOptions"
-            displayText ="Einstellungen fuer das iPlug-XML">
+            displayText ="Einstellungen fuer das iPlug-XML"
+            target      ="adminPort">
             
             <comment displayText="" explanatoryText="Lokaler Port, unter dem die Administrationsoberfläche des XML-iPlugs erreichbar sein soll."/>           
             <text property="localServerPort" displayText="Port für Adminoberfläche:" defaultValue="50061"/>
