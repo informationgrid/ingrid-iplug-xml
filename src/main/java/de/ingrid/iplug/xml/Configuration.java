@@ -18,6 +18,7 @@ import de.ingrid.admin.command.PlugdescriptionCommandObject;
 @PropertyLocations(directories = {"conf"}, fromClassLoader = true)
 public class Configuration implements IConfig {
     
+    @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog(Configuration.class);
     
     @PropertyValue("plugdescription.fields")
