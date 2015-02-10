@@ -1,12 +1,12 @@
 XML iPlug
 ========
 
-The XML-iPlug connects the data of a XML File to the InGrid data space.
+The XML-iPlug connects the data of XML Files to the InGrid data space.
 
 Features
 --------
 
-- index any XML File at a certain schedule
+- index XML Files at a certain schedule
 - user friendly, GUI based mapping of XML Data to an index
 - provides search functionality on the indexed data
 - GUI for easy administration
