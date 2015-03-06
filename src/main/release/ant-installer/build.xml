@@ -26,8 +26,6 @@
     </description>
     <!-- set global properties for this build -->
     <property name="iPlugName"          value="${project.artifactId}-${project.version}"/>
-    <property name="xml-communication"  value="${installDir}/conf/communication.xml"/>
-    <property name="start-script"       value="${installDir}/start.sh"/>
 	<property name="config"             value="${installDir}/conf/config.override.properties"/>
 
     <!-- THESE PORPERTIES ARE NECESSARY FOR UPDATES -->
