@@ -23,21 +23,19 @@
 package de.ingrid.iplug.xml;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field.Index;
-import org.apache.lucene.document.Field.Store;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
+import de.ingrid.admin.Utils;
 import de.ingrid.admin.object.IDocumentProducer;
-import de.ingrid.admin.search.Stemmer;
 import de.ingrid.iplug.xml.model.Field;
 import de.ingrid.iplug.xml.service.XmlService;
 import de.ingrid.utils.IConfigurable;
@@ -51,34 +49,29 @@ import de.ingrid.utils.PlugDescription;
 public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 
 	private final XmlService _xmlService;
-	private final Stemmer _stemmer;
 	private static final Logger LOG = Logger
 			.getLogger(XmlDocumentProducer.class);
 
 	@Autowired
-	public XmlDocumentProducer(XmlService xmlService, Stemmer stemmer) {
+	public XmlDocumentProducer(XmlService xmlService) {
 		_xmlService = xmlService;
-		_stemmer = stemmer;
 
 	}
 
 	private XmlDocumentIterator _xmlIterator;
 
-	static class XmlDocumentIterator implements Iterator<Document> {
+	static class XmlDocumentIterator implements Iterator<Map<String, Object>> {
 		private XmlDocumentIterator _prev;
 		private final XmlService _xmlService;
-		private final Stemmer _stemmer;
 		private Iterator<Element> _docsIterator;
 		private final List<Field> _fields;
 
 		public XmlDocumentIterator(XmlDocumentIterator prev,
-				List<Element> docs, List<Field> fields, XmlService xmlService,
-				Stemmer stemmer) {
+				List<Element> docs, List<Field> fields, XmlService xmlService) {
 			_prev = prev;
 			_fields = fields;
 			_docsIterator = docs.iterator();
 			_xmlService = xmlService;
-			_stemmer = stemmer;
 		}
 
 		/* (non-Javadoc)
@@ -98,7 +91,7 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 		/* (non-Javadoc)
 		 * @see java.util.Iterator#next()
 		 */
-		public Document next() {
+		public Map<String, Object> next() {
 			if (_prev != null && _prev.hasNext()) {
 				return _prev.next();
 			}
@@ -113,9 +106,8 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 		 * @return
 		 * 		Document.
 		 */
-		@SuppressWarnings("unchecked")
-		private Document createDocument(Element node) {
-			Document doc = new Document();
+		private Map<String, Object> createDocument(Element node) {
+			Map<String, Object> doc = new HashMap<String, Object>();
 			for (de.ingrid.iplug.xml.model.Field field : _fields) {
 				try {
 					de.ingrid.iplug.xml.model.FieldType fieldType = field
@@ -128,42 +120,25 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 					switch (fieldType) {
 					case KEYWORD:
 						for (String value : values) {
-							doc.add(new org.apache.lucene.document.Field(label,
-									value, Store.YES, Index.NOT_ANALYZED));
+						    Utils.addToDoc( doc, label, value );
 						}
 						break;
 					case NUMBER:
-						for (Comparable value : values) {
-							doc.add(new org.apache.lucene.document.Field(label,
-									StringUtils.padding(Double
-											.parseDouble(value.toString())),
-									Store.YES, Index.NOT_ANALYZED));
+						for (Comparable<?> value : values) {
+						    Utils.addToDoc( doc, label, StringUtils.padding(Double.parseDouble(value.toString())) );
 						}
 						break;
 					case TEXT:
-						for (Comparable value : values) {
-							doc
-									.add(new org.apache.lucene.document.Field(
-											label, value.toString(), Store.YES,
-											Index.ANALYZED));
+						for (Comparable<?> value : values) {
+						    Utils.addToDoc( doc, label, value.toString() );
 						}
 						break;
 					default:
 						break;
 					}
 
-					for (Comparable value : values) {
-
-						try {
-							doc.add(new org.apache.lucene.document.Field(
-									"content", _stemmer.stem(value.toString()),
-									Store.NO, Index.ANALYZED));
-						} catch (IOException e) {
-							LOG.warn("can not stem content: "
-									+ value.toString(), e);
-						}
-						doc.add(new org.apache.lucene.document.Field("content",
-								value.toString(), Store.NO, Index.ANALYZED));
+					for (Comparable<?> value : values) {
+						Utils.addToDoc( doc, "content", value.toString() );
 					}
 
 				} catch (Exception e) {
@@ -198,7 +173,7 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 	/* (non-Javadoc)
 	 * @see de.ingrid.admin.object.IDocumentProducer#next()
 	 */
-	public Document next() {
+	public Map<String, Object> next() {
 		return _xmlIterator.next();
 	}
 
@@ -239,7 +214,7 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 								+ filterString);
 
 						_xmlIterator = new XmlDocumentIterator(_xmlIterator, docs,
-								xmlDocument.getFields(), _xmlService, _stemmer);
+								xmlDocument.getFields(), _xmlService);
 					}	
 				}
 			}
