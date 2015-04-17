@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import de.ingrid.admin.command.Command;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.xml.command.SyncPlugDescriptionDirectoryCommand;
 import de.ingrid.utils.query.IngridQuery;

@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 import com.tngtech.configbuilder.ConfigBuilder;
 
 import de.ingrid.admin.JettyStarter;
-import de.ingrid.admin.search.IngridIndexSearcher;
+import de.ingrid.admin.elasticsearch.IndexImpl;
 import de.ingrid.iplug.HeartBeatPlug;
 import de.ingrid.iplug.IPlugdescriptionFieldFilter;
 import de.ingrid.iplug.PlugDescriptionFieldFilters;
@@ -45,11 +45,11 @@ import de.ingrid.utils.query.IngridQuery;
 @Service
 public class XmlPlug extends HeartBeatPlug implements IRecordLoader {
 
-	private final IngridIndexSearcher _indexSearcher;
+	private final IndexImpl _indexSearcher;
 	public static Configuration conf;
 	
 	@Autowired
-	public XmlPlug(final IngridIndexSearcher indexSearcher,
+	public XmlPlug(final IndexImpl indexSearcher,
 			final IPlugdescriptionFieldFilter[] fieldFilters,
 			final IMetadataInjector[] metadataInjectors,
 			final IPreProcessor[] preProcessors, final IPostProcessor[] postProcessors) {

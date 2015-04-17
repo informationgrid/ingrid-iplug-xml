@@ -177,7 +177,7 @@ public class UploadController {
 				return firstRow(); 
 			}
 			
-			Enumeration entries = zipFile.entries();
+			Enumeration<?> entries = zipFile.entries();
 			File firstZipFile = null;
 			byte[] buffer = new byte[16384];
 			int len;
