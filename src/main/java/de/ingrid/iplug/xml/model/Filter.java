@@ -71,7 +71,8 @@ public class Filter implements Externalizable {
 	/* (non-Javadoc)
 	 * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
 	 */
-	public void readExternal(ObjectInput in) throws IOException,
+	@SuppressWarnings("unchecked")
+    public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
 		_filterType = FilterType.valueOf(in.readUTF());
 		_expression = (Comparable<? extends Serializable>) in.readObject();

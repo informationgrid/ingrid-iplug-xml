@@ -91,7 +91,7 @@ public class MappingController {
 
 			for (final Field field : fields) {
 				final String xpath = field.getXpath();
-				final List subNodes = _xmlService.getSubNodes(doc, xpath);
+				final List<Element> subNodes = _xmlService.getSubNodes(doc, xpath);
 				boolean xPathCheck = _xmlService.checkXpath(xpath); 
 				if((subNodes != null && subNodes.size() > 0) || xPathCheck){
 					final List<String> values = _xmlService.getValues(subNodes);

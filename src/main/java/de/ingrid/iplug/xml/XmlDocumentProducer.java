@@ -23,7 +23,6 @@
 package de.ingrid.iplug.xml;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,10 +33,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
-import de.ingrid.admin.Utils;
 import de.ingrid.admin.object.IDocumentProducer;
 import de.ingrid.iplug.xml.model.Field;
 import de.ingrid.iplug.xml.service.XmlService;
+import de.ingrid.utils.ElasticDocument;
 import de.ingrid.utils.IConfigurable;
 import de.ingrid.utils.PlugDescription;
 
@@ -91,7 +90,7 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 		/* (non-Javadoc)
 		 * @see java.util.Iterator#next()
 		 */
-		public Map<String, Object> next() {
+		public ElasticDocument next() {
 			if (_prev != null && _prev.hasNext()) {
 				return _prev.next();
 			}
@@ -106,8 +105,8 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 		 * @return
 		 * 		Document.
 		 */
-		private Map<String, Object> createDocument(Element node) {
-			Map<String, Object> doc = new HashMap<String, Object>();
+		private ElasticDocument createDocument(Element node) {
+			ElasticDocument doc = new ElasticDocument();
 			for (de.ingrid.iplug.xml.model.Field field : _fields) {
 				try {
 					de.ingrid.iplug.xml.model.FieldType fieldType = field
@@ -120,17 +119,17 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 					switch (fieldType) {
 					case KEYWORD:
 						for (String value : values) {
-						    Utils.addToDoc( doc, label, value );
+						    doc.put( label, value );
 						}
 						break;
 					case NUMBER:
 						for (Comparable<?> value : values) {
-						    Utils.addToDoc( doc, label, StringUtils.padding(Double.parseDouble(value.toString())) );
+						    doc.put( label, StringUtils.padding(Double.parseDouble(value.toString())) );
 						}
 						break;
 					case TEXT:
 						for (Comparable<?> value : values) {
-						    Utils.addToDoc( doc, label, value.toString() );
+						    doc.put( label, value.toString() );
 						}
 						break;
 					default:
@@ -138,7 +137,7 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 					}
 
 					for (Comparable<?> value : values) {
-						Utils.addToDoc( doc, "content", value.toString() );
+						doc.put( "content", value.toString() );
 					}
 
 				} catch (Exception e) {
@@ -173,7 +172,7 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 	/* (non-Javadoc)
 	 * @see de.ingrid.admin.object.IDocumentProducer#next()
 	 */
-	public Map<String, Object> next() {
+	public ElasticDocument next() {
 		return _xmlIterator.next();
 	}
 

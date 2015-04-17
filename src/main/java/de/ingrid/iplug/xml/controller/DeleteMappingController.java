@@ -22,7 +22,6 @@
  */
 package de.ingrid.iplug.xml.controller;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,6 +37,7 @@ import de.ingrid.admin.command.Command;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.xml.command.SyncPlugDescriptionDirectoryCommand;
 import de.ingrid.iplug.xml.model.Document;
+
 @Controller
 @SessionAttributes( { "plugDescription", "postCommandObject"})
 public class DeleteMappingController {
@@ -61,7 +61,6 @@ public class DeleteMappingController {
 		final List<Document> documents = (List<Document>) plugdescriptionCommandObject.get("mapping");
 		final Iterator<Document> iterator = documents.iterator();
 		int i = 0;
-		List<String> list = new ArrayList<String>(); 
 		while (iterator.hasNext()) {
 			iterator.next();
 			if (i == documentIndex) {
