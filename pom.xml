@@ -8,12 +8,12 @@
   <groupId>de.ingrid</groupId>
   <artifactId>ingrid-iplug-xml</artifactId>
   <packaging>jar</packaging>
-	<version>3.6.0-SNAPSHOT</version>
+	<version>3.6.0</version>
   <name>Ingrid iPlug XML</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-iplug-xml.git</connection>
     <developerConnection>scm:git:git@github.com:informationgrid/ingrid-iplug-xml.git</developerConnection>
-	  <tag>HEAD</tag>
+	  <tag>ingrid-iplug-xml-3.6.0</tag>
   </scm>
   <repositories>
     <!-- Repo of parent pom needed, parent pom may not be installed locally yet -->
