@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.xml.XmlPlug;
 import de.ingrid.iplug.xml.command.SyncPlugDescriptionDirectoryCommand;
 import de.ingrid.utils.query.IngridQuery;
 
@@ -59,6 +60,7 @@ public class ListMappingsController {
         
     	SyncPlugDescriptionDirectoryCommand command = new SyncPlugDescriptionDirectoryCommand(commandObject);
     	command.execute();
+    	model.put( "mapping", XmlPlug.conf.mappingFiltered );
     	return "/iplug-pages/listMappings";
 	}
 }

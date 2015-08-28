@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.admin.command.Command;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.xml.XmlPlug;
 import de.ingrid.iplug.xml.command.SyncPlugDescriptionDirectoryCommand;
 import de.ingrid.iplug.xml.model.Document;
 
@@ -50,7 +51,6 @@ public class DeleteMappingController {
 	 * @return
 	 * 		Web request "redirect:/iplug-pages/listMappings.html"
 	 */
-	@SuppressWarnings("unchecked")
     @RequestMapping(value = "/iplug-pages/deleteMapping.html", method = RequestMethod.POST)
 	public String deleteMapping(
 			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
@@ -58,7 +58,7 @@ public class DeleteMappingController {
 			@ModelAttribute("postCommandObject") final Command postCommandObject,
 			final ModelMap model) {
 		System.out.println("DeleteMappingController.deleteMapping() : documentIndex = " + documentIndex);
-		final List<Document> documents = (List<Document>) plugdescriptionCommandObject.get("mapping");
+		final List<Document> documents = XmlPlug.conf.mapping;
 		final Iterator<Document> iterator = documents.iterator();
 		int i = 0;
 		while (iterator.hasNext()) {

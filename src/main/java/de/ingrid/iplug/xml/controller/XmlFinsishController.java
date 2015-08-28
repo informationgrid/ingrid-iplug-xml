@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.admin.IUris;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.xml.XmlPlug;
 import de.ingrid.iplug.xml.model.Document;
 import de.ingrid.iplug.xml.model.Field;
 
@@ -61,15 +62,9 @@ public class XmlFinsishController {
 			plugdescriptionCommandObject.put("fields", new ArrayList<String>());
 		}
 
-		final List<String> fields = (List<String>) plugdescriptionCommandObject
-				.get("fields");
+		final List<String> fields = (List<String>) plugdescriptionCommandObject.get("fields");
 
-		if (!plugdescriptionCommandObject.containsKey("mapping")) {
-			plugdescriptionCommandObject.put("mapping",
-					new ArrayList<Document>());
-		}
-		final List<Document> documents = (List<Document>) plugdescriptionCommandObject
-				.get("mapping");
+		final List<Document> documents = XmlPlug.conf.mapping;
 		// edit mode
 		if (documents.contains(document)) {
 			documents.remove(document);

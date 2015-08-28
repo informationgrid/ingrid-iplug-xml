@@ -29,6 +29,7 @@ import java.util.List;
 
 import de.ingrid.admin.command.Command;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.xml.XmlPlug;
 import de.ingrid.iplug.xml.model.Document;
 
 /**
@@ -58,12 +59,11 @@ public class SyncPlugDescriptionDirectoryCommand extends Command {
      * Method for synchronization Plug description and mapping directory.
      * 
      */
-    @SuppressWarnings("unchecked")
     public void syncPlugDescriptionWithMappingDirectory() {
         File mappingDir = new File( plugDescription.getWorkinDirectory(), "mapping" );
         String[] mappingDirFiles = mappingDir.list();
-        List<Document> mappingList = new ArrayList<Document>();
-        mappingList = (List<Document>) plugDescription.get( "mapping" );
+        List<Document> mappingList = new ArrayList<Document>(XmlPlug.conf.mapping);
+        XmlPlug.conf.mappingFiltered = mappingList;
         if (mappingList != null) {
             boolean fileDelete = true;
             if (mappingDirFiles != null && mappingDirFiles.length > 0) {
