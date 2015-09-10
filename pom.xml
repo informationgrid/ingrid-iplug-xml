@@ -229,6 +229,16 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>external.atlassian.jgitflow</groupId>
+        <artifactId>jgitflow-maven-plugin</artifactId>
+        <version>1.0-m5.1</version>
+        <configuration>
+          <defaultOriginUrl>https://github.com/informationgrid/ingrid-iplug-xml</defaultOriginUrl>
+          <noReleaseBuild>true</noReleaseBuild>
+          <updateDependencies>false</updateDependencies>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
