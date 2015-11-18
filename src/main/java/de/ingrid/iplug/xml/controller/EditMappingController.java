@@ -43,6 +43,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.xml.XmlPlug;
 import de.ingrid.iplug.xml.controller.UploadController.XsltOutput;
 import de.ingrid.iplug.xml.model.Document;
 import de.ingrid.iplug.xml.service.XmlService;
@@ -73,20 +74,17 @@ public class EditMappingController {
 	 * @throws JDOMException
 	 * @throws TransformerException
 	 */
-	@SuppressWarnings("unchecked")
     @RequestMapping(value = "/iplug-pages/editMapping.html", method = RequestMethod.GET)
 	public String editXml(
 			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
 			@RequestParam(value = "documentIndex", required = true) final int documentIndex,
 			final Model model) throws IOException, JDOMException,
 			TransformerException {
-		final List<Document> documents = (List<Document>) plugdescriptionCommandObject
-				.get("mapping");
+		final List<Document> documents = XmlPlug.conf.mapping;
 		final Document document = documents.get(documentIndex);
 		model.addAttribute("document", document);
 
-		final File mappingDir = new File(plugdescriptionCommandObject
-				.getWorkinDirectory(), "mapping");
+		final File mappingDir = new File(plugdescriptionCommandObject.getWorkinDirectory(), "mapping");
 		
 		final File pathToMappingDir = new File (mappingDir, document.getFileName());
 		final File[] listAllFiles = pathToMappingDir.listFiles();

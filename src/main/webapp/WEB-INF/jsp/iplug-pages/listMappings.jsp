@@ -24,10 +24,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page import="de.ingrid.admin.security.IngridPrincipal"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
 <title>Portal U Administration</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <meta name="author" content="wemove digital solutions" />
@@ -57,12 +58,12 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Daten Mappings</h1>
 		<div class="controls">
-            <a href="#" onclick="document.location='../base/fieldQuery.html';">Zurück</a>
+            <a href="#" onclick="document.location='../base/fieldQuery.html';">ZurÃ¼ck</a>
             <a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
             <a href="#" onclick="document.location='../base/save.html';">Mapping beenden und speichern</a>
         </div>
         <div class="controls cBottom">
-            <a href="#" onclick="document.location='../base/fieldQuery.html';">Zurück</a>
+            <a href="#" onclick="document.location='../base/fieldQuery.html';">ZurÃ¼ck</a>
             <a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
             <a href="#" onclick="document.location='../base/save.html';">Mapping beenden und speichern</a>
         </div>
@@ -75,14 +76,14 @@
 					<th>&nbsp;</th>
 				</tr>
 				<c:set var="i" value="0" />
-				<c:forEach var="document" items="${plugDescription['mapping']}">
+				<c:forEach var="document" items="${mapping}">
 				<tr>
 					<td>${document.fileName}</td>
 					<td>${document.description}</td>
 					<td>
 						<form action="../iplug-pages/deleteMapping.html" method="POST" style="float:left">
 							<input type="hidden" name="documentIndex" value="${i}"/>
-							<input type="submit" value="Löschen"/>
+							<input type="submit" value="LÃ¶schen"/>
 						</form>
 						<form action="../iplug-pages/editMapping.html" method="GET" style="float:left">
 							<input type="hidden" name="documentIndex" value="${i}"/>

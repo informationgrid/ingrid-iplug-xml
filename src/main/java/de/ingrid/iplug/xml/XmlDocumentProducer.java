@@ -179,12 +179,10 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 	/* (non-Javadoc)
 	 * @see de.ingrid.utils.IConfigurable#configure(de.ingrid.utils.PlugDescription)
 	 */
-	@SuppressWarnings("unchecked")
 	public void configure(PlugDescription plugDescription) {
 		try {
 			File workinDirectory = plugDescription.getWorkinDirectory();
-			List<de.ingrid.iplug.xml.model.Document> xmlDocuments = (List<de.ingrid.iplug.xml.model.Document>) plugDescription
-					.get("mapping");
+			List<de.ingrid.iplug.xml.model.Document> xmlDocuments = XmlPlug.conf.mapping;
 			_xmlIterator = null;
 			for (de.ingrid.iplug.xml.model.Document xmlDocument : xmlDocuments) {
 				LOG.debug("document: " + xmlDocument.getFileName() + ", "

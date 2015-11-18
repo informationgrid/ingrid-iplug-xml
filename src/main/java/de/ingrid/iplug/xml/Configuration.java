@@ -22,6 +22,8 @@
  */
 package de.ingrid.iplug.xml;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
@@ -30,11 +32,14 @@ import org.apache.commons.logging.LogFactory;
 import com.thoughtworks.xstream.XStream;
 import com.tngtech.configbuilder.annotation.propertyloaderconfiguration.PropertiesFiles;
 import com.tngtech.configbuilder.annotation.propertyloaderconfiguration.PropertyLocations;
+import com.tngtech.configbuilder.annotation.typetransformer.TypeTransformer;
+import com.tngtech.configbuilder.annotation.typetransformer.TypeTransformers;
 import com.tngtech.configbuilder.annotation.valueextractor.DefaultValue;
 import com.tngtech.configbuilder.annotation.valueextractor.PropertyValue;
 
 import de.ingrid.admin.IConfig;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.xml.model.Document;
 
 @PropertiesFiles( {"config"} )
 @PropertyLocations(directories = {"conf"}, fromClassLoader = true)
@@ -42,20 +47,46 @@ public class Configuration implements IConfig {
     
     @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog(Configuration.class);
+
+    private XStream xstream;
+    
+    public Configuration() {
+        xstream = new XStream();
+        
+    }
+    
+
+    public class StringToDocs extends TypeTransformer<String, List<Document>> {
+        
+        @SuppressWarnings("unchecked")
+        @Override
+        public List<Document> transform( String input ) {
+            List<Document> map = null;
+            if ("".equals( input )) {
+                map = new ArrayList<Document>();
+            } else {
+                map = (List<Document>) xstream.fromXML(input);
+            }
+            return map;
+        }
+    }
+    
     
     @PropertyValue("plugdescription.fields")
     public String fields;
     
+    @TypeTransformers(Configuration.StringToDocs.class)
     @PropertyValue("plugdescription.mapping")
     @DefaultValue("")
-    public String mapping;
-    
-    private XStream xstream;
-    
-    @Override
-    public void initialize() {
-    }
+    public List<Document> mapping;
 
+    // contains the mapping after filtering with ones from working dir
+    public List<Document> mappingFiltered;
+
+
+    @Override
+    public void initialize() {}
+    
     @Override
     public void addPlugdescriptionValues( PlugdescriptionCommandObject pdObject ) {
         pdObject.put( "iPlugClass", "de.ingrid.iplug.xml.XmlPlug");
@@ -68,20 +99,12 @@ public class Configuration implements IConfig {
         		}
         	}
     	}
-        
-        if(pdObject.get("mapping") == null){
-        	if(!mapping.equals("")){
-        		xstream = new XStream();
-            	pdObject.put("mapping", xstream.fromXML(mapping));
-        	}
-        }
     }
 
     @Override
     public void setPropertiesFromPlugdescription( Properties props, PlugdescriptionCommandObject pd ) {
-    	if(pd.get("mapping") != null){
-    		xstream = new XStream();
-        	props.setProperty("plugdescription.mapping", xstream.toXML(pd.get("mapping")));
+    	if (!this.mapping.isEmpty()){
+        	props.setProperty("plugdescription.mapping", xstream.toXML(this.mapping));
     	}
     }
 }

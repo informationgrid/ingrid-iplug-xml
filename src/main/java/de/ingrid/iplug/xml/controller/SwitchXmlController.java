@@ -41,6 +41,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.xml.XmlPlug;
 import de.ingrid.iplug.xml.controller.UploadController.UploadBean;
 import de.ingrid.iplug.xml.model.Document;
 
@@ -89,7 +90,6 @@ public class SwitchXmlController {
 	 * 		Web request "redirect:/iplug-pages/listMappings.html"
 	 * @throws IOException
 	 */
-	@SuppressWarnings("unchecked")
     @RequestMapping(value = "/iplug-pages/switchXml.html", method = RequestMethod.POST)
 	public String upload(
 			@RequestParam(value = "documentIndex", required = true) final int documentIndex,
@@ -98,7 +98,7 @@ public class SwitchXmlController {
 			throws IOException {
 		final MultipartFile multipartFile = uploadBean.getFile();
 		final byte[] uploadBytes = multipartFile.getBytes();
-		final List<Document> documents = (List<Document>) plugdescriptionCommandObject.get("mapping");
+		final List<Document> documents = XmlPlug.conf.mapping;
 		final String fileName = documents.get(documentIndex).getFileName();
 		final File mappingDir = new File(plugdescriptionCommandObject
 				.getWorkinDirectory(), "mapping/"+fileName);
