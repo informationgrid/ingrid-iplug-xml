@@ -3,3 +3,4 @@
 /conf
 /target
 /.classpath
+/src/test/resources/mapping/

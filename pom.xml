@@ -98,12 +98,12 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>3.6.1</version>
+      <version>3.6.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>3.6.1</version>
+      <version>3.6.2-SNAPSHOT</version>
       <classifier>res</classifier>
       <type>zip</type>
     </dependency>
@@ -242,7 +242,7 @@
         <version>1.0-m5.1</version>
         <configuration>
           <defaultOriginUrl>https://github.com/informationgrid/ingrid-iplug-xml</defaultOriginUrl>
-          <noReleaseBuild>true</noReleaseBuild>
+          <noDeploy>true</noDeploy>
         </configuration>
       </plugin>
     </plugins>
