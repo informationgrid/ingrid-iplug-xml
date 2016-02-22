@@ -29,10 +29,17 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    
+    <!-- SPRING Dispatcher Config (MVC) -->
     <servlet>
         <servlet-name>springapp</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/springapp-servlet.xml,
+                /WEB-INF/override/*.xml</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>springapp</servlet-name>
@@ -60,6 +67,7 @@
         <servlet-name>forwarding</servlet-name>
         <url-pattern>*.js</url-pattern>
     </servlet-mapping>
+    
     <listener>
         <listener-class>de.ingrid.admin.ContextListener</listener-class>
     </listener>
@@ -126,6 +134,11 @@
     <error-page>
         <error-code>403</error-code>
         <location>/base/auth/roleFailure.html</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/base/welcome.html</location>
     </error-page>
     
     <error-page>
