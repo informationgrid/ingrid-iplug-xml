@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid iPlug XML
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -33,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
+import de.ingrid.admin.elasticsearch.IndexInfo;
 import de.ingrid.admin.object.IDocumentProducer;
 import de.ingrid.iplug.xml.model.Field;
 import de.ingrid.iplug.xml.service.XmlService;
@@ -220,4 +221,14 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 			e.printStackTrace();
 		}
 	}
+
+    @Override
+    public IndexInfo getIndexInfo() {
+        return null;
+    }
+
+    @Override
+    public Integer getDocumentCount() {
+        return null;
+    }
 }

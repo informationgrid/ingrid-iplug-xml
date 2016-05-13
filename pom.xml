@@ -2,13 +2,12 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>3.6.1</version>
+    <version>3.6.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.ingrid</groupId>
   <artifactId>ingrid-iplug-xml</artifactId>
   <packaging>jar</packaging>
-	<version>3.6.1</version>
+  <version>3.6.2</version>
   <name>Ingrid iPlug XML</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-iplug-xml.git</connection>
@@ -46,19 +45,13 @@
         <artifactId>saxpath</artifactId>
         <version>1.0</version>
       </dependency>
-      <dependency>
-        <groupId>de.ingrid</groupId>
-        <artifactId>ingrid-version-management-pom</artifactId>
-        <version>3.6.0</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug</artifactId>
+      <version>3.6.2</version>
       <exclusions>
         <exclusion>
           <groupId>de.ingrid</groupId>
@@ -93,17 +86,17 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
-      <version>3.6.1</version>
+      <version>3.6.2</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>3.6.1</version>
+      <version>3.6.2</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>3.6.1</version>
+      <version>3.6.2</version>
       <classifier>res</classifier>
       <type>zip</type>
     </dependency>
@@ -242,7 +235,7 @@
         <version>1.0-m5.1</version>
         <configuration>
           <defaultOriginUrl>https://github.com/informationgrid/ingrid-iplug-xml</defaultOriginUrl>
-          <noReleaseBuild>true</noReleaseBuild>
+          <noDeploy>true</noDeploy>
         </configuration>
       </plugin>
     </plugins>
