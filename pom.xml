@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-iplug-xml</artifactId>
   <packaging>jar</packaging>
-  <version>3.6.2</version>
+  <version>4.0.0</version>
   <name>Ingrid iPlug XML</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-iplug-xml.git</connection>
@@ -91,12 +91,12 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>3.6.2</version>
+      <version>3.6.2.1</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>3.6.2</version>
+      <version>3.6.2.1</version>
       <classifier>res</classifier>
       <type>zip</type>
     </dependency>
