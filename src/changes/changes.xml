@@ -28,12 +28,19 @@
     <author email="andre.wallat@wemove.com">André Wallat</author>
   </properties>
   <body>
-    <release version="4.0.0" date="2016-08-25" description="Release 4.0.0">
-      <action type="fix" dev="wemove" issue="REDMINE-411">
-        Catch error on invalid stored password. Updated usage info of start script (resetPassword).
-      </action>
-    </release>
-
+  
+  <release version="4.0.1" date="2016-02-01" description="Release 4.0.1">
+    <action type="fix" dev="wemove" issue="REDMINE-465">
+      Fixed wrong path to save data when using cygwin.
+    </action>
+  </release>
+  
+  <release version="4.0.0" date="2016-08-25" description="Release 4.0.0">
+    <action type="fix" dev="wemove" issue="REDMINE-411">
+      Catch error on invalid stored password. Updated usage info of start script (resetPassword).
+    </action>
+  </release>
+    
   <release version="3.6.2" date="2016-05-13" description="Release 3.6.2">
       <action type="fix" dev="wemove" issue="REDMINE-269">
         Fixed redirect to welcome page for a logged in user.
