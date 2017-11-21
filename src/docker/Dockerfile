@@ -14,6 +14,7 @@ RUN unzip ingrid-iplug-*-installer.jar -d /tmp \
 RUN ln -sf /dev/stdout /opt/ingrid/ingrid-iplug-xml/log.log
   # && ln -sf /dev/stderr /var/log/nginx/error.log
 
+RUN touch /opt/ingrid/ingrid-iplug-xml/conf/config.override.properties
 WORKDIR /opt/ingrid/ingrid-iplug-xml
 EXPOSE 80
 
