@@ -4,3 +4,4 @@
 /target
 /.classpath
 /src/test/resources/mapping/
+bin/
