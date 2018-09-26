@@ -8,6 +8,10 @@
   <artifactId>ingrid-iplug-xml</artifactId>
   <packaging>jar</packaging>
   <version>4.4.0-SNAPSHOT</version>
+  <properties>
+    <ingrid-base-webapp.version>5.0.0-SNAPSHOT</ingrid-base-webapp.version>
+    <spring.version>4.3.3.RELEASE</spring.version>
+  </properties>
   <name>Ingrid iPlug XML</name>
   <description>This iPlug indexes documents from a XML document and can be queried by the iBus.</description>
   <scm>
@@ -46,6 +50,21 @@
         <artifactId>saxpath</artifactId>
         <version>1.0</version>
       </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -54,10 +73,10 @@
       <artifactId>ingrid-iplug</artifactId>
       <version>3.6.2</version>
       <exclusions>
-        <exclusion>
+        <!--<exclusion>
           <groupId>de.ingrid</groupId>
           <artifactId>ingrid-ibus</artifactId>
-        </exclusion>
+        </exclusion>-->
         <exclusion>
           <groupId>opensymphony</groupId>
           <artifactId>quartz</artifactId>
@@ -92,12 +111,12 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>4.2.2</version>
+      <version>${ingrid-base-webapp.version}</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>4.2.2</version>
+      <version>${ingrid-base-webapp.version}</version>
       <classifier>res</classifier>
       <type>zip</type>
     </dependency>

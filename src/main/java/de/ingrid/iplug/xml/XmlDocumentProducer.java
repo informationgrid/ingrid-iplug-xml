@@ -33,7 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
-import de.ingrid.admin.elasticsearch.IndexInfo;
+import de.ingrid.elasticsearch.IndexInfo;
 import de.ingrid.admin.object.IDocumentProducer;
 import de.ingrid.iplug.xml.model.Field;
 import de.ingrid.iplug.xml.service.XmlService;
@@ -49,13 +49,14 @@ import de.ingrid.utils.PlugDescription;
 public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 
 	private final XmlService _xmlService;
-	private static final Logger LOG = Logger
-			.getLogger(XmlDocumentProducer.class);
+	private static final Logger LOG = Logger.getLogger(XmlDocumentProducer.class);
+
+	private IndexInfo indexInfo;
 
 	@Autowired
-	public XmlDocumentProducer(XmlService xmlService) {
+	public XmlDocumentProducer(XmlService xmlService, IndexInfo indexInfo) {
 		_xmlService = xmlService;
-
+		this.indexInfo = indexInfo;
 	}
 
 	private XmlDocumentIterator _xmlIterator;
@@ -224,7 +225,7 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 
     @Override
     public IndexInfo getIndexInfo() {
-        return null;
+        return this.indexInfo;
     }
 
     @Override
