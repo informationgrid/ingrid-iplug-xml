@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-iplug-xml</artifactId>
   <packaging>jar</packaging>
-  <version>4.3.0</version>
+  <version>4.5.0</version>
   <name>Ingrid iPlug XML</name>
   <description>This iPlug indexes documents from a XML document and can be queried by the iBus.</description>
   <scm>
@@ -92,12 +92,12 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>4.2.2</version>
+      <version>4.5.0</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>4.2.2</version>
+      <version>4.5.0</version>
       <classifier>res</classifier>
       <type>zip</type>
     </dependency>
