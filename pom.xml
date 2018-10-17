@@ -102,6 +102,10 @@
           <groupId>commons-betwixt</groupId>
           <artifactId>commons-betwixt</artifactId>
         </exclusion>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
