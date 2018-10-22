@@ -219,7 +219,7 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error("Error configuring XmlDocumentProducer", e);
 		}
 	}
 
