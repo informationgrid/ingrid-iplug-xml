@@ -32,14 +32,17 @@
 	<packaging>war</packaging>
 	<version>0.1-SNAPSHOT</version>
 	<name>ingrid-base-webapp</name>
-	<scm>
+
+	<!-- ==================== Source Code Management ==================== -->
+  <scm>
 		<connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-iplug-xml/trunk</connection>
 		<developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-iplug-xml/trunk</developerConnection>
 	</scm>
-	<repositories>
+
+	<!-- ==================== REPOSITORIES ==================== -->
+  <repositories>
 		<!--
-			Repo of parent pom needed, parent pom may not be installed locally
-			yet
+			Repo of parent pom needed, parent pom may not be installed locally yet
 		-->
 		<repository>
 			<snapshots />
@@ -48,6 +51,8 @@
 			<url>http://harrison.its-technidata.de/ingrid/maven2</url>
 		</repository>
 	</repositories>
+
+	<!-- ==================== DEPENDENCIES ==================== -->
 	<dependencies>
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
@@ -181,7 +186,9 @@
       <version>2.5.D1</version>
     </dependency>
 	</dependencies>
-	<build>
+
+	<!-- ==================== Build Configuration ==================== -->
+  <build>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.groovy.maven</groupId>
@@ -197,7 +204,7 @@
 								ant.unzip(src:
 								"${settings.localRepository}/de/ingrid/ingrid-base-webapp/0.1-SNAPSHOT/ingrid-base-webapp-0.1-SNAPSHOT-res.zip",
 								dest: 'src/main/webapp')
-                            </source>
+              </source>
 						</configuration>
 					</execution>
 				</executions>
@@ -223,6 +230,8 @@
 						</connector>
 					</connectors>
 					<scanIntervalSeconds>0</scanIntervalSeconds>
+					<stopKey/>
+					<stopPort/>
 				</configuration>
 			</plugin>
 		</plugins>
