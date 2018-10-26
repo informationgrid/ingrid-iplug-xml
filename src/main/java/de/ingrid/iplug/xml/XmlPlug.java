@@ -26,6 +26,7 @@ import de.ingrid.admin.elasticsearch.IndexScheduler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import com.tngtech.configbuilder.ConfigBuilder;
@@ -47,6 +48,8 @@ import de.ingrid.utils.processor.IPostProcessor;
 import de.ingrid.utils.processor.IPreProcessor;
 import de.ingrid.utils.query.IngridQuery;
 
+@org.springframework.context.annotation.Configuration
+@PropertySource(value = {"classpath:config.properties", "classpath:config.override.properties"})
 @Service
 public class XmlPlug extends HeartBeatPlug implements IRecordLoader {
 
