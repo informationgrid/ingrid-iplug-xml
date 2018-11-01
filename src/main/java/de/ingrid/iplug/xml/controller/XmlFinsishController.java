@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ingrid.iplug.xml.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +44,10 @@ import de.ingrid.iplug.xml.model.Field;
 @RequestMapping("/iplug-pages/finish.html")
 @SessionAttributes(value = { "plugDescription", "document" })
 public class XmlFinsishController {
+
+	@Autowired
+	private Configuration xmlConfig;
+
 	/**
 	 * Put all fields to PlugDescription.
 	 * 
@@ -64,7 +70,7 @@ public class XmlFinsishController {
 
 		final List<String> fields = (List<String>) plugdescriptionCommandObject.get("fields");
 
-		final List<Document> documents = XmlPlug.conf.mapping;
+		final List<Document> documents = xmlConfig.mapping;
 		// edit mode
 		if (documents.contains(document)) {
 			documents.remove(document);

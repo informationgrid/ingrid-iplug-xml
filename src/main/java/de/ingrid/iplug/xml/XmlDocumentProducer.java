@@ -52,11 +52,13 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 	private static final Logger LOG = Logger.getLogger(XmlDocumentProducer.class);
 
 	private IndexInfo indexInfo;
+	private final Configuration xmlConfig;
 
 	@Autowired
-	public XmlDocumentProducer(XmlService xmlService, IndexInfo indexInfo) {
+	public XmlDocumentProducer(XmlService xmlService, IndexInfo indexInfo, Configuration xmlConfig) {
 		_xmlService = xmlService;
 		this.indexInfo = indexInfo;
+		this.xmlConfig = xmlConfig;
 	}
 
 	private XmlDocumentIterator _xmlIterator;
@@ -184,7 +186,7 @@ public class XmlDocumentProducer implements IDocumentProducer, IConfigurable {
 	public void configure(PlugDescription plugDescription) {
 		try {
 			File workinDirectory = plugDescription.getWorkinDirectory();
-			List<de.ingrid.iplug.xml.model.Document> xmlDocuments = XmlPlug.conf.mapping;
+			List<de.ingrid.iplug.xml.model.Document> xmlDocuments = xmlConfig.mapping;
 			_xmlIterator = null;
 			for (de.ingrid.iplug.xml.model.Document xmlDocument : xmlDocuments) {
 				LOG.debug("document: " + xmlDocument.getFileName() + ", "

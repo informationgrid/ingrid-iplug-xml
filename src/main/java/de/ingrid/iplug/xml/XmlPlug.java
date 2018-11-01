@@ -22,31 +22,23 @@
  */
 package de.ingrid.iplug.xml;
 
-import de.ingrid.admin.elasticsearch.IndexScheduler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Service;
-
-import com.tngtech.configbuilder.ConfigBuilder;
-
 import de.ingrid.admin.JettyStarter;
+import de.ingrid.admin.elasticsearch.IndexScheduler;
 import de.ingrid.elasticsearch.search.IndexImpl;
 import de.ingrid.iplug.HeartBeatPlug;
 import de.ingrid.iplug.IPlugdescriptionFieldFilter;
 import de.ingrid.iplug.PlugDescriptionFieldFilters;
-import de.ingrid.utils.IRecordLoader;
-import de.ingrid.utils.IngridCall;
-import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.IngridHitDetail;
-import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.*;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.metadata.IMetadataInjector;
 import de.ingrid.utils.processor.IPostProcessor;
 import de.ingrid.utils.processor.IPreProcessor;
 import de.ingrid.utils.query.IngridQuery;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Service;
 
 @org.springframework.context.annotation.Configuration
 @PropertySource(value = {"classpath:config.properties", "classpath:config.override.properties"})
@@ -56,7 +48,6 @@ public class XmlPlug extends HeartBeatPlug implements IRecordLoader {
 	private static Logger log = LogManager.getLogger(XmlPlug.class);
 
 	private final IndexImpl _indexSearcher;
-	public static Configuration conf;
 	private final IndexScheduler indexScheduler;
 
 	@Autowired
@@ -112,8 +103,7 @@ public class XmlPlug extends HeartBeatPlug implements IRecordLoader {
 	}
 	
 	public static void main(String[] args) throws Exception {
-        conf = new ConfigBuilder<>(Configuration.class).withCommandLineArgs(args).build();
-        new JettyStarter( conf );
+        new JettyStarter();
     }
 
 	@Override
