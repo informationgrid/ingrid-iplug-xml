@@ -29,6 +29,7 @@ import java.util.List;
 
 import javax.xml.transform.TransformerException;
 
+import de.ingrid.iplug.xml.Configuration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.Element;
@@ -58,6 +59,9 @@ public class EditMappingController {
 	private final XmlService _xmlService;
 
 	@Autowired
+	private Configuration xmlConfig;
+
+	@Autowired
 	public EditMappingController(final XmlService xmlService) {
 		_xmlService = xmlService;
 	}
@@ -80,7 +84,7 @@ public class EditMappingController {
 			@RequestParam(value = "documentIndex", required = true) final int documentIndex,
 			final Model model) throws IOException, JDOMException,
 			TransformerException {
-		final List<Document> documents = XmlPlug.conf.mapping;
+		final List<Document> documents = xmlConfig.mapping;
 		final Document document = documents.get(documentIndex);
 		model.addAttribute("document", document);
 
