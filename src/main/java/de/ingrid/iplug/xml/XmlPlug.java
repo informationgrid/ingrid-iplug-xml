@@ -24,6 +24,8 @@ package de.ingrid.iplug.xml;
 
 import de.ingrid.admin.JettyStarter;
 import de.ingrid.admin.elasticsearch.IndexScheduler;
+import de.ingrid.elasticsearch.ElasticConfig;
+import de.ingrid.elasticsearch.IBusIndexManager;
 import de.ingrid.elasticsearch.search.IndexImpl;
 import de.ingrid.iplug.HeartBeatPlug;
 import de.ingrid.iplug.IPlugdescriptionFieldFilter;
@@ -33,6 +35,8 @@ import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.metadata.IMetadataInjector;
 import de.ingrid.utils.processor.IPostProcessor;
 import de.ingrid.utils.processor.IPreProcessor;
+import de.ingrid.utils.query.ClauseQuery;
+import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,6 +50,12 @@ import org.springframework.stereotype.Service;
 public class XmlPlug extends HeartBeatPlug implements IRecordLoader {
 
 	private static Logger log = LogManager.getLogger(XmlPlug.class);
+
+	@Autowired
+	private ElasticConfig elasticConfig;
+
+	@Autowired
+	private IBusIndexManager iBusIndexManager;
 
 	private final IndexImpl _indexSearcher;
 	private final IndexScheduler indexScheduler;
@@ -75,6 +85,18 @@ public class XmlPlug extends HeartBeatPlug implements IRecordLoader {
 	public IngridHits search(final IngridQuery query, final int start,
 			final int length) throws Exception {
         preProcess(query);
+
+		// request iBus directly to get search results from within this iPlug
+		// adapt query to only get results coming from this iPlug and activated in iBus
+		// But when not connected to an iBus then use direct connection to Elasticsearch
+		if (elasticConfig.esCommunicationThroughIBus) {
+
+			ClauseQuery cq = new ClauseQuery(true, false);
+			cq.addField(new FieldQuery(true, false, "iPlugId", elasticConfig.communicationProxyUrl));
+			query.addClause(cq);
+			return this.iBusIndexManager.search(query, start, length);
+		}
+
 		return _indexSearcher.search(query, start, length);
 	}
 
@@ -83,6 +105,13 @@ public class XmlPlug extends HeartBeatPlug implements IRecordLoader {
 	 */
 	public IngridHitDetail getDetail(final IngridHit hit,
 			final IngridQuery query, final String[] fields) {
+		// request iBus directly to get search results from within this iPlug
+		// adapt query to only get results coming from this iPlug and activated in iBus
+		// But when not connected to an iBus then use direct connection to Elasticsearch
+		if (elasticConfig.esCommunicationThroughIBus) {
+			return this.iBusIndexManager.getDetail(hit, query, fields);
+		}
+
 		return _indexSearcher.getDetail(hit, query, fields);
 	}
 
@@ -91,6 +120,13 @@ public class XmlPlug extends HeartBeatPlug implements IRecordLoader {
 	 */
 	public IngridHitDetail[] getDetails(final IngridHit[] hitArray,
 			final IngridQuery query, final String[] fields) {
+		// request iBus directly to get search results from within this iPlug
+		// adapt query to only get results coming from this iPlug and activated in iBus
+		// But when not connected to an iBus then use direct connection to Elasticsearch
+		if (elasticConfig.esCommunicationThroughIBus) {
+			return this.iBusIndexManager.getDetails(hitArray, query, fields);
+		}
+
 		return _indexSearcher.getDetails(hitArray, query, fields);
 	}
 
