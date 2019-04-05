@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid iPlug XML
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or â€“ as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -54,19 +54,19 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Datei auswählen</h1>
+		<h1 id="head">Datei auswï¿½hlen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('uploadBean').submit();">Upload</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('uploadBean').submit();">Upload</a>
 		</div>
 		<div id="content">
-			<h2>Wählen Sie eine Xml Datei aus, die Sie indizieren möchten</h2>
+			<h2>Wï¿½hlen Sie eine Xml Datei aus, die Sie indizieren mï¿½chten</h2>
 			<form:form action="../iplug-pages/upload.html" enctype="multipart/form-data" modelAttribute="uploadBean"> 
 				<table id="konfigForm">
 					<tr>
@@ -76,9 +76,9 @@
 							<c:if test="${!empty error_file}">
 							    <div class="error">
                                     <c:choose>
-                                        <c:when test="${error_file == 'invalid'}">Die ausgewählte Datei entspricht keinem XML Schema.</c:when>
-                                        <c:when test="${error_file == 'empty'}">Bitte wählen Sie ein XML Dokument aus.</c:when>
-                                        <c:when test="${error_file == 'invalid_zip'}">Die ausgewählte ZIP-Datei ist fehlerhaft oder der Zugriff wird verweigert.</c:when>
+                                        <c:when test="${error_file == 'invalid'}">Die ausgewï¿½hlte Datei entspricht keinem XML Schema.</c:when>
+                                        <c:when test="${error_file == 'empty'}">Bitte wï¿½hlen Sie ein XML Dokument aus.</c:when>
+                                        <c:when test="${error_file == 'invalid_zip'}">Die ausgewï¿½hlte ZIP-Datei ist fehlerhaft oder der Zugriff wird verweigert.</c:when>
                                     </c:choose>
 							    </div>
 							</c:if>
@@ -93,7 +93,7 @@
 								    <div class="error">
 	                                    <c:choose>
 	                                        <c:when test="${error == 'empty'}">Bitte geben Sie den Pfad zum Wurzelelement an.</c:when>
-	                                        <c:when test="${error == 'invalid'}">Dieser Pfad existiert nicht oder ist ungültig. Bitte überprüfen Sie Ihre Eingabe.</c:when>
+	                                        <c:when test="${error == 'invalid'}">Dieser Pfad existiert nicht oder ist ungï¿½ltig. Bitte ï¿½berprï¿½fen Sie Ihre Eingabe.</c:when>
 	                                    </c:choose>
 								    </div>
 								</c:if>
