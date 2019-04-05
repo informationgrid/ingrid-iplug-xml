@@ -76,7 +76,7 @@
 
   <bean id="indexInfo" class="de.ingrid.elasticsearch.IndexInfo">
     <property name="toAlias" value="ingrid" />
-    <property name="toIndex" value="xml-test" />
+    <property name="toIndex" value="xml" />
     <property name="toType" value="default" />
     <!--<property name="docIdField" value="" />-->
   </bean>
