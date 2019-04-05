@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid iPlug XML
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -29,8 +29,10 @@ import java.util.List;
 
 import de.ingrid.admin.command.Command;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.xml.Configuration;
 import de.ingrid.iplug.xml.XmlPlug;
 import de.ingrid.iplug.xml.model.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Command for synchronization of Plug description and mapping directory. 
@@ -40,8 +42,11 @@ public class SyncPlugDescriptionDirectoryCommand extends Command {
 
     private PlugdescriptionCommandObject plugDescription;
 
-    public SyncPlugDescriptionDirectoryCommand(PlugdescriptionCommandObject pg) {
+    private Configuration xmlConfig;
+
+    public SyncPlugDescriptionDirectoryCommand(PlugdescriptionCommandObject pg, Configuration xmlConfig) {
         plugDescription = pg;
+        this.xmlConfig = xmlConfig;
     }
 
     /*
@@ -62,8 +67,8 @@ public class SyncPlugDescriptionDirectoryCommand extends Command {
     public void syncPlugDescriptionWithMappingDirectory() {
         File mappingDir = new File( plugDescription.getWorkinDirectory(), "mapping" );
         String[] mappingDirFiles = mappingDir.list();
-        List<Document> mappingList = new ArrayList<Document>(XmlPlug.conf.mapping);
-        XmlPlug.conf.mappingFiltered = mappingList;
+        List<Document> mappingList = new ArrayList<Document>(xmlConfig.mapping);
+        xmlConfig.mappingFiltered = mappingList;
         if (mappingList != null) {
             boolean fileDelete = true;
             if (mappingDirFiles != null && mappingDirFiles.length > 0) {

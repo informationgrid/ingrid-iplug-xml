@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid iPlug XML
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -28,6 +28,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import de.ingrid.iplug.xml.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -48,6 +50,9 @@ import de.ingrid.iplug.xml.model.Document;
 @Controller
 @SessionAttributes( { "plugDescription", "document" })
 public class SwitchXmlController {
+
+	@Autowired
+	private Configuration xmlConfig;
 
 	@InitBinder
 	public void initBinder(final WebDataBinder binder) {
@@ -98,7 +103,7 @@ public class SwitchXmlController {
 			throws IOException {
 		final MultipartFile multipartFile = uploadBean.getFile();
 		final byte[] uploadBytes = multipartFile.getBytes();
-		final List<Document> documents = XmlPlug.conf.mapping;
+		final List<Document> documents = xmlConfig.mapping;
 		final String fileName = documents.get(documentIndex).getFileName();
 		final File mappingDir = new File(plugdescriptionCommandObject
 				.getWorkinDirectory(), "mapping/"+fileName);

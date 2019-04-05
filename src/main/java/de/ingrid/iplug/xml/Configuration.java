@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid iPlug XML
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,27 +22,19 @@
  */
 package de.ingrid.iplug.xml;
 
+import com.thoughtworks.xstream.XStream;
+import de.ingrid.admin.IConfig;
+import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.xml.model.Document;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.thoughtworks.xstream.XStream;
-import com.tngtech.configbuilder.annotation.propertyloaderconfiguration.PropertiesFiles;
-import com.tngtech.configbuilder.annotation.propertyloaderconfiguration.PropertyLocations;
-import com.tngtech.configbuilder.annotation.typetransformer.TypeTransformer;
-import com.tngtech.configbuilder.annotation.typetransformer.TypeTransformers;
-import com.tngtech.configbuilder.annotation.valueextractor.DefaultValue;
-import com.tngtech.configbuilder.annotation.valueextractor.PropertyValue;
-
-import de.ingrid.admin.IConfig;
-import de.ingrid.admin.command.PlugdescriptionCommandObject;
-import de.ingrid.iplug.xml.model.Document;
-
-@PropertiesFiles( {"config"} )
-@PropertyLocations(directories = {"conf"}, fromClassLoader = true)
+@org.springframework.context.annotation.Configuration
 public class Configuration implements IConfig {
     
     @SuppressWarnings("unused")
@@ -54,30 +46,11 @@ public class Configuration implements IConfig {
         xstream = new XStream();
         
     }
-    
 
-    public class StringToDocs extends TypeTransformer<String, List<Document>> {
-        
-        @SuppressWarnings("unchecked")
-        @Override
-        public List<Document> transform( String input ) {
-            List<Document> map = null;
-            if ("".equals( input )) {
-                map = new ArrayList<Document>();
-            } else {
-                map = (List<Document>) xstream.fromXML(input);
-            }
-            return map;
-        }
-    }
-    
-    
-    @PropertyValue("plugdescription.fields")
+    @Value("plugdescription.fields")
     public String fields;
     
-    @TypeTransformers(Configuration.StringToDocs.class)
-    @PropertyValue("plugdescription.mapping")
-    @DefaultValue("")
+
     public List<Document> mapping;
 
     // contains the mapping after filtering with ones from working dir
@@ -106,5 +79,16 @@ public class Configuration implements IConfig {
     	if (!this.mapping.isEmpty()){
         	props.setProperty("plugdescription.mapping", xstream.toXML(this.mapping));
     	}
+    }
+
+    @Value("${plugdescription.mapping:}")
+    private void setDocumentMapping( String input ) {
+        List<Document> map;
+        if ("".equals( input )) {
+            map = new ArrayList<>();
+        } else {
+            map = (List<Document>) xstream.fromXML(input);
+        }
+        mapping = map;
     }
 }

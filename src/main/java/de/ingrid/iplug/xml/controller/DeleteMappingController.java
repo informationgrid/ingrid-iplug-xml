@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid iPlug XML
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,26 +22,25 @@
  */
 package de.ingrid.iplug.xml.controller;
 
-import java.util.Iterator;
-import java.util.List;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
 import de.ingrid.admin.command.Command;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
-import de.ingrid.iplug.xml.XmlPlug;
+import de.ingrid.iplug.xml.Configuration;
 import de.ingrid.iplug.xml.command.SyncPlugDescriptionDirectoryCommand;
 import de.ingrid.iplug.xml.model.Document;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Iterator;
+import java.util.List;
 
 @Controller
 @SessionAttributes( { "plugDescription", "postCommandObject"})
 public class DeleteMappingController {
+
+	@Autowired
+	private Configuration xmlConfig;
 
 	/**
 	 * Delete mapping.
@@ -58,13 +57,13 @@ public class DeleteMappingController {
 			@ModelAttribute("postCommandObject") final Command postCommandObject,
 			final ModelMap model) {
 		System.out.println("DeleteMappingController.deleteMapping() : documentIndex = " + documentIndex);
-		final List<Document> documents = XmlPlug.conf.mapping;
+		final List<Document> documents = xmlConfig.mapping;
 		final Iterator<Document> iterator = documents.iterator();
 		int i = 0;
 		while (iterator.hasNext()) {
 			iterator.next();
 			if (i == documentIndex) {
-				postCommandObject.add(new SyncPlugDescriptionDirectoryCommand(plugdescriptionCommandObject));
+				postCommandObject.add(new SyncPlugDescriptionDirectoryCommand(plugdescriptionCommandObject, xmlConfig));
 		    	iterator.remove();
 				break;
 			}

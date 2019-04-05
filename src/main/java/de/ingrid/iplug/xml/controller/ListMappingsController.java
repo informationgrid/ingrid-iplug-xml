@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid iPlug XML
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,6 +22,8 @@
  */
 package de.ingrid.iplug.xml.controller;
 
+import de.ingrid.iplug.xml.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,6 +39,9 @@ import de.ingrid.utils.query.IngridQuery;
 @Controller
 @SessionAttributes("plugDescription")
 public class ListMappingsController {
+
+    @Autowired
+    private Configuration xmlConfig;
 
     /**
      * List mappings.
@@ -58,9 +63,9 @@ public class ListMappingsController {
             commandObject.getArrayList(IngridQuery.RANKED).clear();
         commandObject.setRankinTypes(true,  isDate, isOff);
         
-    	SyncPlugDescriptionDirectoryCommand command = new SyncPlugDescriptionDirectoryCommand(commandObject);
+    	SyncPlugDescriptionDirectoryCommand command = new SyncPlugDescriptionDirectoryCommand(commandObject, xmlConfig);
     	command.execute();
-    	model.put( "mapping", XmlPlug.conf.mappingFiltered );
+    	model.put( "mapping", xmlConfig.mappingFiltered );
     	return "/iplug-pages/listMappings";
 	}
 }
