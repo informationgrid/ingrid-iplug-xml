@@ -28,6 +28,12 @@
     <author email="andre.wallat@wemove.com">André Wallat</author>
   </properties>
   <body>
+    <release version="5.1.0" date="2019-07-09" description="Release 5.1.0">
+      <action type="fix" dev="wemove">
+        Fix UTF-8 in JSP and remove references to PortalU
+      </action>
+    </release>
+
     <release version="5.0.1" date="2019-04-11" description="Release 5.0.1">
       <action type="fix" dev="wemove">
         Fix index name generation.
