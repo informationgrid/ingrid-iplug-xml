@@ -28,12 +28,18 @@
     <author email="andre.wallat@wemove.com">André Wallat</author>
   </properties>
   <body>
+    <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0-SNAPSHOT">
+      <action type="add" dev="wemove" issue="2085">
+        Improve InGrid Search - Add ngram Analyzer and additional sort hash.
+      </action>
+    </release>
+
     <release version="5.7.0" date="2021-01-18" description="Release 5.7.0">
       <action type="add" dev="wemove" issue="2211">
         Fix Redmine issue link generation for changes.
       </action>
     </release>
-	
+
     <release version="5.5.0" date="2020-07-24" description="Release 5.5.0">
       <action type="add" dev="wemove" issue="1898">
         Change the container’s privilege to a non-root user.
@@ -84,31 +90,31 @@
         Added docker integration.
       </action>
     </release>
-    
+
     <release version="4.0.2" date="2017-04-06" description="Release 4.0.2">
       <action type="fix" dev="wemove" issue="REDMINE-616">
         Fixed handling of multiple values inside an index field on detail request.
       </action>
     </release>
-  
+
     <release version="4.0.1" date="2017-02-01" description="Release 4.0.1">
       <action type="fix" dev="wemove" issue="REDMINE-465">
         Fixed wrong path to save data when using cygwin.
       </action>
     </release>
-    
+
     <release version="4.0.0" date="2016-08-25" description="Release 4.0.0">
       <action type="fix" dev="wemove" issue="REDMINE-411">
         Catch error on invalid stored password. Updated usage info of start script (resetPassword).
       </action>
     </release>
-      
+
     <release version="3.6.2" date="2016-05-13" description="Release 3.6.2">
       <action type="fix" dev="wemove" issue="REDMINE-269">
         Fixed redirect to welcome page for a logged in user.
       </action>
     </release>
-    
+
     <release version="3.6.1" date="2015-11-18" description="Release 3.6.1">
       <action type="update" dev="wemove" issue="REDMINE-15">
         Remove all references to PortalU.
@@ -120,19 +126,19 @@
         Use encrypted password for web interface.
       </action>
     </release>
-    
+
     <release version="3.6.0.3" date="2015-09-10" description="Bugfix-Release 3.6.0.3">
       <action type="fix" dev="wemove" issue="REDMINE-142,REDMINE-89">
         Fixed query generation and request of index fields.
       </action>
     </release>
-    
+
     <release version="3.6.0" date="2015-06-19" description="Release 3.6.0">
       <action type="add" dev="wemove" issue="REDMINE-6">
         Added elastic search as new indexing method.
       </action>
     </release>
-    
+
     <release version="3.5.0" date="2015-01-30" description="Release InGrid 3.5.0">
         <action type="add" dev="wemove" issue="REDMINE-524">
             Added license header to all source files for Open Source migration.
