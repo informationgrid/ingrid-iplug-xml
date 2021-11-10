@@ -60,12 +60,12 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Mapping der Daten auf den Index</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/upload.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/upload.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('submit').submit();">Mapping Beenden und Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/upload.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/upload.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('submit').submit();">Mapping Beenden und Speichern</a>
 		</div>

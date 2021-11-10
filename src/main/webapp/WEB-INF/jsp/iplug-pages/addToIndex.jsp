@@ -54,14 +54,14 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Zum Index hinzuf�gen</h1>
+		<h1 id="head">Zum Index hinzufügen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addToIndex').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addToIndex').submit();">Speichern</a>
 		</div>
@@ -77,7 +77,7 @@
 					<c:if test="${!empty error}">
 					<tr>
 						<td></td>
-						<td><font color="red">�berpr�fen Sie bitte Ihren eingegebenen xPath Ausdruck.</font></td>
+						<td><font color="red">Überprüfen Sie bitte Ihren eingegebenen xPath Ausdruck.</font></td>
 					</tr>
 					</c:if>
 					<tr>
@@ -85,7 +85,7 @@
 						<td>
 							<div class="input full">
 								<select name="fieldName">
-									<option value="">-- bitte w�hlen --</option>
+									<option value="">-- bitte wählen --</option>
 									<option value="title">title</option>
 									<option value="summary">summary</option>
 								</select>
@@ -115,11 +115,11 @@
 					<tr>
 						<td class="leftCol"></td>
 						<td class="comment">
-							Bitte w�hlen Sie den entsprechenden Typ aus:
+							Bitte wählen Sie den entsprechenden Typ aus:
 							<ul>
 								<li>1) TEXT - Wert wird im Index in Tokens gesplittet</li>
 								<li>2) KEYWORD - Wert wird im Index wie in der Quelle hinterlegt</li>
-								<li>3) NUMBER - Numerischer Wert wird im Index mit Nullen (12 Vorkommastellen) bef�llt</li>
+								<li>3) NUMBER - Numerischer Wert wird im Index mit Nullen (12 Vorkommastellen) befüllt</li>
 							</ul>
 						</td>
 					</tr>
