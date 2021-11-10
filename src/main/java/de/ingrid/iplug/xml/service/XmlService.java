@@ -69,6 +69,7 @@ public class XmlService {
 
 	public XmlService() {
         _saxBuilder = new SAXBuilder();
+        _saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl",true);
 		_saxBuilder.setFeature("http://xml.org/sax/features/external-general-entities", false);
 		_saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		_saxBuilder.setFeature("http://xml.org/sax/features/validation", false);
