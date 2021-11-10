@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -70,7 +69,6 @@ public class XmlService {
 
 	public XmlService() {
         _saxBuilder = new SAXBuilder();
-		_saxBuilder.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 		_saxBuilder.setFeature("http://xml.org/sax/features/external-general-entities", false);
 		_saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		_saxBuilder.setFeature("http://xml.org/sax/features/validation", false);
