@@ -35,6 +35,9 @@
       <action type="fix" dev="wemove">
         Fix XXE on upload XML files.
       </action>
+      <action type="fix" dev="wemove" issue="3292">
+        Kritische Sicherheitslücke Log4Shell in der weitverbreiteten Java-Logging-Bibliothek log4j
+      </action>
     </release>
 
     <release version="5.10.0" date="2021-10-20" description="Release 5.10.0">
