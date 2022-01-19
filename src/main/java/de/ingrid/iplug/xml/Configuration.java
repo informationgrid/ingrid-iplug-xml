@@ -23,6 +23,7 @@
 package de.ingrid.iplug.xml;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import de.ingrid.admin.IConfig;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.xml.model.Document;
@@ -44,7 +45,7 @@ public class Configuration implements IConfig {
     
     public Configuration() {
         xstream = new XStream();
-        
+        xstream.addPermission(AnyTypePermission.ANY);
     }
 
     @Value("plugdescription.fields")
