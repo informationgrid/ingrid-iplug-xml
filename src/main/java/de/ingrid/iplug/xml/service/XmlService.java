@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid iPlug XML
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -68,7 +68,10 @@ public class XmlService {
 	private SAXBuilder _saxBuilder;
 
 	public XmlService() {
-		_saxBuilder = new SAXBuilder();	
+        _saxBuilder = new SAXBuilder();
+        _saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl",true);
+		_saxBuilder.setFeature("http://xml.org/sax/features/external-general-entities", false);
+		_saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		_saxBuilder.setFeature("http://xml.org/sax/features/validation", false);
 		_saxBuilder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
 		_saxBuilder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);

@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid iPlug XML
   ==================================================
-  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2022 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -54,19 +54,19 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Datei ausw�hlen</h1>
+		<h1 id="head">Datei auswählen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('uploadBean').submit();">Upload</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('uploadBean').submit();">Upload</a>
 		</div>
 		<div id="content">
-			<h2>W�hlen Sie eine XML Datei aus, die Sie indizieren m�chten</h2>
+			<h2>Wählen Sie eine XML Datei aus, die Sie indizieren möchten</h2>
 			<form:form  action="../iplug-pages/switchXml.html" enctype="multipart/form-data" modelAttribute="uploadBean"> 
 				<table id="konfigForm">
 					<tr>
