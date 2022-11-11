@@ -24,13 +24,15 @@ package de.ingrid.iplug.xml.service;
 
 import java.io.File;
 import java.util.List;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.jdom.Element;
 
-public class XmlServiceTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+public class XmlServiceTest {
+
+	@Test
 	public void testPomXmlDependencies() throws Exception {
 		XmlService xmlService = new XmlService();
 		File xml = new File("src/test/resources/pom.xml");
@@ -43,6 +45,7 @@ public class XmlServiceTest extends TestCase {
 		assertEquals(18, subNodes.size());
 	}
 
+	@Test
 	public void testPomXmlDependency() throws Exception {
 		XmlService xmlService = new XmlService();
 		File xml = new File("src/test/resources/pom.xml");
@@ -54,6 +57,7 @@ public class XmlServiceTest extends TestCase {
 		assertEquals(18, subNodes.size());
 	}
 
+	@Test
 	public void testPomXmlProject() throws Exception {
 		XmlService xmlService = new XmlService();
 		File xml = new File("src/test/resources/pom.xml");
@@ -66,6 +70,7 @@ public class XmlServiceTest extends TestCase {
 		assertEquals(18, subNodes.size());
 	}
 
+	@Test
 	public void testPomXmlVersion() throws Exception {
 		XmlService xmlService = new XmlService();
 		File xml = new File("src/test/resources/pom.xml");
@@ -78,6 +83,7 @@ public class XmlServiceTest extends TestCase {
 		assertEquals(18, subNodes.size());
 	}
 
+	@Test
 	public void testPomXmlLimitSize() throws Exception {
 		XmlService xmlService = new XmlService();
 		File xml = new File("src/test/resources/pom.xml");
@@ -91,6 +97,7 @@ public class XmlServiceTest extends TestCase {
 		assertEquals(2, subNodes.size());
 	}
 
+	@Test
 	public void testParseNsg() throws Exception {
 		XmlService xmlService = new XmlService();
 		File xml = new File("src/test/resources/nsg.xml");
@@ -105,6 +112,7 @@ public class XmlServiceTest extends TestCase {
 		assertEquals("2009-04-18", element.getValue());
 	}
 
+	@Test
 	public void testParseNsgGcoDate() throws Exception {
 		XmlService xmlService = new XmlService();
 		File xml = new File("src/test/resources/nsg.xml");

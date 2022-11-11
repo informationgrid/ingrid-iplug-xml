@@ -23,14 +23,19 @@
 package de.ingrid.iplug.xml.service;
 
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.jdom.JDOMException;
 import org.jdom.xpath.XPath;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class XPathTest101tec extends TestCase {
 
+public class XPathTest101tec {
+
+	@Test
 	public void test101tecXpath() throws Exception {
 		String xpath1 = "./PERSONAE\\PERSONA";
 		String xpath2 = "./PERSONAE/PERSONA";
@@ -46,9 +51,10 @@ public class XPathTest101tec extends TestCase {
 		assertEquals(".[count(.//city)>10]/name", testNewInstance(xpath4));
 		assertNotNull(testNewInstance(xpath5));
 	}
-	
-	
-	public String testNewInstance(String xpath)throws Exception{
+
+
+	@Test
+	public String testNewInstance(String xpath) throws Exception {
 		XPath newInstance; 
 		try{
 			newInstance = XPath.newInstance(xpath);

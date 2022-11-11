@@ -24,11 +24,14 @@ package de.ingrid.iplug.xml.service;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class XPathTest extends TestCase {
-	
+public class XPathTest {
+
+	@Test
 	public void testKstXpath() throws Exception {
 		String xpath1 = "./PERSONAE\\PERSONA";
 		String xpath2 = "./PERSONAE/PERSONA";
@@ -40,7 +43,8 @@ public class XPathTest extends TestCase {
 		assertNotNull(testNewInstance(xpath3));
 		assertNull(testNewInstance(xpath4));
 	}
-	
+
+	@Test
 	public String testNewInstance(String xpath) throws Exception {
 		try {
 			// XPath x1 = new XP
