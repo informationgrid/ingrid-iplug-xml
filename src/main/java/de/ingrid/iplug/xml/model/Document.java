@@ -170,6 +170,7 @@ public class Document implements Externalizable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == null) return false;
 		Document other = (Document) obj;
 		return other._fileName.equals(_fileName);
 	}
