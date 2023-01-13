@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid iPlug XML
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -23,14 +23,19 @@
 package de.ingrid.iplug.xml.service;
 
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.jdom.JDOMException;
 import org.jdom.xpath.XPath;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class XPathTest101tec extends TestCase {
 
+public class XPathTest101tec {
+
+	@Test
 	public void test101tecXpath() throws Exception {
 		String xpath1 = "./PERSONAE\\PERSONA";
 		String xpath2 = "./PERSONAE/PERSONA";
@@ -46,9 +51,10 @@ public class XPathTest101tec extends TestCase {
 		assertEquals(".[count(.//city)>10]/name", testNewInstance(xpath4));
 		assertNotNull(testNewInstance(xpath5));
 	}
-	
-	
-	public String testNewInstance(String xpath)throws Exception{
+
+
+	@Test
+	public String testNewInstance(String xpath) throws Exception {
 		XPath newInstance; 
 		try{
 			newInstance = XPath.newInstance(xpath);

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid iPlug XML
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,11 +24,14 @@ package de.ingrid.iplug.xml.service;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class XPathTest extends TestCase {
-	
+public class XPathTest {
+
+	@Test
 	public void testKstXpath() throws Exception {
 		String xpath1 = "./PERSONAE\\PERSONA";
 		String xpath2 = "./PERSONAE/PERSONA";
@@ -40,7 +43,8 @@ public class XPathTest extends TestCase {
 		assertNotNull(testNewInstance(xpath3));
 		assertNull(testNewInstance(xpath4));
 	}
-	
+
+	@Test
 	public String testNewInstance(String xpath) throws Exception {
 		try {
 			// XPath x1 = new XP

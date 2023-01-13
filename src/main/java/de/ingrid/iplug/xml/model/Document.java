@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid iPlug XML
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -170,6 +170,7 @@ public class Document implements Externalizable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == null) return false;
 		Document other = (Document) obj;
 		return other._fileName.equals(_fileName);
 	}
